@@ -14,6 +14,10 @@
     color: var(--messages-textColors-system);
 }
 
+.linkText {
+    color: var(--messages-textColors-link);
+}
+
 /*fade out effect for history/timeout*/
 .fade {
     background-color: var(--messages-disabled);
@@ -29,7 +33,8 @@
 
 .input {
     background: black;
-    color: var(--messages-textColors-regular)
+    color: var(--messages-textColors-regular);
+    caret-color: var(--messages-textColors-caret);
 }
 
 .input::placeholder {

@@ -35,9 +35,9 @@ body {
     --messages-disabled: #19191999;
     --messages-highlightAnimationEnd: #e6e6e600;
     --messages-highlightAnimationStart: #e6e6e66e;
-    --messages-selection: #ffffff40;
-    --messages-textColors-caret: #ffffff;
-    --messages-textColors-chatPlaceholder: #5d5555;
+    --messages-selection: #4000ff00;
+    --messages-textColors-caret: #ffff00;
+    --messages-textColors-chatPlaceholder: #ff0000;
     --messages-textColors-link: #4286f4;
     --messages-textColors-regular: #ffffff;
     --messages-textColors-system: #8c7f7f;
