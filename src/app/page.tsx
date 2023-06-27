@@ -16,7 +16,9 @@ export default function Home() {
                         Chatterino Theme Creator
                     </div>
                 </div>
-                <div className="flex flex-grow">
+                {/*<div className="h-full bg-emerald-300"></div>*/}
+                {/*overflow-auto somehow force the height to be correct??*/}
+                <div className="h-full overflow-auto flex">
                     <div className="flex-1">
                         <Tabs
                             // defaultActiveKey="overview"
@@ -56,7 +58,7 @@ export default function Home() {
                             ]}
                         />
                     </div>
-                    <div className="flex-1 flex items-center justify-center">
+                    <div className="p-6">
                         <ChatterinoChatList />
                     </div>
                 </div>

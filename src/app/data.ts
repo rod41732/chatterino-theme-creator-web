@@ -1,4 +1,4 @@
-interface FakeChatMessage {
+export interface FakeChatMessage {
     id: string;
     timestampText: string;
     username: string;
@@ -12,6 +12,19 @@ interface FakeChatMessage {
 
 // testing XD
 export const chatMessages: FakeChatMessage[] = [
+    ...Array(100)
+        .fill(null)
+        .map((it, idx) => ({
+            chat: `historical message -${100 - idx}`,
+            highlight: false,
+            history: true,
+            id: `-${100 - 1}`,
+            link: false,
+            system: false,
+            timeout: idx % 5 == 0,
+            timestampText: "20:32",
+            username: "doge",
+        })),
     {
         id: "1",
         timestampText: "20:32",

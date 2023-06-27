@@ -10,8 +10,8 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={`${inter.className} w-screen h-screen`}>
-                {children}
+            <body className={`${inter.className}`}>
+                <div className="w-screen h-screen">{children}</div>
             </body>
         </html>
     );
