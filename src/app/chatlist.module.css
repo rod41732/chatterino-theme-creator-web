@@ -1,0 +1,38 @@
+.chatEven {
+    background-color: var(--messages-backgrounds-regular);
+}
+.chatOdd {
+    background-color: var(--messages-backgrounds-alternate);
+}
+
+.normalText {
+    color: var(--messages-textColors-regular);
+}
+
+/*system message, also other part like timestamp as well*/
+.systemText {
+    color: var(--messages-textColors-system);
+}
+
+/*fade out effect for history/timeout*/
+.fade {
+    background-color: var(--messages-disabled);
+}
+
+.highlightOverlayStart {
+    background-color: var(--messages-highlightAnimationStart);
+
+}
+.highlightOverlayEnd {
+    background-color: var(--messages-highlightAnimationEnd);
+}
+
+.input {
+    background: black;
+    color: var(--messages-textColors-regular)
+}
+
+.input::placeholder {
+    color: var(--messages-textColors-chatPlaceholder);
+}
+

@@ -2,26 +2,110 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+/*:root {*/
+/*  --foreground-rgb: 0, 0, 0;*/
+/*  --background-start-rgb: 214, 219, 220;*/
+/*  --background-end-rgb: 255, 255, 255;*/
+/*}*/
+
+/*@media (prefers-color-scheme: dark) {*/
+/*  :root {*/
+/*    --foreground-rgb: 255, 255, 255;*/
+/*    --background-start-rgb: 0, 0, 0;*/
+/*    --background-end-rgb: 0, 0, 0;*/
+/*  }*/
+/*}*/
+
+/*body {*/
+/*  color: rgb(var(--foreground-rgb));*/
+/*  background: linear-gradient(*/
+/*      to bottom,*/
+/*      transparent,*/
+/*      rgb(var(--background-end-rgb))*/
+/*    )*/
+/*    rgb(var(--background-start-rgb));*/
+/*}*/
+
+body {
+    --selection-color: unset;
+    /*messages*/
+    --accent: #00aeff;
+    --messages-backgrounds-alternate: #222222;
+    --messages-backgrounds-regular: #191912;
+    --messages-disabled: #19191999;
+    --messages-highlightAnimationEnd: #e6e6e600;
+    --messages-highlightAnimationStart: #e6e6e66e;
+    --messages-selection: #ffffff40;
+    --messages-textColors-caret: #ffffff;
+    --messages-textColors-chatPlaceholder: #5d5555;
+    --messages-textColors-link: #4286f4;
+    --messages-textColors-regular: #ffffff;
+    --messages-textColors-system: #8c7f7f;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+
+body {
+    --scrollbars-background: #00000000;
+    --scrollbars-thumb: #575757;
+    --scrollbars-thumbSelected: #616161;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    --splits-background: #191919;
+    --splits-dropPreview: #0094ff30;
+    --splits-dropPreviewBorder: #0094ff;
+    --splits-dropTargetRect: #0094ff00;
+    --splits-dropTargetRectBorder: #0094ff00;
+    --splits-header-background: #2e2e2e;
+    --splits-header-border: #383838;
+    --splits-header-focusedBackground: #444444;
+    --splits-header-focusedBorder: #464646;
+    --splits-header-focusedText: #84c1ff;
+    --splits-header-text: #ffffff;
+    --splits-input-background: #000000;
+    --splits-input-text: #00ff00;
+    --splits-messageSeperator: #3c3c3c;
+    --splits-resizeHandle: #0094ff70;
+    --splits-resizeHandleBackground: #0094ff20;
+}
+
+body {
+    --tabs-dividerLine: #555555;
+    --tabs-highlighted-backgrounds-hover: #252525;
+    --tabs-highlighted-backgrounds-regular: #252525;
+    --tabs-highlighted-backgrounds-unfocused: #252525;
+    --tabs-highlighted-line-hover: #ee6166;
+    --tabs-highlighted-line-regular: #ee6166;
+    --tabs-highlighted-line-unfocused: #ee6166;
+    --tabs-highlighted-text: #eeeeee;
+    --tabs-newMessage-backgrounds-hover: #252525;
+    --tabs-newMessage-backgrounds-regular: #252525;
+    --tabs-newMessage-backgrounds-unfocused: #252525;
+    --tabs-newMessage-line-hover: #888888;
+    --tabs-newMessage-line-regular: #888888;
+    --tabs-newMessage-line-unfocused: #888888;
+    --tabs-newMessage-text: #eeeeee;
+    --tabs-regular-backgrounds-hover: #252525;
+    --tabs-regular-backgrounds-regular: #252525;
+    --tabs-regular-backgrounds-unfocused: #252525;
+    --tabs-regular-line-hover: #444444;
+    --tabs-regular-line-regular: #444444;
+    --tabs-regular-line-unfocused: #444444;
+    --tabs-regular-text: #aaaaaa;
+    --tabs-selected-backgrounds-hover: #555555;
+    --tabs-selected-backgrounds-regular: #555555;
+    --tabs-selected-backgrounds-unfocused: #555555;
+    --tabs-selected-line-hover: #00aeef;
+    --tabs-selected-line-regular: #00aeef;
+    --tabs-selected-line-unfocused: #00aeef;
+    --tabs-selected-text: #ffffff;
+}
+
+body {
+    --window-background: #111111;
+    --window-text: #eeeeee;
+}
+
+::selection {
+    background: var(--messages-selection);
 }
