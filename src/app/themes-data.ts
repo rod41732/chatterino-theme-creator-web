@@ -1,6 +1,7 @@
 // NOTE: QT color is argb, but web color is rgba
 import { ColorScheme } from "@/app/model.types";
 
+/** default state / testing color */
 export const COLOR: ColorScheme = {
     accent: "#00aeff",
     messages: {
@@ -30,7 +31,7 @@ export const COLOR: ColorScheme = {
         thumbSelected: "#ff0000",
     },
     splits: {
-        background: "#191919",
+        background: "#000000",
         dropPreview: "#0094ff30",
         dropPreviewBorder: "#0094ff",
         dropTargetRect: "#0094ff00",
@@ -111,6 +112,7 @@ export const COLOR: ColorScheme = {
         text: "#eeeeee",
     },
 };
+
 export const DARK_COLOR: ColorScheme = {
     accent: "#00aeff",
     messages: {

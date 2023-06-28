@@ -1,13 +1,28 @@
 "use client";
 import { Tabs } from "antd";
 import { useState } from "react";
-import { ChatterinoChatList } from "@/app/chatterino";
+import {
+    ChatterinoDragSplitPreview,
+    ChatterinoSingle,
+    ChatterinoSplitAdvanced,
+    ChatterinoSplitVertical,
+} from "@/app/chatterino";
 import { ConfigContextProvider } from "@/app/color-context-provider";
 import { MessageSettings } from "@/app/messageSettings";
 import { ScrollBarSettings } from "@/app/scrollBarSettings";
+import { TabsSettings } from "@/app/tabsSettings";
+import {
+    fakeChatListLarge,
+    fakeChatListSmall,
+    fakeChatListVerySmall,
+} from "@/app/data";
+import clsx from "clsx";
+import { SplitSettings } from "@/app/splitSettings";
+import { ChatterinoTabPreview } from "@/app/chatterinoTabPreview.component";
 
 export default function Home() {
     const [activeTab, setActiveTab] = useState("overview");
+    const [activePreviewTab, setActivePreviewTab] = useState("chat");
     return (
         <ConfigContextProvider>
             <div className="h-full flex flex-col">
@@ -44,12 +59,12 @@ export default function Home() {
                                 {
                                     label: "Splits",
                                     key: "splits",
-                                    children: <p> Splits XD</p>,
+                                    children: <SplitSettings />,
                                 },
                                 {
                                     label: "Tabs",
                                     key: "tabs",
-                                    children: <p> Tabs XD</p>,
+                                    children: <TabsSettings />,
                                 },
                                 {
                                     label: "Window",
@@ -59,8 +74,74 @@ export default function Home() {
                             ]}
                         />
                     </div>
-                    <div className="p-6">
-                        <ChatterinoChatList />
+                    <div className="p-6 max-h-full overflow-auto">
+                        <Tabs
+                            activeKey={activePreviewTab}
+                            onTabClick={(key, _) => setActivePreviewTab(key)}
+                            items={[
+                                {
+                                    label: "Chat",
+                                    key: "chat",
+                                    children: (
+                                        // TODO!
+                                        <div className="max-h-[80%] overflow-auto">
+                                            <ChatterinoSingle
+                                                chatMessages={fakeChatListLarge}
+                                            />
+                                        </div>
+                                    ),
+                                },
+                                {
+                                    label: "Split Basic",
+                                    key: "spilt_basic",
+                                    children: (
+                                        <div className="p-4 bg-gray-800">
+                                            <ChatterinoSplitVertical
+                                                chatMessages={fakeChatListSmall}
+                                                extraClasses={clsx(
+                                                    "h-[1000px]"
+                                                )}
+                                            />
+                                        </div>
+                                    ),
+                                },
+                                {
+                                    label: "Split Drop Preivew",
+                                    key: "spilt_drop_preview",
+                                    children: (
+                                        <div className="p-4 bg-gray-800 relative">
+                                            <ChatterinoDragSplitPreview
+                                                chatMessages={fakeChatListSmall}
+                                                extraClasses={clsx(
+                                                    "h-[1000px]"
+                                                )}
+                                            />
+                                        </div>
+                                    ),
+                                },
+                                {
+                                    label: "Split Drop Target",
+                                    key: "spilt_drop_target",
+                                    children: (
+                                        <div className="p-4 bg-gray-800 relative">
+                                            <ChatterinoSplitAdvanced
+                                                chatMessages={
+                                                    fakeChatListVerySmall
+                                                }
+                                                extraClasses={clsx(
+                                                    "h-[1000px]"
+                                                )}
+                                            />
+                                        </div>
+                                    ),
+                                },
+                                {
+                                    label: "Tab States",
+                                    key: "tab_states",
+                                    children: <ChatterinoTabPreview />,
+                                },
+                            ]}
+                        />
                     </div>
                 </div>
             </div>

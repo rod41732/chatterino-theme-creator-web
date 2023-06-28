@@ -1,6 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+* {
+    font-family: sans-serif;
+}
 
 /*:root {*/
 /*  --foreground-rgb: 0, 0, 0;*/
@@ -104,6 +107,18 @@ body {
 body {
     --window-background: #111111;
     --window-text: #eeeeee;
+}
+
+body {
+    /*color for: very thin line betweeen splits, drop target bg*/
+    /*it's hardcoded #555 (dark theme) or #999 (light)*/
+    --empty-split-color: #555555;
+}
+
+/*settings controlled*/
+body {
+    /*allow enabling/disabling message separator*/
+    --message-separator-width: 0px;
 }
 
 ::selection {

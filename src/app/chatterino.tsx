@@ -1,95 +1,153 @@
-import { useEffect, useState } from "react";
 import styles from "./chatlist.module.css";
-import { chatMessages, FakeChatMessage } from "@/app/data";
+import { FakeChatMessage } from "@/app/data";
+import { ChatterinoSplit } from "@/app/chatterinoSplit.component";
+import { ChatterinoFakeTab } from "@/app/chatterinoFakeTab";
+import clsx from "clsx";
 
-export function ChatterinoChatList({}) {
-    const [animationState, setAnimationState] = useState(0);
-
-    useEffect(() => {
-        let interval = setInterval(() => {
-            setAnimationState((a) => a + 1);
-        }, 500);
-        return () => clearInterval(interval);
-    });
-
-    return (
-        <div className="flex flex-col max-h-full min-h-0 overflow-auto">
-            <div>tab</div>
-            {/*chat list*/}
-            {/*TODO: some background IDK*/}
-            <div className={`overflow-y-auto flex-shrink ${styles.list}`}>
-                {chatMessages.map((it, idx) => (
-                    <Messsage
-                        key={it.id}
-                        it={it}
-                        idx={idx}
-                        animationState={animationState}
-                    />
-                ))}
-            </div>
-            <div
-                className="flex-shrink-0"
-                style={{
-                    // TODO: idk border
-                    border: "1px solid #ff00ff",
-                    // TODO: idk bg
-                    background: "black",
-                }}
-            >
-                <input
-                    className={`${styles.input} w-full px-2 py-2`}
-                    placeholder="Try typing message here..."
-                />
-            </div>
-        </div>
-    );
-}
-function Messsage({
-    it,
-    idx,
-    animationState,
+/** normal chat list */
+export function ChatterinoSingle({
+    chatMessages,
+    extraClasses = "",
 }: {
-    it: FakeChatMessage;
-    idx: number;
-    animationState: number;
+    chatMessages: FakeChatMessage[];
+    extraClasses?: string;
 }) {
     return (
         <div
-            className={`px-2 py-1 relative ${
-                idx % 2 == 0 ? styles.chatEven : styles.chatOdd
-            }`}
+            className={`flex flex-col ${extraClasses} overflow-auto ${styles.split}`}
         >
-            <span className={styles.systemText}> {it.timestampText}</span>
-            {!it.system && (
-                <strong className="text-red-500">{it.username}</strong>
-            )}
-            <span
-                className={
-                    it.link
-                        ? styles.linkText
-                        : it.system
-                        ? styles.systemText
-                        : styles.normalText
-                }
-            >
-                {" "}
-                {it.chat}
-            </span>
-            {it.history && (
-                <div className={`absolute inset-0 ${styles.fade}`}></div>
-            )}
-            {it.timeout && (
-                <div className={`absolute inset-0 ${styles.fade}`}></div>
-            )}
-            {it.highlight && (
+            {/*tab TODO: unknown background */}
+
+            <ChatterinoFakeTab />
+            <ChatterinoSplit name="pajlada" chatMessages={chatMessages} />
+        </div>
+    );
+}
+
+/** basic split */
+export function ChatterinoSplitVertical({
+    chatMessages,
+    extraClasses = "",
+}: {
+    chatMessages: FakeChatMessage[];
+    extraClasses?: string;
+}) {
+    return (
+        <div
+            className={`flex flex-col ${extraClasses} overflow-auto ${styles.split}`}
+        >
+            {/*tab TODO: unknown background */}
+
+            <ChatterinoFakeTab />
+            <ChatterinoSplit name="active tab" chatMessages={chatMessages} />
+            <ChatterinoSplit
+                name="inactive tab"
+                chatMessages={chatMessages}
+                active={false}
+            />
+        </div>
+    );
+}
+export function ChatterinoDragSplitPreview({
+    chatMessages,
+    extraClasses = "",
+}: {
+    chatMessages: FakeChatMessage[];
+    extraClasses?: string;
+}) {
+    return (
+        <div
+            className={`flex flex-col ${extraClasses} overflow-auto ${styles.split}`}
+        >
+            {/*tab TODO: unknown background */}
+
+            <ChatterinoFakeTab />
+            <ChatterinoSplit
+                name="active tab"
+                chatMessages={chatMessages}
+                previewSplit={true}
+            />
+            <ChatterinoSplit
+                name="inactive tab"
+                chatMessages={chatMessages}
+                active={false}
+            />
+        </div>
+    );
+}
+
+export function ChatterinoSplitAdvanced({
+    chatMessages,
+    extraClasses = "",
+}: {
+    chatMessages: FakeChatMessage[];
+    extraClasses?: string;
+}) {
+    return (
+        <div
+            className={`flex flex-col ${extraClasses} overflow-auto ${styles.split}`}
+        >
+            {/*tab TODO: unknown background */}
+
+            <ChatterinoFakeTab />
+            {/*TODO: there some backgroudn I don't knwo yet, using grey for now*/}
+            <div className={styles.splitContainerRow}>
                 <div
-                    className={`absolute inset-0 ${
-                        animationState % 3 != 0
-                            ? `transition-colors duration-500 ${styles.highlightOverlayEnd}`
-                            : `${styles.highlightOverlayStart}`
-                    }`}
-                ></div>
-            )}
+                    className={clsx(
+                        styles.dropTargetRectVertical,
+                        styles.droppable
+                    )}
+                >
+                    {" "}
+                    +{" "}
+                </div>
+                {/*chat inner*/}
+                <div className={styles.splitContainerCol}>
+                    <div
+                        className={clsx(
+                            styles.dropTargetRectHorizontal,
+                            styles.droppable
+                        )}
+                    >
+                        +
+                    </div>
+                    <div className={styles.splitContainerRow}>
+                        <ChatterinoSplit
+                            name="active tab"
+                            chatMessages={chatMessages}
+                            previewSplit={true}
+                        />
+                        <ChatterinoSplit
+                            name="inactive"
+                            chatMessages={chatMessages}
+                            active={false}
+                        />
+                    </div>
+                    <div
+                        className={clsx(
+                            styles.dropTargetRectHorizontal,
+                            styles.droppable
+                        )}
+                    >
+                        {" "}
+                        +{" "}
+                    </div>
+                    <ChatterinoSplit
+                        name="inactive tab"
+                        chatMessages={chatMessages}
+                        active={false}
+                    />
+                </div>
+                <div
+                    className={clsx(
+                        styles.dropTargetRectVertical,
+                        styles.droppable
+                    )}
+                >
+                    {" "}
+                    +{" "}
+                </div>
+            </div>
         </div>
     );
 }

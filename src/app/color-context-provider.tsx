@@ -8,9 +8,11 @@ import {
 } from "react";
 import { COLOR, flattenKV } from "@/app/themes-data";
 
+// used for generating theme
 export interface ConfigData {
     color: ColorScheme;
 }
+
 
 type ValueOrFactory<T> = T | ((old: T) => T);
 
