@@ -274,3 +274,21 @@
 .chatMessage:not(:last-child) {
     border-bottom:  var(--settings-message-separator-width) solid var(--splits-messageSeperator);
 }
+
+
+.resizeHandleHorizontal {
+    position: relative;
+    width: 100%;
+    height: 1px;
+    background: var(--splits-resizeHandle);
+    box-shadow: 0 0 2px 4px var(--splits-resizeHandleBackground);
+    z-index: 99;
+}
+.resizeHandleVertical {
+    position: relative;
+    width: 1px;
+    height: 100%;
+    background: var(--splits-resizeHandle);
+    box-shadow: 0 0 2px 4px var(--splits-resizeHandleBackground);
+    z-index: 99;
+}

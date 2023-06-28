@@ -5,6 +5,7 @@ import {
     ChatterinoDragSplitPreview,
     ChatterinoSingle,
     ChatterinoSplitAdvanced,
+    ChatterinoSplitResize,
     ChatterinoSplitVertical,
 } from "@/app/chatterino";
 import { ConfigContextProvider } from "@/app/color-context-provider";
@@ -125,6 +126,22 @@ export default function Home() {
                                     children: (
                                         <div className="p-4 bg-gray-800 relative">
                                             <ChatterinoSplitAdvanced
+                                                chatMessages={
+                                                    fakeChatListVerySmall
+                                                }
+                                                extraClasses={clsx(
+                                                    "h-[1000px]"
+                                                )}
+                                            />
+                                        </div>
+                                    ),
+                                },
+                                {
+                                    label: "Split Resize",
+                                    key: "spilt_resize",
+                                    children: (
+                                        <div className="p-4 bg-gray-800 relative">
+                                            <ChatterinoSplitResize
                                                 chatMessages={
                                                     fakeChatListVerySmall
                                                 }

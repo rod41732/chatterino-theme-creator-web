@@ -151,3 +151,38 @@ export function ChatterinoSplitAdvanced({
         </div>
     );
 }
+
+export function ChatterinoSplitResize({
+    chatMessages,
+    extraClasses = "",
+}: {
+    chatMessages: FakeChatMessage[];
+    extraClasses?: string;
+}) {
+    return (
+        <div
+            className={`flex flex-col ${extraClasses} overflow-auto ${styles.split}`}
+        >
+            <ChatterinoFakeTab />
+            <div className={styles.splitContainerCol}>
+                <div className={styles.splitContainerRow}>
+                    <ChatterinoSplit
+                        name="active"
+                        chatMessages={chatMessages}
+                    />
+                    <div className={styles.resizeHandleVertical} />
+                    <ChatterinoSplit
+                        name="active"
+                        chatMessages={chatMessages}
+                    />
+                </div>
+                <div className={styles.resizeHandleHorizontal} />
+                <ChatterinoSplit
+                    name="inactive"
+                    chatMessages={chatMessages}
+                    active={false}
+                />
+            </div>
+        </div>
+    );
+}

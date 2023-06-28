@@ -161,6 +161,10 @@ export function SplitSettings() {
             </p>
 
             <h2 className="text-lg font-bold col-span-3">Resize</h2>
+            <p className="text-gray-500 col-span-3 -mt-3 mb-1">
+                Resize handles shows when you hold Ctrl to resize split in
+                chatterino.
+            </p>
             <div> Handle Color </div>
             <div className="col-span-2">
                 <ColorPickerWrapper
@@ -186,8 +190,7 @@ export function SplitSettings() {
                 />
             </div>
             <p className="text-gray-500 col-span-3 -mt-3 mb-1">
-                &quot;glow&quot; area around handle&#39;s color (the glow is
-                about 2px)
+                &quot;glow&quot; area around handle&#39;s color.
             </p>
 
             <hr className="col-span-3" />

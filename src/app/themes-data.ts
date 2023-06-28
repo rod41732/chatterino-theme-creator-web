@@ -49,7 +49,7 @@ export const COLOR: ColorScheme = {
             text: "#00ff00",
         },
         messageSeperator: "#3c3c3c",
-        resizeHandle: "#0094ff70",
+        resizeHandle: "#0094ffff",
         resizeHandleBackground: "#0094ff20",
     },
     tabs: {
