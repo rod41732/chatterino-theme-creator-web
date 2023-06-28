@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ChatterinoChatList } from "@/app/chatterino";
 import { ConfigContextProvider } from "@/app/color-context-provider";
 import { MessageSettings } from "@/app/messageSettings";
+import { ScrollBarSettings } from "@/app/scrollBarSettings";
 
 export default function Home() {
     const [activeTab, setActiveTab] = useState("overview");
@@ -38,7 +39,7 @@ export default function Home() {
                                 {
                                     label: "Scrollbars",
                                     key: "scrollbars",
-                                    children: <p> Scrollbars XD</p>,
+                                    children: <ScrollBarSettings />,
                                 },
                                 {
                                     label: "Splits",

@@ -139,7 +139,7 @@ interface ColorPickerWrapperProps {
     getColor: (data: ConfigData) => string;
     alpha?: boolean;
 }
-function ColorPickerWrapper({
+export function ColorPickerWrapper({
     mutateColor,
     getColor,
     alpha = false,

@@ -25,9 +25,9 @@ export const COLOR: ColorScheme = {
         },
     },
     scrollbars: {
-        background: "#00000000",
-        thumb: "#575757",
-        thumbSelected: "#616161",
+        background: "#00ff00ff",
+        thumb: "#ffff00",
+        thumbSelected: "#ff0000",
     },
     splits: {
         background: "#191919",

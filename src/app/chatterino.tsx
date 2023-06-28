@@ -17,7 +17,7 @@ export function ChatterinoChatList({}) {
             <div>tab</div>
             {/*chat list*/}
             {/*TODO: some background IDK*/}
-            <div className="overflow-y-auto flex-shrink">
+            <div className={`overflow-y-auto flex-shrink ${styles.list}`}>
                 {chatMessages.map((it, idx) => (
                     <Messsage
                         key={it.id}
@@ -85,8 +85,8 @@ function Messsage({
                 <div
                     className={`absolute inset-0 ${
                         animationState % 3 != 0
-                            ? `transition-colors duration-500 ${styles.highlightOverlayStart}`
-                            : `${styles.highlightOverlayEnd}`
+                            ? `transition-colors duration-500 ${styles.highlightOverlayEnd}`
+                            : `${styles.highlightOverlayStart}`
                     }`}
                 ></div>
             )}

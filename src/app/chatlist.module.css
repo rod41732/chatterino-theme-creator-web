@@ -41,3 +41,31 @@
     color: var(--messages-textColors-chatPlaceholder);
 }
 
+
+.list {
+    /*scrollbar-color: red black;*/
+    position: relative;
+}
+
+.list::-webkit-scrollbar {
+    width: 25px;
+    height: 25px;
+}
+
+
+.list::-webkit-scrollbar-track {
+    background: var(--scrollbars-background);
+}
+.list::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-right: 4px solid var(--scrollbars-thumb);
+}
+.list::-webkit-scrollbar-thumb:hover {
+    background: transparent;
+    border-right: 25px solid var(--scrollbars-thumb);
+}
+
+.list::-webkit-scrollbar-thumb:active {
+    background: transparent;
+    border-right: 25px solid var(--scrollbars-thumbSelected);
+}
