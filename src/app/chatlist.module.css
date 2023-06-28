@@ -270,3 +270,7 @@
 .characterCount {
     color: var(--splits-input-text);
 }
+
+.chatMessage:not(:last-child) {
+    border-bottom:  var(--settings-message-separator-width) solid var(--splits-messageSeperator);
+}

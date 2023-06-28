@@ -9,24 +9,32 @@ import {
 import { COLOR, flattenKV } from "@/app/themes-data";
 
 // used for generating theme
-export interface ConfigData {
+export interface ThemeData {
     color: ColorScheme;
 }
-
+export interface ChatterinoSettings {
+    messageSeparator: boolean;
+}
 
 type ValueOrFactory<T> = T | ((old: T) => T);
 
 interface ConfigContext {
-    data: ConfigData;
-    setData: (newValue: ValueOrFactory<ConfigData>) => void;
+    data: ThemeData;
+    settings: ChatterinoSettings;
+    setData: (newValue: ValueOrFactory<ThemeData>) => void;
+    setSettings: (newValue: ValueOrFactory<ChatterinoSettings>) => void;
 }
 
 const ConfigContext = createContext<ConfigContext>(null as any);
 
 export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
-    const [data, setData] = useState<ConfigData>({
+    const [data, setData] = useState<ThemeData>({
         color: COLOR,
     });
+    const [settings, setSettings] = useState<ChatterinoSettings>({
+        messageSeparator: false,
+    });
+
     useEffect(() => {
         // the convention used for generating
         const cssVariables = flattenKV("--", data.color, "-");
@@ -39,27 +47,18 @@ export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
             cssVariables.map((it) => it.join(": ") + ";").join("\n")
         );
     }, [data.color]);
-    // const interceptedSetData = useCallback(
-    //     (newValOrFact: ValueOrFactory<ConfigData>) => {
-    //         setData(curData => {
-    //             let newData: ConfigData;
-    //             if (typeof newValOrFact == "function") {
-    //                 newData = newValOrFact(curData)
-    //             } else {
-    //                 newData = newValOrFact
-    //             }
-    //
-    //             return newData
-    //         })
-    //         const newState = typeof newValOrFact == "function" ? newValOrFact()
-    //         const flattenedKV = flattenKV("--", );
-    //         setData(newValOrFact);
-    //     },
-    //     [setData]
-    // );
+
+    useEffect(() => {
+        document.body.style.setProperty(
+            "--settings-message-separator-width",
+            settings.messageSeparator ? "1px" : "0"
+        );
+    }, [settings]);
 
     return (
-        <ConfigContext.Provider value={{ data, setData }}>
+        <ConfigContext.Provider
+            value={{ data, setData, settings, setSettings }}
+        >
             {" "}
             {children}
         </ConfigContext.Provider>

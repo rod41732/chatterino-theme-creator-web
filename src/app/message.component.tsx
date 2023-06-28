@@ -1,5 +1,6 @@
 import { FakeChatMessage } from "@/app/data";
 import styles from "@/app/chatlist.module.css";
+import clsx from "clsx";
 
 export function Message({
     it,
@@ -12,9 +13,11 @@ export function Message({
 }) {
     return (
         <div
-            className={`px-2 py-1 relative ${
-                idx % 2 == 0 ? styles.chatEven : styles.chatOdd
-            }`}
+            className={clsx(
+                "px-2 py-1 relative",
+                idx % 2 == 0 ? styles.chatEven : styles.chatOdd,
+                styles.chatMessage
+            )}
         >
             <span className={styles.systemText}> {it.timestampText}</span>
             {!it.system && (

@@ -118,7 +118,7 @@ body {
 /*settings controlled*/
 body {
     /*allow enabling/disabling message separator*/
-    --message-separator-width: 0px;
+    --settings-message-separator-width: 0px;
 }
 
 ::selection {

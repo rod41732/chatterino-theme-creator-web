@@ -1,4 +1,4 @@
-import { ConfigData, useConfigContext } from "@/app/color-context-provider";
+import { ThemeData, useConfigContext } from "@/app/color-context-provider";
 import { produce } from "immer";
 import { ColorPicker } from "antd";
 import { WritableDraft } from "immer/src/types/types-external";
@@ -135,8 +135,8 @@ export function MessageSettings() {
 }
 
 interface ColorPickerWrapperProps {
-    mutateColor: (draft: WritableDraft<ConfigData>, color: string) => void;
-    getColor: (data: ConfigData) => string;
+    mutateColor: (draft: WritableDraft<ThemeData>, color: string) => void;
+    getColor: (data: ThemeData) => string;
     alpha?: boolean;
 }
 export function ColorPickerWrapper({

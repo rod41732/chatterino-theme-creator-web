@@ -1,9 +1,10 @@
-import { ConfigData, useConfigContext } from "@/app/color-context-provider";
+import { ThemeData, useConfigContext } from "@/app/color-context-provider";
 import { produce } from "immer";
-import { ColorPicker } from "antd";
+import { ColorPicker, Switch } from "antd";
 import { WritableDraft } from "immer/src/types/types-external";
 
 export function SplitSettings() {
+    const { settings, setSettings } = useConfigContext();
     return (
         <div className="grid grid-cols-[1fr,auto,auto] gap-2 ">
             <div> Background </div>
@@ -188,13 +189,25 @@ export function SplitSettings() {
                 &quot;glow&quot; area around handle&#39;s color (the glow is
                 about 2px)
             </p>
+
+            <hr className="col-span-3" />
+
+            <div className="col-span-2">Enable message sep (preview only)</div>
+            <div>
+                <Switch
+                    checked={settings.messageSeparator}
+                    onChange={(c) => {
+                        setSettings({ messageSeparator: c });
+                    }}
+                />
+            </div>
         </div>
     );
 }
 
 interface ColorPickerWrapperProps {
-    mutateColor: (draft: WritableDraft<ConfigData>, color: string) => void;
-    getColor: (data: ConfigData) => string;
+    mutateColor: (draft: WritableDraft<ThemeData>, color: string) => void;
+    getColor: (data: ThemeData) => string;
     alpha?: boolean;
 }
 export function ColorPickerWrapper({
