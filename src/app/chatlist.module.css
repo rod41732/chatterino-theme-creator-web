@@ -37,6 +37,7 @@
     background: var(--splits-input-background);
     color: var(--messages-textColors-regular);
     caret-color: var(--messages-textColors-caret);
+    border: 1px solid var(--opposite-of-icon-theme);
 }
 
 .input::placeholder {
@@ -251,8 +252,8 @@
 }
 
 .splitHeaderBase {
-    text-align: center;
-    padding: 4px 0;
+    display: flex;
+    align-items: center;
 }
 
 .splitHeader {
@@ -292,3 +293,18 @@
     box-shadow: 0 0 2px 4px var(--splits-resizeHandleBackground);
     z-index: 99;
 }
+
+.window {
+    background: var(--window-background);
+}
+
+.tabButton {
+    color: var(--tabs-regular-text);
+    display: flex;
+    font-size: 16px;
+    align-items: center;
+    justify-content: center;
+    min-height: 30px;
+}
+
+

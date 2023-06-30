@@ -107,3 +107,8 @@ export interface ColorScheme {
         text: ColorNoAlpha;
     };
 }
+
+export interface ThemeMetadata {
+    // swap color for some icons, also affect some border
+    iconTheme: "light" | "dark";
+}

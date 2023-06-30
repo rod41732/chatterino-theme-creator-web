@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styles from "@/app/chatlist.module.css";
 import clsx from "clsx";
 import { Message } from "@/app/message.component";
+import { useConfigContext } from "@/app/color-context-provider";
 
 export function ChatterinoSplit({
     name,
@@ -17,6 +18,11 @@ export function ChatterinoSplit({
 }) {
     const [animationState, setAnimationState] = useState(0);
     const [input, setInput] = useState("");
+    const {
+        data: {
+            metadata: { iconTheme },
+        },
+    } = useConfigContext();
 
     useEffect(() => {
         let interval = setInterval(() => {
@@ -34,7 +40,37 @@ export function ChatterinoSplit({
                     styles.splitHeaderBase
                 )}
             >
-                {name}
+                <div className="flex-grow text-center py-1">{name}</div>
+                <button className="self-stretch flex items-center -m-px mx-2 opacity-50">
+                    <img
+                        src={
+                            iconTheme == "dark"
+                                ? "/chatterino-icons/viewersDark.png"
+                                : "/chatterino-icons/viewersLight.png"
+                        }
+                        className="h-5 w-5 object-contain"
+                    />
+                </button>
+                <button className="self-stretch flex items-center -m-px mx-2 opacity-50">
+                    <img
+                        src={
+                            iconTheme == "dark"
+                                ? "/chatterino-icons/menuDark.png"
+                                : "/chatterino-icons/menuLight.png"
+                        }
+                        className="h-5 w-5 object-contain"
+                    />
+                </button>
+                <button className="self-stretch flex items-center -m-px opacity-50">
+                    <img
+                        src={
+                            iconTheme == "dark"
+                                ? "/chatterino-icons/addSplitDark.png"
+                                : "/chatterino-icons/addSplit.png"
+                        }
+                        className="h-8 w-auto"
+                    />
+                </button>
             </div>
             <div
                 className={`overflow-y-auto flex-grow flex-shrink ${styles.list}`}

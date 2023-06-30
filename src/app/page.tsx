@@ -20,6 +20,8 @@ import {
 import clsx from "clsx";
 import { SplitSettings } from "@/app/splitSettings";
 import { ChatterinoTabPreview } from "@/app/chatterinoTabPreview.component";
+import { WindowSettings } from "@/app/windowSettings";
+import { OverviewSettings } from "@/app/overviewSettings";
 
 export default function Home() {
     const [activeTab, setActiveTab] = useState("overview");
@@ -45,7 +47,7 @@ export default function Home() {
                                 {
                                     label: "Overview",
                                     key: "overview",
-                                    children: <p> Overview XD</p>,
+                                    children: <OverviewSettings />,
                                 },
                                 {
                                     label: "Messages",
@@ -70,7 +72,7 @@ export default function Home() {
                                 {
                                     label: "Window",
                                     key: "window",
-                                    children: <p> Window XD</p>,
+                                    children: <WindowSettings />,
                                 },
                             ]}
                         />

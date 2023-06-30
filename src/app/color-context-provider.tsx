@@ -1,4 +1,4 @@
-import { ColorScheme } from "@/app/model.types";
+import { ColorScheme, ThemeMetadata } from "@/app/model.types";
 import {
     createContext,
     PropsWithChildren,
@@ -11,6 +11,7 @@ import { COLOR, flattenKV } from "@/app/themes-data";
 // used for generating theme
 export interface ThemeData {
     color: ColorScheme;
+    metadata: ThemeMetadata;
 }
 export interface ChatterinoSettings {
     messageSeparator: boolean;
@@ -30,6 +31,9 @@ const ConfigContext = createContext<ConfigContext>(null as any);
 export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
     const [data, setData] = useState<ThemeData>({
         color: COLOR,
+        metadata: {
+            iconTheme: "light",
+        },
     });
     const [settings, setSettings] = useState<ChatterinoSettings>({
         messageSeparator: false,
@@ -47,6 +51,14 @@ export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
             cssVariables.map((it) => it.join(": ") + ";").join("\n")
         );
     }, [data.color]);
+
+    useEffect(() => {
+        // the convention used for generating
+        document.body.style.setProperty(
+            "--opposite-of-icon-theme",
+            data.metadata.iconTheme == "light" ? "#000000" : "#ffffff"
+        );
+    }, [data.metadata]);
 
     useEffect(() => {
         document.body.style.setProperty(

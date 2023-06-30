@@ -113,6 +113,8 @@ body {
     /*color for: very thin line betweeen splits, drop target bg*/
     /*it's hardcoded #555 (dark theme) or #999 (light)*/
     --empty-split-color: #555555;
+
+    --opposite-of-icon-theme: #ffffff;
 }
 
 /*settings controlled*/

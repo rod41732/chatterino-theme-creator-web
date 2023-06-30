@@ -14,10 +14,9 @@ export function ChatterinoSingle({
 }) {
     return (
         <div
-            className={`flex flex-col ${extraClasses} overflow-auto ${styles.split}`}
+            className={`flex flex-col ${extraClasses} overflow-auto ${styles.window}`}
         >
             {/*tab TODO: unknown background */}
-
             <ChatterinoFakeTab />
             <ChatterinoSplit name="pajlada" chatMessages={chatMessages} />
         </div>
