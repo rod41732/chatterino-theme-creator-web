@@ -1,5 +1,5 @@
 import { FakeChatMessage } from "@/app/data";
-import styles from "@/app/chatlist.module.css";
+import styles from "@/app/fake-uis/chatlist.module.css";
 import clsx from "clsx";
 
 export function Message({

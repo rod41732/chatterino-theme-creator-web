@@ -1,4 +1,4 @@
-import styles from "@/app/chatlist.module.css";
+import styles from "@/app/fake-uis/chatlist.module.css";
 
 const HoverOverlay = () => {
     return <div className="absolute inset-0 bg-gray-100/20"></div>;

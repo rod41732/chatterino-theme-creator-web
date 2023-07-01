@@ -1,4 +1,4 @@
-import { ColorPickerWrapper } from "@/app/messageSettings";
+import { ColorPickerWrapper } from "@/app/settings/messageSettings";
 
 export function ScrollBarSettings() {
     return (
@@ -7,9 +7,9 @@ export function ScrollBarSettings() {
             <div> Background </div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.scrollbars.background = newColor;
+                    data.colors.scrollbars.background = newColor;
                 }}
-                getColor={(data) => data.color.scrollbars.background}
+                getColor={(data) => data.colors.scrollbars.background}
                 alpha={true}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
@@ -19,9 +19,9 @@ export function ScrollBarSettings() {
             <div> Thumb </div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.scrollbars.thumb = newColor;
+                    data.colors.scrollbars.thumb = newColor;
                 }}
-                getColor={(data) => data.color.scrollbars.thumb}
+                getColor={(data) => data.colors.scrollbars.thumb}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
                 Thumb is the place where you drag the scrollbar
@@ -30,9 +30,9 @@ export function ScrollBarSettings() {
             <div> Thumb Selected </div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.scrollbars.thumbSelected = newColor;
+                    data.colors.scrollbars.thumbSelected = newColor;
                 }}
-                getColor={(data) => data.color.scrollbars.thumbSelected}
+                getColor={(data) => data.colors.scrollbars.thumbSelected}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
                 Color of Thumb when you are dragging it

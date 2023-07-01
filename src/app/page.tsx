@@ -7,21 +7,21 @@ import {
     ChatterinoSplitAdvanced,
     ChatterinoSplitResize,
     ChatterinoSplitVertical,
-} from "@/app/chatterino";
+} from "@/app/fake-uis/chatterino";
 import { ConfigContextProvider } from "@/app/color-context-provider";
-import { MessageSettings } from "@/app/messageSettings";
-import { ScrollBarSettings } from "@/app/scrollBarSettings";
-import { TabsSettings } from "@/app/tabsSettings";
+import { MessageSettings } from "@/app/settings/messageSettings";
+import { ScrollBarSettings } from "@/app/settings/scrollBarSettings";
+import { TabsSettings } from "@/app/settings/tabsSettings";
 import {
     fakeChatListLarge,
     fakeChatListSmall,
     fakeChatListVerySmall,
 } from "@/app/data";
 import clsx from "clsx";
-import { SplitSettings } from "@/app/splitSettings";
-import { ChatterinoTabPreview } from "@/app/chatterinoTabPreview.component";
-import { WindowSettings } from "@/app/windowSettings";
-import { OverviewSettings } from "@/app/overviewSettings";
+import { SplitSettings } from "@/app/settings/splitSettings";
+import { ChatterinoTabPreview } from "@/app/fake-uis/chatterinoTabPreview.component";
+import { WindowSettings } from "@/app/settings/windowSettings";
+import { OverviewSettings } from "@/app/settings/overviewSettings";
 
 export default function Home() {
     const [activeTab, setActiveTab] = useState("overview");

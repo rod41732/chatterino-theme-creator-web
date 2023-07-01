@@ -1,4 +1,4 @@
-import { ColorPickerWrapper } from "@/app/messageSettings";
+import { ColorPickerWrapper } from "@/app/settings/messageSettings";
 
 export function TabsSettings() {
     return (
@@ -6,9 +6,9 @@ export function TabsSettings() {
             <div> Divider Line</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.dividerLine = newColor;
+                    data.colors.tabs.dividerLine = newColor;
                 }}
-                getColor={(data) => data.color.tabs.dividerLine}
+                getColor={(data) => data.colors.tabs.dividerLine}
             />
             <div className="text-gray-500">
                 Divider between list of tab, and chat.
@@ -22,33 +22,35 @@ export function TabsSettings() {
             <div>Text Color</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.regular.text = newColor;
+                    data.colors.tabs.regular.text = newColor;
                 }}
-                getColor={(data) => data.color.tabs.regular.text}
+                getColor={(data) => data.colors.tabs.regular.text}
             />
 
             <h3 className="font-bold col-span-2"> Background </h3>
             <div>Regular</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.regular.backgrounds.regular = newColor;
+                    data.colors.tabs.regular.backgrounds.regular = newColor;
                 }}
-                getColor={(data) => data.color.tabs.regular.backgrounds.regular}
+                getColor={(data) =>
+                    data.colors.tabs.regular.backgrounds.regular
+                }
             />
             <div>Hover</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.regular.backgrounds.hover = newColor;
+                    data.colors.tabs.regular.backgrounds.hover = newColor;
                 }}
-                getColor={(data) => data.color.tabs.regular.backgrounds.hover}
+                getColor={(data) => data.colors.tabs.regular.backgrounds.hover}
             />
             <div>Unfocused</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.regular.backgrounds.unfocused = newColor;
+                    data.colors.tabs.regular.backgrounds.unfocused = newColor;
                 }}
                 getColor={(data) =>
-                    data.color.tabs.regular.backgrounds.unfocused
+                    data.colors.tabs.regular.backgrounds.unfocused
                 }
             />
 
@@ -56,23 +58,23 @@ export function TabsSettings() {
             <div>Regular</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.regular.line.regular = newColor;
+                    data.colors.tabs.regular.line.regular = newColor;
                 }}
-                getColor={(data) => data.color.tabs.regular.line.regular}
+                getColor={(data) => data.colors.tabs.regular.line.regular}
             />
             <div>Hover</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.regular.line.hover = newColor;
+                    data.colors.tabs.regular.line.hover = newColor;
                 }}
-                getColor={(data) => data.color.tabs.regular.line.hover}
+                getColor={(data) => data.colors.tabs.regular.line.hover}
             />
             <div>Unfocused</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.regular.line.unfocused = newColor;
+                    data.colors.tabs.regular.line.unfocused = newColor;
                 }}
-                getColor={(data) => data.color.tabs.regular.line.unfocused}
+                getColor={(data) => data.colors.tabs.regular.line.unfocused}
             />
 
             <h2 className="text-lg font-bold col-span-2">Selected Tab</h2>
@@ -81,35 +83,35 @@ export function TabsSettings() {
             <div>Text Color</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.selected.text = newColor;
+                    data.colors.tabs.selected.text = newColor;
                 }}
-                getColor={(data) => data.color.tabs.selected.text}
+                getColor={(data) => data.colors.tabs.selected.text}
             />
 
             <h3 className="font-bold col-span-2"> Background </h3>
             <div>Regular</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.selected.backgrounds.regular = newColor;
+                    data.colors.tabs.selected.backgrounds.regular = newColor;
                 }}
                 getColor={(data) =>
-                    data.color.tabs.selected.backgrounds.regular
+                    data.colors.tabs.selected.backgrounds.regular
                 }
             />
             <div>Hover</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.selected.backgrounds.hover = newColor;
+                    data.colors.tabs.selected.backgrounds.hover = newColor;
                 }}
-                getColor={(data) => data.color.tabs.selected.backgrounds.hover}
+                getColor={(data) => data.colors.tabs.selected.backgrounds.hover}
             />
             <div>Unfocused</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.selected.backgrounds.unfocused = newColor;
+                    data.colors.tabs.selected.backgrounds.unfocused = newColor;
                 }}
                 getColor={(data) =>
-                    data.color.tabs.selected.backgrounds.unfocused
+                    data.colors.tabs.selected.backgrounds.unfocused
                 }
             />
 
@@ -117,23 +119,23 @@ export function TabsSettings() {
             <div>Regular</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.selected.line.regular = newColor;
+                    data.colors.tabs.selected.line.regular = newColor;
                 }}
-                getColor={(data) => data.color.tabs.selected.line.regular}
+                getColor={(data) => data.colors.tabs.selected.line.regular}
             />
             <div>Hover</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.selected.line.hover = newColor;
+                    data.colors.tabs.selected.line.hover = newColor;
                 }}
-                getColor={(data) => data.color.tabs.selected.line.hover}
+                getColor={(data) => data.colors.tabs.selected.line.hover}
             />
             <div>Unfocused</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.selected.line.unfocused = newColor;
+                    data.colors.tabs.selected.line.unfocused = newColor;
                 }}
-                getColor={(data) => data.color.tabs.selected.line.unfocused}
+                getColor={(data) => data.colors.tabs.selected.line.unfocused}
             />
 
             <h2 className="text-lg font-bold col-span-2">Highlighted Tab</h2>
@@ -144,38 +146,38 @@ export function TabsSettings() {
             <div>Text Color</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.highlighted.text = newColor;
+                    data.colors.tabs.highlighted.text = newColor;
                 }}
-                getColor={(data) => data.color.tabs.highlighted.text}
+                getColor={(data) => data.colors.tabs.highlighted.text}
             />
 
             <h3 className="font-bold col-span-2"> Background </h3>
             <div>Regular</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.highlighted.backgrounds.regular = newColor;
+                    data.colors.tabs.highlighted.backgrounds.regular = newColor;
                 }}
                 getColor={(data) =>
-                    data.color.tabs.highlighted.backgrounds.regular
+                    data.colors.tabs.highlighted.backgrounds.regular
                 }
             />
             <div>Hover</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.highlighted.backgrounds.hover = newColor;
+                    data.colors.tabs.highlighted.backgrounds.hover = newColor;
                 }}
                 getColor={(data) =>
-                    data.color.tabs.highlighted.backgrounds.hover
+                    data.colors.tabs.highlighted.backgrounds.hover
                 }
             />
             <div>Unfocused</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.highlighted.backgrounds.unfocused =
+                    data.colors.tabs.highlighted.backgrounds.unfocused =
                         newColor;
                 }}
                 getColor={(data) =>
-                    data.color.tabs.highlighted.backgrounds.unfocused
+                    data.colors.tabs.highlighted.backgrounds.unfocused
                 }
             />
 
@@ -183,23 +185,23 @@ export function TabsSettings() {
             <div>Regular</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.highlighted.line.regular = newColor;
+                    data.colors.tabs.highlighted.line.regular = newColor;
                 }}
-                getColor={(data) => data.color.tabs.highlighted.line.regular}
+                getColor={(data) => data.colors.tabs.highlighted.line.regular}
             />
             <div>Hover</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.highlighted.line.hover = newColor;
+                    data.colors.tabs.highlighted.line.hover = newColor;
                 }}
-                getColor={(data) => data.color.tabs.highlighted.line.hover}
+                getColor={(data) => data.colors.tabs.highlighted.line.hover}
             />
             <div>Unfocused</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.highlighted.line.unfocused = newColor;
+                    data.colors.tabs.highlighted.line.unfocused = newColor;
                 }}
-                getColor={(data) => data.color.tabs.highlighted.line.unfocused}
+                getColor={(data) => data.colors.tabs.highlighted.line.unfocused}
             />
 
             <h2 className="text-lg font-bold col-span-2">New Message Tab</h2>
@@ -210,37 +212,38 @@ export function TabsSettings() {
             <div>Text Color</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.newMessage.text = newColor;
+                    data.colors.tabs.newMessage.text = newColor;
                 }}
-                getColor={(data) => data.color.tabs.newMessage.text}
+                getColor={(data) => data.colors.tabs.newMessage.text}
             />
 
             <h3 className="font-bold col-span-2"> Background </h3>
             <div>Regular</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.newMessage.backgrounds.regular = newColor;
+                    data.colors.tabs.newMessage.backgrounds.regular = newColor;
                 }}
                 getColor={(data) =>
-                    data.color.tabs.newMessage.backgrounds.regular
+                    data.colors.tabs.newMessage.backgrounds.regular
                 }
             />
             <div>Hover</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.newMessage.backgrounds.hover = newColor;
+                    data.colors.tabs.newMessage.backgrounds.hover = newColor;
                 }}
                 getColor={(data) =>
-                    data.color.tabs.newMessage.backgrounds.hover
+                    data.colors.tabs.newMessage.backgrounds.hover
                 }
             />
             <div>Unfocused</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.newMessage.backgrounds.unfocused = newColor;
+                    data.colors.tabs.newMessage.backgrounds.unfocused =
+                        newColor;
                 }}
                 getColor={(data) =>
-                    data.color.tabs.newMessage.backgrounds.unfocused
+                    data.colors.tabs.newMessage.backgrounds.unfocused
                 }
             />
 
@@ -248,23 +251,23 @@ export function TabsSettings() {
             <div>Regular</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.newMessage.line.regular = newColor;
+                    data.colors.tabs.newMessage.line.regular = newColor;
                 }}
-                getColor={(data) => data.color.tabs.newMessage.line.regular}
+                getColor={(data) => data.colors.tabs.newMessage.line.regular}
             />
             <div>Hover</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.newMessage.line.hover = newColor;
+                    data.colors.tabs.newMessage.line.hover = newColor;
                 }}
-                getColor={(data) => data.color.tabs.newMessage.line.hover}
+                getColor={(data) => data.colors.tabs.newMessage.line.hover}
             />
             <div>Unfocused</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.tabs.newMessage.line.unfocused = newColor;
+                    data.colors.tabs.newMessage.line.unfocused = newColor;
                 }}
-                getColor={(data) => data.color.tabs.newMessage.line.unfocused}
+                getColor={(data) => data.colors.tabs.newMessage.line.unfocused}
             />
         </div>
     );

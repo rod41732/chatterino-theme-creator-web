@@ -1,4 +1,4 @@
-import styles from "@/app/chatlist.module.css";
+import styles from "@/app/fake-uis/chatlist.module.css";
 import { FaCog, FaUserAlt } from "react-icons/fa";
 import { AiOutlinePlus } from "react-icons/ai";
 import clsx from "clsx";

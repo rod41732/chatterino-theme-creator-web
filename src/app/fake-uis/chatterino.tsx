@@ -1,7 +1,7 @@
 import styles from "./chatlist.module.css";
 import { FakeChatMessage } from "@/app/data";
-import { ChatterinoSplit } from "@/app/chatterinoSplit.component";
-import { ChatterinoFakeTab } from "@/app/chatterinoFakeTab";
+import { ChatterinoSplit } from "@/app/fake-uis/chatterinoSplit.component";
+import { ChatterinoFakeTab } from "@/app/fake-uis/chatterinoFakeTab";
 import clsx from "clsx";
 
 /** normal chat list */

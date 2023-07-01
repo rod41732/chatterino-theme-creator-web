@@ -10,7 +10,7 @@ import { COLOR, flattenKV } from "@/app/themes-data";
 
 // used for generating theme
 export interface ThemeData {
-    color: ColorScheme;
+    colors: ColorScheme;
     metadata: ThemeMetadata;
 }
 export interface ChatterinoSettings {
@@ -30,7 +30,7 @@ const ConfigContext = createContext<ConfigContext>(null as any);
 
 export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
     const [data, setData] = useState<ThemeData>({
-        color: COLOR,
+        colors: COLOR,
         metadata: {
             iconTheme: "light",
         },
@@ -41,7 +41,7 @@ export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
 
     useEffect(() => {
         // the convention used for generating
-        const cssVariables = flattenKV("--", data.color, "-");
+        const cssVariables = flattenKV("--", data.colors, "-");
         for (const [variable, val] of cssVariables) {
             document.body.style.setProperty(variable, val);
         }
@@ -50,7 +50,7 @@ export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
             "set props",
             cssVariables.map((it) => it.join(": ") + ";").join("\n")
         );
-    }, [data.color]);
+    }, [data.colors]);
 
     useEffect(() => {
         // some "hard coded" color values that are based on theme

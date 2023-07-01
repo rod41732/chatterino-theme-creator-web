@@ -11,9 +11,9 @@ export function SplitSettings() {
             <div className="col-span-2">
                 <ColorPickerWrapper
                     mutateColor={(data, newColor) => {
-                        data.color.splits.background = newColor;
+                        data.colors.splits.background = newColor;
                     }}
-                    getColor={(data) => data.color.splits.background}
+                    getColor={(data) => data.colors.splits.background}
                 />
             </div>
             <p className="text-gray-500 col-span-3 -mt-3 mb-1">
@@ -29,43 +29,43 @@ export function SplitSettings() {
             <div> Background </div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.splits.header.focusedBackground = newColor;
+                    data.colors.splits.header.focusedBackground = newColor;
                 }}
-                getColor={(data) => data.color.splits.header.focusedBackground}
+                getColor={(data) => data.colors.splits.header.focusedBackground}
             />
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.splits.header.background = newColor;
+                    data.colors.splits.header.background = newColor;
                 }}
-                getColor={(data) => data.color.splits.header.background}
+                getColor={(data) => data.colors.splits.header.background}
             />
 
             <div> Text </div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.splits.header.focusedText = newColor;
+                    data.colors.splits.header.focusedText = newColor;
                 }}
-                getColor={(data) => data.color.splits.header.focusedText}
+                getColor={(data) => data.colors.splits.header.focusedText}
             />
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.splits.header.text = newColor;
+                    data.colors.splits.header.text = newColor;
                 }}
-                getColor={(data) => data.color.splits.header.text}
+                getColor={(data) => data.colors.splits.header.text}
             />
 
             <div> Border </div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.splits.header.focusedBorder = newColor;
+                    data.colors.splits.header.focusedBorder = newColor;
                 }}
-                getColor={(data) => data.color.splits.header.focusedBorder}
+                getColor={(data) => data.colors.splits.header.focusedBorder}
             />
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.splits.header.border = newColor;
+                    data.colors.splits.header.border = newColor;
                 }}
-                getColor={(data) => data.color.splits.header.border}
+                getColor={(data) => data.colors.splits.header.border}
             />
 
             <h2 className="text-lg font-bold col-span-3">Split Drop Preview</h2>
@@ -76,18 +76,18 @@ export function SplitSettings() {
             <div className="col-span-2">
                 <ColorPickerWrapper
                     mutateColor={(data, newColor) => {
-                        data.color.splits.dropPreviewBorder = newColor;
+                        data.colors.splits.dropPreviewBorder = newColor;
                     }}
-                    getColor={(data) => data.color.splits.dropPreviewBorder}
+                    getColor={(data) => data.colors.splits.dropPreviewBorder}
                 />
             </div>
             <div> Area </div>
             <div className="col-span-2">
                 <ColorPickerWrapper
                     mutateColor={(data, newColor) => {
-                        data.color.splits.dropPreview = newColor;
+                        data.colors.splits.dropPreview = newColor;
                     }}
-                    getColor={(data) => data.color.splits.dropPreview}
+                    getColor={(data) => data.colors.splits.dropPreview}
                     alpha={true}
                 />
             </div>
@@ -100,9 +100,9 @@ export function SplitSettings() {
             <div className="col-span-2">
                 <ColorPickerWrapper
                     mutateColor={(data, newColor) => {
-                        data.color.splits.dropTargetRectBorder = newColor;
+                        data.colors.splits.dropTargetRectBorder = newColor;
                     }}
-                    getColor={(data) => data.color.splits.dropTargetRectBorder}
+                    getColor={(data) => data.colors.splits.dropTargetRectBorder}
                     alpha={true}
                 />
             </div>
@@ -110,9 +110,9 @@ export function SplitSettings() {
             <div className="col-span-2">
                 <ColorPickerWrapper
                     mutateColor={(data, newColor) => {
-                        data.color.splits.dropTargetRect = newColor;
+                        data.colors.splits.dropTargetRect = newColor;
                     }}
-                    getColor={(data) => data.color.splits.dropTargetRect}
+                    getColor={(data) => data.colors.splits.dropTargetRect}
                     alpha={true}
                 />
             </div>
@@ -125,9 +125,9 @@ export function SplitSettings() {
             <div className="col-span-2">
                 <ColorPickerWrapper
                     mutateColor={(data, newColor) => {
-                        data.color.splits.input.text = newColor;
+                        data.colors.splits.input.text = newColor;
                     }}
-                    getColor={(data) => data.color.splits.input.text}
+                    getColor={(data) => data.colors.splits.input.text}
                     alpha={true}
                 />
             </div>
@@ -138,9 +138,9 @@ export function SplitSettings() {
             <div className="col-span-2">
                 <ColorPickerWrapper
                     mutateColor={(data, newColor) => {
-                        data.color.splits.input.background = newColor;
+                        data.colors.splits.input.background = newColor;
                     }}
-                    getColor={(data) => data.color.splits.input.background}
+                    getColor={(data) => data.colors.splits.input.background}
                     alpha={true}
                 />
             </div>
@@ -151,9 +151,9 @@ export function SplitSettings() {
             <div className="col-span-2">
                 <ColorPickerWrapper
                     mutateColor={(data, newColor) => {
-                        data.color.splits.messageSeperator = newColor;
+                        data.colors.splits.messageSeperator = newColor;
                     }}
-                    getColor={(data) => data.color.splits.messageSeperator}
+                    getColor={(data) => data.colors.splits.messageSeperator}
                 />
             </div>
             <p className="text-gray-500 col-span-3 -mt-3 mb-1">
@@ -169,9 +169,9 @@ export function SplitSettings() {
             <div className="col-span-2">
                 <ColorPickerWrapper
                     mutateColor={(data, newColor) => {
-                        data.color.splits.resizeHandle = newColor;
+                        data.colors.splits.resizeHandle = newColor;
                     }}
-                    getColor={(data) => data.color.splits.resizeHandle}
+                    getColor={(data) => data.colors.splits.resizeHandle}
                 />
             </div>
             <p className="text-gray-500 col-span-3 -mt-3 mb-1">
@@ -181,10 +181,10 @@ export function SplitSettings() {
             <div className="col-span-2">
                 <ColorPickerWrapper
                     mutateColor={(data, newColor) => {
-                        data.color.splits.resizeHandleBackground = newColor;
+                        data.colors.splits.resizeHandleBackground = newColor;
                     }}
                     getColor={(data) =>
-                        data.color.splits.resizeHandleBackground
+                        data.colors.splits.resizeHandleBackground
                     }
                     alpha={true}
                 />

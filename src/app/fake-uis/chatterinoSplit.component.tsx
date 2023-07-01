@@ -1,8 +1,8 @@
 import { FakeChatMessage } from "@/app/data";
 import { useEffect, useState } from "react";
-import styles from "@/app/chatlist.module.css";
+import styles from "@/app/fake-uis/chatlist.module.css";
 import clsx from "clsx";
-import { Message } from "@/app/message.component";
+import { Message } from "@/app/fake-uis/message.component";
 import { useConfigContext } from "@/app/color-context-provider";
 
 export function ChatterinoSplit({
@@ -46,7 +46,9 @@ export function ChatterinoSplit({
             >
                 <div className="flex-grow text-center py-1">{name}</div>
                 <button className="self-stretch flex items-center -m-px mx-2 opacity-50">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
+                        alt="viewers list"
                         src={
                             iconTheme == "dark"
                                 ? "/chatterino-icons/viewersDark.png"
@@ -56,7 +58,9 @@ export function ChatterinoSplit({
                     />
                 </button>
                 <button className="self-stretch flex items-center -m-px mx-2 opacity-50">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
+                        alt="split menu"
                         src={
                             iconTheme == "dark"
                                 ? "/chatterino-icons/menuDark.png"
@@ -66,7 +70,9 @@ export function ChatterinoSplit({
                     />
                 </button>
                 <button className="self-stretch flex items-center -m-px opacity-50">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
+                        alt="add split"
                         src={
                             iconTheme == "dark"
                                 ? "/chatterino-icons/addSplitDark.png"

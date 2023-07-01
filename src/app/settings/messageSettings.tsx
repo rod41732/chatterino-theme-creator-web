@@ -10,17 +10,17 @@ export function MessageSettings() {
             <div> Regular </div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.messages.backgrounds.regular = newColor;
+                    data.colors.messages.backgrounds.regular = newColor;
                 }}
-                getColor={(data) => data.color.messages.backgrounds.regular}
+                getColor={(data) => data.colors.messages.backgrounds.regular}
             />
 
             <div> Alternate </div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.messages.backgrounds.alternate = newColor;
+                    data.colors.messages.backgrounds.alternate = newColor;
                 }}
-                getColor={(data) => data.color.messages.backgrounds.alternate}
+                getColor={(data) => data.colors.messages.backgrounds.alternate}
             />
 
             {/*sep */}
@@ -29,9 +29,9 @@ export function MessageSettings() {
             <div> Disabled </div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.messages.disabled = newColor;
+                    data.colors.messages.disabled = newColor;
                 }}
-                getColor={(data) => data.color.messages.disabled}
+                getColor={(data) => data.colors.messages.disabled}
                 alpha={true}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
@@ -41,9 +41,11 @@ export function MessageSettings() {
             <div> Highlight Animation Start </div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.messages.highlightAnimationStart = newColor;
+                    data.colors.messages.highlightAnimationStart = newColor;
                 }}
-                getColor={(data) => data.color.messages.highlightAnimationStart}
+                getColor={(data) =>
+                    data.colors.messages.highlightAnimationStart
+                }
                 alpha={true}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
@@ -53,9 +55,9 @@ export function MessageSettings() {
             <div> Highlight Animation End </div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.messages.highlightAnimationEnd = newColor;
+                    data.colors.messages.highlightAnimationEnd = newColor;
                 }}
-                getColor={(data) => data.color.messages.highlightAnimationEnd}
+                getColor={(data) => data.colors.messages.highlightAnimationEnd}
                 alpha={true}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
@@ -65,9 +67,9 @@ export function MessageSettings() {
             <div> Selection </div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.messages.selection = newColor;
+                    data.colors.messages.selection = newColor;
                 }}
-                getColor={(data) => data.color.messages.selection}
+                getColor={(data) => data.colors.messages.selection}
                 alpha={true}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
@@ -80,17 +82,17 @@ export function MessageSettings() {
             <div> Regular message </div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.messages.textColors.regular = newColor;
+                    data.colors.messages.textColors.regular = newColor;
                 }}
-                getColor={(data) => data.color.messages.textColors.regular}
+                getColor={(data) => data.colors.messages.textColors.regular}
             />
 
             <div> Caret </div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.messages.textColors.caret = newColor;
+                    data.colors.messages.textColors.caret = newColor;
                 }}
-                getColor={(data) => data.color.messages.textColors.caret}
+                getColor={(data) => data.colors.messages.textColors.caret}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
                 Caret (blinking cursor) color. might not work on some platform.
@@ -99,10 +101,10 @@ export function MessageSettings() {
             <div> Chat Placeholder </div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.messages.textColors.chatPlaceholder = newColor;
+                    data.colors.messages.textColors.chatPlaceholder = newColor;
                 }}
                 getColor={(data) =>
-                    data.color.messages.textColors.chatPlaceholder
+                    data.colors.messages.textColors.chatPlaceholder
                 }
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
@@ -112,9 +114,9 @@ export function MessageSettings() {
             <div> Link </div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.messages.textColors.link = newColor;
+                    data.colors.messages.textColors.link = newColor;
                 }}
-                getColor={(data) => data.color.messages.textColors.link}
+                getColor={(data) => data.colors.messages.textColors.link}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
                 Color when [Go to message] end (usually transparent)
@@ -123,9 +125,9 @@ export function MessageSettings() {
             <div> System </div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.messages.textColors.system = newColor;
+                    data.colors.messages.textColors.system = newColor;
                 }}
-                getColor={(data) => data.color.messages.textColors.system}
+                getColor={(data) => data.colors.messages.textColors.system}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
                 System message, timestamp. etc.

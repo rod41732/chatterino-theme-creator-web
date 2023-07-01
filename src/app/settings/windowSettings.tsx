@@ -1,4 +1,4 @@
-import { ColorPickerWrapper } from "@/app/messageSettings";
+import { ColorPickerWrapper } from "@/app/settings/messageSettings";
 
 export function WindowSettings() {
     return (
@@ -7,9 +7,9 @@ export function WindowSettings() {
             <div> Background </div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.window.background = newColor;
+                    data.colors.window.background = newColor;
                 }}
-                getColor={(data) => data.color.window.background}
+                getColor={(data) => data.colors.window.background}
                 alpha={true}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
@@ -19,9 +19,9 @@ export function WindowSettings() {
             <div> Text </div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
-                    data.color.window.text = newColor;
+                    data.colors.window.text = newColor;
                 }}
-                getColor={(data) => data.color.window.text}
+                getColor={(data) => data.colors.window.text}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
                 Some part of UI
