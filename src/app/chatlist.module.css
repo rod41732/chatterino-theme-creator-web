@@ -308,3 +308,23 @@
 }
 
 
+.inputBorder {
+    border: 1px solid var(--opposite-of-icon-theme);
+}
+.replyIndicator {
+    border: 1px solid var(--opposite-of-icon-theme);
+    color: var(--similar-to-icon-theme);
+}
+
+.window     {
+    color: var(--window-text);
+    background: var(--window-background);
+}
+.emoteSelect {
+    background: var(--accent);
+    opacity: 0.5;
+}
+.completionMenu {
+    /*yes this is hardcoded*/
+    border: 1px solid #999999;
+}

@@ -38,7 +38,12 @@ export function ChatterinoSplitVertical({
             {/*tab TODO: unknown background */}
 
             <ChatterinoFakeTab />
-            <ChatterinoSplit name="active tab" chatMessages={chatMessages} />
+            <ChatterinoSplit
+                name="active tab"
+                chatMessages={chatMessages}
+                showReply={true}
+                showCompletion={true}
+            />
             <ChatterinoSplit
                 name="inactive tab"
                 chatMessages={chatMessages}

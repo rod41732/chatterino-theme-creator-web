@@ -53,10 +53,15 @@ export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
     }, [data.color]);
 
     useEffect(() => {
-        // the convention used for generating
+        // some "hard coded" color values that are based on theme
+
         document.body.style.setProperty(
             "--opposite-of-icon-theme",
             data.metadata.iconTheme == "light" ? "#000000" : "#ffffff"
+        );
+        document.body.style.setProperty(
+            "--similar-to-icon-theme",
+            data.metadata.iconTheme == "light" ? "#cccccc" : "#333333"
         );
     }, [data.metadata]);
 

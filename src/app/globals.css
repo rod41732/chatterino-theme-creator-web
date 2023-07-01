@@ -114,7 +114,10 @@ body {
     /*it's hardcoded #555 (dark theme) or #999 (light)*/
     --empty-split-color: #555555;
 
+     /*border around chat and reply box*/
     --opposite-of-icon-theme: #ffffff;
+    /* text in "replying to" */
+    --similar-to-icon-theme: #333333;
 }
 
 /*settings controlled*/
@@ -126,3 +129,4 @@ body {
 ::selection {
     background: var(--messages-selection);
 }
+

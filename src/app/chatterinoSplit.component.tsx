@@ -10,11 +10,15 @@ export function ChatterinoSplit({
     chatMessages,
     active = true,
     previewSplit = false,
+    showReply = false,
+    showCompletion = false,
 }: {
     name: string;
     active?: boolean;
     chatMessages: FakeChatMessage[];
     previewSplit?: boolean;
+    showReply?: boolean;
+    showCompletion?: boolean;
 }) {
     const [animationState, setAnimationState] = useState(0);
     const [input, setInput] = useState("");
@@ -84,15 +88,26 @@ export function ChatterinoSplit({
                     />
                 ))}
             </div>
-            <div
-                className="flex-shrink-0 relative"
-                style={{
-                    // TODO: idk border
-                    border: "1px solid black",
-                    // TODO: idk bg
-                    background: "black",
-                }}
-            >
+            {showReply && (
+                <div
+                    className={clsx(
+                        styles.replyIndicator,
+                        "font-bold text-base py-1 px-2 flex items-center"
+                    )}
+                >
+                    <p className="flex-grow"> Replying to @doge41732</p>
+
+                    <img
+                        className="w-4 h-4"
+                        src={
+                            iconTheme == "light"
+                                ? "/chatterino-icons/cancel.svg"
+                                : "/chatterino-icons/cancelDark.svg"
+                        }
+                    />
+                </div>
+            )}
+            <div className={clsx("flex-shrink-0 relative", styles.inputBorder)}>
                 <input
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
@@ -108,6 +123,63 @@ export function ChatterinoSplit({
                     {" "}
                     {input.length}
                 </div>
+                <img
+                    className={clsx("absolute bottom-1 right-1", "w-4 h-4")}
+                    src={
+                        iconTheme == "light"
+                            ? "/chatterino-icons/emote.svg"
+                            : "/chatterino-icons/emoteDark.svg"
+                    }
+                />
+                {showCompletion && (
+                    <div
+                        className={`text-base w-[300px] h-[200px] absolute top-0 left-1/2 -translate-y-full -translate-x-1/2 p-2 ${styles.window}  ${styles.completionMenu}`}
+                    >
+                        <div className="relative">
+                            <div
+                                className={clsx(
+                                    styles.emoteSelect,
+                                    "absolute inset-0"
+                                )}
+                            ></div>
+                            <div className="flex items-center relative">
+                                <img
+                                    src="https://cdn.frankerfacez.com/emote/536927/4"
+                                    className="h-8 w-auto mx-2"
+                                />
+                                <p
+                                    className={clsx(
+                                        styles.windowText,
+                                        "text-xs"
+                                    )}
+                                >
+                                    {" "}
+                                    FeelsDankMan - Global FrankerFaceZ{" "}
+                                </p>
+                            </div>
+                        </div>
+                        <div className="flex items-center relative">
+                            <img
+                                src="https://cdn.frankerfacez.com/emote/536927/4"
+                                className="h-8 w-auto mx-2"
+                            />
+                            <p className={clsx(styles.windowText, "text-xs")}>
+                                {" "}
+                                FeelsDankMan - Global FrankerFaceZ{" "}
+                            </p>
+                        </div>
+                        <div className="flex items-center relative">
+                            <img
+                                src="https://cdn.frankerfacez.com/emote/536927/4"
+                                className="h-8 w-auto mx-2"
+                            />
+                            <p className={clsx(styles.windowText, "text-xs")}>
+                                {" "}
+                                FeelsDankMan - Global FrankerFaceZ{" "}
+                            </p>
+                        </div>
+                    </div>
+                )}
             </div>
             {previewSplit && (
                 <div

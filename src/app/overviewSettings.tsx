@@ -28,7 +28,17 @@ export function OverviewSettings() {
                 <Radio.Button value="light">Light</Radio.Button>
                 <Radio.Button value="dark">Dark</Radio.Button>
             </Radio.Group>
-            <div></div>
+
+            <div className="text-lg font-bold col-span-2">Accent color</div>
+            <ColorPickerWrapper
+                mutateColor={(data, newColor) => {
+                    data.color.accent = newColor;
+                }}
+                getColor={(data) => data.color.accent}
+            />
+            <p className="text-gray-500 col-span-2 -mt-3 mb-1">
+                Used in some part
+            </p>
         </div>
     );
 }
