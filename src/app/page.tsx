@@ -143,6 +143,7 @@ export default function Home() {
                 {/*<div className="h-full bg-emerald-300"></div>*/}
                 {/*overflow-auto somehow force the height to be correct??*/}
                 <div className="h-full overflow-auto flex">
+                    {/*left col*/}
                     <div className="flex-1 flex-shrink overflow-hidden">
                         {/*tab bar*/}
                         <div className="flex items-center overflow-x-auto">
@@ -157,7 +158,8 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <div className="flex-1 flex-shrink overflow-hidden">
+                    {/*right col*/}
+                    <div className="flex-1 flex-shrink overflow-hidden flex flex-col">
                         {/*tab bar*/}
                         <div className="flex items-center overflow-x-auto">
                             {previewTabs.map((it) => (
@@ -167,6 +169,7 @@ export default function Home() {
                             ))}
                         </div>
                         <div className="overflow-hidden relative flex-1 border-2 p-1 border-red-500">
+                            {/*<div className="h-full bg-green-200"></div>*/}
                             <ChatterinoSingle
                                 chatMessages={fakeChatListLarge}
                             />

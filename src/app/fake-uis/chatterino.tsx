@@ -14,12 +14,26 @@ export function ChatterinoSingle({
 }) {
     return (
         <div
-            className={`flex flex-col h-full overflow-auto ${extraClasses} ${styles.window}`}
+            className={`flex flex-col h-full overflow-hidden ${extraClasses} ${styles.window}`}
         >
             {/*tab TODO: unknown background */}
-            <ChatterinoFakeTab />
-            <div className="h-full flex-grow bg-red-500"></div>
-            {/*<ChatterinoSplit name="pajlada" chatMessages={chatMessages} />*/}
+            <div className="flex-shrink-0">
+                <ChatterinoFakeTab />
+            </div>
+            <div className={styles.splitContainerCol}>
+                {/*<div className={styles.splitContainerRow}>*/}
+                {/*    <ChatterinoSplit*/}
+                {/*        name="pajlada"*/}
+                {/*        chatMessages={chatMessages}*/}
+                {/*    />*/}
+                {/*    <ChatterinoSplit*/}
+                {/*        name="pajlada"*/}
+                {/*        chatMessages={chatMessages}*/}
+                {/*    />*/}
+                {/*</div>*/}
+                {/*<ChatterinoSplit name="pajlada" chatMessages={chatMessages} />*/}
+                <ChatterinoSplit name="pajlada" chatMessages={chatMessages} />
+            </div>
         </div>
     );
 }

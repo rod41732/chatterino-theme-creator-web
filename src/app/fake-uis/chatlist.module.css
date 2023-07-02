@@ -178,8 +178,11 @@
 
 .splitContainerRow {
     display: flex;
-    flex: 1 0 0;
     flex-direction: row;
+    flex: 1 0 0;
+
+    overflow: hidden;
+
     background-color: var(--empty-split-color);
     column-gap: 1px;
     padding: 1px;
@@ -187,8 +190,10 @@
 
 .splitContainerCol {
     display: flex;
-    flex: 1 0 0;
     flex-direction: column;
+    flex: 1 0 0;
+
+    overflow: hidden;
 
     background-color: var(--empty-split-color);
     row-gap: 1px;

@@ -37,7 +37,9 @@ export function ChatterinoSplit({
 
     return (
         // make it so that split take space evenly
-        <div className={`${styles.split} flex-1 flex flex-col relative`}>
+        <div
+            className={`${styles.split} flex-1 flex flex-col relative overflow-hidden`}
+        >
             <div
                 className={clsx(
                     active ? styles.splitHeaderFocused : styles.splitHeader,
