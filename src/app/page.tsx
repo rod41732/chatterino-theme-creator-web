@@ -148,13 +148,17 @@ export default function Home() {
                         {/*tab bar*/}
                         <div className="flex items-center overflow-x-auto">
                             {tabs.map((it) => (
-                                <button className="mx-5 border" key={it.key}>
+                                <button
+                                    className="mx-5 border"
+                                    key={it.key}
+                                    onClick={() => setActiveTab(it.key)}
+                                >
                                     {it.label}
                                 </button>
                             ))}
                         </div>
                         <div className="overflow-auto max-h-full">
-                            <SplitSettings />
+                            {tabs.find((it) => it.key == activeTab)?.children}
                         </div>
                     </div>
 
@@ -163,16 +167,21 @@ export default function Home() {
                         {/*tab bar*/}
                         <div className="flex items-center overflow-x-auto">
                             {previewTabs.map((it) => (
-                                <button className="mx-5 border" key={it.key}>
+                                <button
+                                    className="mx-5 border"
+                                    key={it.key}
+                                    onClick={() => setActivePreviewTab(it.key)}
+                                >
                                     {it.label}
                                 </button>
                             ))}
                         </div>
-                        <div className="overflow-hidden relative flex-1 border-2 p-1 border-red-500">
-                            {/*<div className="h-full bg-green-200"></div>*/}
-                            <ChatterinoSingle
-                                chatMessages={fakeChatListLarge}
-                            />
+                        <div className="overflow-hidden relative flex-1">
+                            {
+                                previewTabs.find(
+                                    (it) => it.key == activePreviewTab
+                                )?.children
+                            }
                         </div>
                     </div>
                 </div>

@@ -32,7 +32,12 @@ export function ChatterinoSingle({
                 {/*    />*/}
                 {/*</div>*/}
                 {/*<ChatterinoSplit name="pajlada" chatMessages={chatMessages} />*/}
-                <ChatterinoSplit name="pajlada" chatMessages={chatMessages} />
+                <ChatterinoSplit
+                    name="pajlada"
+                    chatMessages={chatMessages}
+                    showCompletion={true}
+                    showReply={true}
+                />
             </div>
         </div>
     );
@@ -53,12 +58,7 @@ export function ChatterinoSplitVertical({
             {/*tab TODO: unknown background */}
 
             <ChatterinoFakeTab />
-            <ChatterinoSplit
-                name="active tab"
-                chatMessages={chatMessages}
-                showReply={true}
-                showCompletion={true}
-            />
+            <ChatterinoSplit name="active tab" chatMessages={chatMessages} />
             <ChatterinoSplit
                 name="inactive tab"
                 chatMessages={chatMessages}
