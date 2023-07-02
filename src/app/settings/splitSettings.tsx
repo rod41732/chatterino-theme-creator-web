@@ -6,7 +6,7 @@ import { WritableDraft } from "immer/src/types/types-external";
 export function SplitSettings() {
     const { settings, setSettings } = useConfigContext();
     return (
-        <div className="grid grid-cols-[1fr,auto,auto] gap-2 ">
+        <div className="grid grid-cols-[1fr,auto,auto] gap-2 h-full overflow-auto">
             <div> Background </div>
             <div className="col-span-2">
                 <ColorPickerWrapper

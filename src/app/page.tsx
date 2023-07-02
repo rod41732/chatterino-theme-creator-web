@@ -1,6 +1,6 @@
 "use client";
 import { Tabs } from "antd";
-import { useState } from "react";
+import { ReactNode, useMemo, useState } from "react";
 import {
     ChatterinoDragSplitPreview,
     ChatterinoSingle,
@@ -23,9 +23,114 @@ import { ChatterinoTabPreview } from "@/app/fake-uis/chatterinoTabPreview.compon
 import { WindowSettings } from "@/app/settings/windowSettings";
 import { OverviewSettings } from "@/app/settings/overviewSettings";
 
+interface Tab {
+    label: string;
+    key: string;
+    children: ReactNode;
+}
+
 export default function Home() {
     const [activeTab, setActiveTab] = useState("overview");
     const [activePreviewTab, setActivePreviewTab] = useState("chat");
+    const tabs = useMemo(
+        () => [
+            {
+                label: "Overview",
+                key: "overview",
+                children: <OverviewSettings />,
+            },
+            {
+                label: "Messages",
+                key: "messages",
+                children: <MessageSettings />,
+            },
+            {
+                label: "Scrollbars",
+                key: "scrollbars",
+                children: <ScrollBarSettings />,
+            },
+            {
+                label: "Splits",
+                key: "splits",
+                children: (
+                    <div className="max-h-full overflow-y-scroll">
+                        <SplitSettings />
+                    </div>
+                ),
+            },
+            {
+                label: "Tabs",
+                key: "tabs",
+                children: <TabsSettings />,
+            },
+            {
+                label: "Window",
+                key: "window",
+                children: <WindowSettings />,
+            },
+        ],
+        []
+    );
+    const previewTabs: Tab[] = [
+        {
+            label: "Chat",
+            key: "chat",
+            children: <ChatterinoSingle chatMessages={fakeChatListLarge} />,
+        },
+        {
+            label: "Split Basic",
+            key: "spilt_basic",
+            children: (
+                <div className="p-4 bg-gray-800">
+                    <ChatterinoSplitVertical
+                        chatMessages={fakeChatListSmall}
+                        extraClasses={clsx("h-[1000px]")}
+                    />
+                </div>
+            ),
+        },
+        {
+            label: "Split Drop Preivew",
+            key: "spilt_drop_preview",
+            children: (
+                <div className="p-4 bg-gray-800 relative">
+                    <ChatterinoDragSplitPreview
+                        chatMessages={fakeChatListSmall}
+                        extraClasses={clsx("h-[1000px]")}
+                    />
+                </div>
+            ),
+        },
+        {
+            label: "Split Drop Target",
+            key: "spilt_drop_target",
+            children: (
+                <div className="p-4 bg-gray-800 relative">
+                    <ChatterinoSplitAdvanced
+                        chatMessages={fakeChatListVerySmall}
+                        extraClasses={clsx("h-[1000px]")}
+                    />
+                </div>
+            ),
+        },
+        {
+            label: "Split Resize",
+            key: "spilt_resize",
+            children: (
+                <div className="p-4 bg-gray-800 relative">
+                    <ChatterinoSplitResize
+                        chatMessages={fakeChatListVerySmall}
+                        extraClasses={clsx("h-[1000px]")}
+                    />
+                </div>
+            ),
+        },
+        {
+            label: "Tab States",
+            key: "tab_states",
+            children: <ChatterinoTabPreview />,
+        },
+    ];
     return (
         <ConfigContextProvider>
             <div className="h-full flex flex-col">
@@ -38,129 +143,34 @@ export default function Home() {
                 {/*<div className="h-full bg-emerald-300"></div>*/}
                 {/*overflow-auto somehow force the height to be correct??*/}
                 <div className="h-full overflow-auto flex">
-                    <div className="flex-1">
-                        <Tabs
-                            // defaultActiveKey="overview"
-                            activeKey={activeTab}
-                            onTabClick={(key, _) => setActiveTab(key)}
-                            items={[
-                                {
-                                    label: "Overview",
-                                    key: "overview",
-                                    children: <OverviewSettings />,
-                                },
-                                {
-                                    label: "Messages",
-                                    key: "messages",
-                                    children: <MessageSettings />,
-                                },
-                                {
-                                    label: "Scrollbars",
-                                    key: "scrollbars",
-                                    children: <ScrollBarSettings />,
-                                },
-                                {
-                                    label: "Splits",
-                                    key: "splits",
-                                    children: <SplitSettings />,
-                                },
-                                {
-                                    label: "Tabs",
-                                    key: "tabs",
-                                    children: <TabsSettings />,
-                                },
-                                {
-                                    label: "Window",
-                                    key: "window",
-                                    children: <WindowSettings />,
-                                },
-                            ]}
-                        />
+                    <div className="flex-1 flex-shrink overflow-hidden">
+                        {/*tab bar*/}
+                        <div className="flex items-center overflow-x-auto">
+                            {tabs.map((it) => (
+                                <button className="mx-5 border" key={it.key}>
+                                    {it.label}
+                                </button>
+                            ))}
+                        </div>
+                        <div className="overflow-auto max-h-full">
+                            <SplitSettings />
+                        </div>
                     </div>
-                    <div className="p-6 max-h-full overflow-auto">
-                        <Tabs
-                            activeKey={activePreviewTab}
-                            onTabClick={(key, _) => setActivePreviewTab(key)}
-                            items={[
-                                {
-                                    label: "Chat",
-                                    key: "chat",
-                                    children: (
-                                        // TODO!
-                                        <div className="max-h-[80%] overflow-auto">
-                                            <ChatterinoSingle
-                                                chatMessages={fakeChatListLarge}
-                                            />
-                                        </div>
-                                    ),
-                                },
-                                {
-                                    label: "Split Basic",
-                                    key: "spilt_basic",
-                                    children: (
-                                        <div className="p-4 bg-gray-800">
-                                            <ChatterinoSplitVertical
-                                                chatMessages={fakeChatListSmall}
-                                                extraClasses={clsx(
-                                                    "h-[1000px]"
-                                                )}
-                                            />
-                                        </div>
-                                    ),
-                                },
-                                {
-                                    label: "Split Drop Preivew",
-                                    key: "spilt_drop_preview",
-                                    children: (
-                                        <div className="p-4 bg-gray-800 relative">
-                                            <ChatterinoDragSplitPreview
-                                                chatMessages={fakeChatListSmall}
-                                                extraClasses={clsx(
-                                                    "h-[1000px]"
-                                                )}
-                                            />
-                                        </div>
-                                    ),
-                                },
-                                {
-                                    label: "Split Drop Target",
-                                    key: "spilt_drop_target",
-                                    children: (
-                                        <div className="p-4 bg-gray-800 relative">
-                                            <ChatterinoSplitAdvanced
-                                                chatMessages={
-                                                    fakeChatListVerySmall
-                                                }
-                                                extraClasses={clsx(
-                                                    "h-[1000px]"
-                                                )}
-                                            />
-                                        </div>
-                                    ),
-                                },
-                                {
-                                    label: "Split Resize",
-                                    key: "spilt_resize",
-                                    children: (
-                                        <div className="p-4 bg-gray-800 relative">
-                                            <ChatterinoSplitResize
-                                                chatMessages={
-                                                    fakeChatListVerySmall
-                                                }
-                                                extraClasses={clsx(
-                                                    "h-[1000px]"
-                                                )}
-                                            />
-                                        </div>
-                                    ),
-                                },
-                                {
-                                    label: "Tab States",
-                                    key: "tab_states",
-                                    children: <ChatterinoTabPreview />,
-                                },
-                            ]}
-                        />
+
+                    <div className="flex-1 flex-shrink overflow-hidden">
+                        {/*tab bar*/}
+                        <div className="flex items-center overflow-x-auto">
+                            {previewTabs.map((it) => (
+                                <button className="mx-5 border" key={it.key}>
+                                    {it.label}
+                                </button>
+                            ))}
+                        </div>
+                        <div className="overflow-hidden relative flex-1 border-2 p-1 border-red-500">
+                            <ChatterinoSingle
+                                chatMessages={fakeChatListLarge}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
