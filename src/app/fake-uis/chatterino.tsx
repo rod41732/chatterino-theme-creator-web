@@ -52,12 +52,13 @@ export function ChatterinoDragSplitPreview({
                 <ChatterinoSplit
                     name="active tab"
                     chatMessages={chatMessages}
-                    previewSplit={true}
+                    persistentPreviewSplit={true}
                 />
                 <ChatterinoSplit
                     name="inactive tab"
                     chatMessages={chatMessages}
                     active={false}
+                    previewSplit={true}
                 />
             </div>
         </div>
@@ -109,6 +110,7 @@ export function ChatterinoSplitAdvanced({
                             name="inactive"
                             chatMessages={chatMessages}
                             active={false}
+                            previewSplit={true}
                         />
                     </div>
                     <div
@@ -123,6 +125,7 @@ export function ChatterinoSplitAdvanced({
                     <ChatterinoSplit
                         name="inactive tab"
                         chatMessages={chatMessages}
+                        previewSplit={true}
                         active={false}
                     />
                 </div>

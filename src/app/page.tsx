@@ -73,7 +73,7 @@ export default function Home() {
     const previewTabs: Tab[] = [
         {
             label: "Chat",
-            key: "spilt_basic",
+            key: "chat",
             children: (
                 <div className="p-4 bg-gray-800 h-full overflow-hidden">
                     <ChatterinoSplitVertical

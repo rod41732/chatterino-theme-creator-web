@@ -10,6 +10,7 @@ export function ChatterinoSplit({
     chatMessages,
     active = true,
     previewSplit = false,
+    persistentPreviewSplit = false,
     showReply = false,
     showCompletion = false,
     showScrollToBottom = false,
@@ -18,6 +19,7 @@ export function ChatterinoSplit({
     active?: boolean;
     chatMessages: FakeChatMessage[];
     previewSplit?: boolean;
+    persistentPreviewSplit?: boolean;
     showReply?: boolean;
     showCompletion?: boolean;
     showScrollToBottom?: boolean;
@@ -86,20 +88,20 @@ export function ChatterinoSplit({
                     />
                 </button>
             </div>
-            <div
-                className={`overflow-y-auto relative flex-grow flex-shrink ${styles.list}`}
-            >
-                {chatMessages.map((it, idx) => (
-                    <Message
-                        key={it.id}
-                        it={it}
-                        idx={idx}
-                        animationState={animationState}
-                    />
-                ))}
+            <div className="relative flex-grow flex-shrink overflow-hidden">
+                <div className={`overflow-y-auto h-full ${styles.list}`}>
+                    {chatMessages.map((it, idx) => (
+                        <Message
+                            key={it.id}
+                            it={it}
+                            idx={idx}
+                            animationState={animationState}
+                        />
+                    ))}
+                </div>
                 {showScrollToBottom && (
                     <div
-                        className={`sticky bottom-0 left-0 right-0 py-1 ${styles.scrollToBottom}`}
+                        className={`absolute z-10 bottom-0 left-0 right-0 py-1 ${styles.scrollToBottom}`}
                     >
                         More messages below.
                     </div>
@@ -198,11 +200,52 @@ export function ChatterinoSplit({
                     </div>
                 )}
             </div>
-            {previewSplit && (
+            {!previewSplit && persistentPreviewSplit && (
                 <div
                     className={clsx(
                         styles.dropPreviewRect,
                         "absolute top-0 bottom-0 left-2/3 right-0"
+                    )}
+                ></div>
+            )}
+            {/*// split hover*/}
+            {/*top*/}
+            {previewSplit && (
+                <div
+                    className={clsx(
+                        "absolute top-0 bottom-1/2 left-0 right-0 ",
+                        styles.droppable
+                        // 'bg-red-500/10'
+                    )}
+                ></div>
+            )}
+            {/*bottom*/}
+            {previewSplit && (
+                <div
+                    className={clsx(
+                        "absolute top-1/2 bottom-0 left-0 right-0 ",
+                        styles.droppable
+                        // 'bg-red-500/10'
+                    )}
+                ></div>
+            )}
+            {/*left */}
+            {previewSplit && (
+                <div
+                    className={clsx(
+                        "absolute top-0 bottom-0 left-0 right-2/3 ",
+                        styles.droppable
+                        // 'bg-red-500/10'
+                    )}
+                ></div>
+            )}
+            {/*right */}
+            {previewSplit && (
+                <div
+                    className={clsx(
+                        "absolute top-0 bottom-0 left-2/3 right-0 ",
+                        styles.droppable
+                        // 'bg-red-500/10'
                     )}
                 ></div>
             )}
