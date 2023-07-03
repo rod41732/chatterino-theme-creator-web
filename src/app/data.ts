@@ -101,7 +101,8 @@ export const fakeChatListLarge: FakeChatMessage[] = [
         id: "11",
         timestampText: "20:32",
         username: "doge",
-        chat: "fforsen forsen forsen forsen forsen forsen forsen forsen orsen forsen ",
+        chat: "Highlighed after goto message",
+        highlight: true,
     },
     {
         id: "12",
@@ -113,8 +114,7 @@ export const fakeChatListLarge: FakeChatMessage[] = [
         id: "13",
         timestampText: "20:32",
         username: "doge",
-        chat: "Highlighed after goto message",
-        highlight: true,
+        chat: "fforsen forsen forsen forsen forsen forsen forsen forsen orsen forsen ",
     },
 ];
 
