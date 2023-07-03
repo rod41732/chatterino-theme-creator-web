@@ -29,9 +29,9 @@ export function TabsSettings() {
                     Unselected tab, without new messages.
                 </div>
             </h2>
-            <div> Regular </div>
-            <div> Hover </div>
-            <div> Unfocused </div>
+            <div className="self-end text-gray-500 text-center">Regular</div>
+            <div className="self-end text-gray-500 text-center">Hover</div>
+            <div className="self-end text-gray-500 text-center">Unfocused</div>
 
             <div> Background </div>
             <ColorPickerWrapper
@@ -93,9 +93,9 @@ export function TabsSettings() {
                 <p className={s.sectionTitle}>Selected Tab</p>
                 <div className="text-gray-500">Current tab</div>
             </h2>
-            <div> Regular </div>
-            <div> Hover </div>
-            <div> Unfocused </div>
+            <div className="self-end text-gray-500 text-center">Regular</div>
+            <div className="self-end text-gray-500 text-center">Hover</div>
+            <div className="self-end text-gray-500 text-center">Unfocused</div>
 
             <div> Background </div>
             <ColorPickerWrapper
@@ -157,9 +157,9 @@ export function TabsSettings() {
                     Tab with mentioned messages.
                 </div>
             </h2>
-            <div> Regular </div>
-            <div> Hover </div>
-            <div> Unfocused </div>
+            <div className="self-end text-gray-500 text-center">Regular</div>
+            <div className="self-end text-gray-500 text-center">Hover</div>
+            <div className="self-end text-gray-500 text-center">Unfocused</div>
 
             <div> Background </div>
             <ColorPickerWrapper
@@ -224,9 +224,9 @@ export function TabsSettings() {
                 <p className={s.sectionTitle}>New Message Tabs</p>
                 <div className="text-gray-500">Tabs with new mesages</div>
             </h2>
-            <div> Regular </div>
-            <div> Hover </div>
-            <div> Unfocused </div>
+            <div className="self-end text-gray-500 text-center">Regular</div>
+            <div className="self-end text-gray-500 text-center">Hover</div>
+            <div className="self-end text-gray-500 text-center">Unfocused</div>
 
             <div> Background </div>
             <ColorPickerWrapper
