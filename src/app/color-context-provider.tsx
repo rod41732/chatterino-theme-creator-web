@@ -63,6 +63,10 @@ export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
             "--similar-to-icon-theme",
             data.metadata.iconTheme == "light" ? "#cccccc" : "#333333"
         );
+        document.body.style.setProperty(
+            "--empty-split-color",
+            data.metadata.iconTheme == "light" ? "#555555" : "#999999"
+        );
     }, [data.metadata]);
 
     useEffect(() => {
