@@ -184,8 +184,8 @@
     overflow: hidden;
 
     background-color: var(--empty-split-color);
-    column-gap: 1px;
-    padding: 1px;
+    column-gap: 2px;
+   /*padding: 1px;*/
 }
 
 .splitContainerCol {
@@ -196,9 +196,10 @@
     overflow: hidden;
 
     background-color: var(--empty-split-color);
-    row-gap: 1px;
-    padding: 1px;
+    row-gap: 2px;
+    /*padding: 1px;*/
 }
+
 
 .dropPreviewRect {
     background-color: var(--splits-dropPreview);
