@@ -148,17 +148,20 @@ export function ColorPickerWrapper({
 }: ColorPickerWrapperProps) {
     const { data, setData } = useConfigContext();
     return (
-        <ColorPicker
-            format={"hex"}
-            // somehow need to set default value to show properly
-            defaultValue={getColor(data)}
-            // it's fine to pass string!!
-            color={getColor(data) as any}
-            onChange={(c, h) => {
-                setData(produce(data, (draft) => mutateColor(draft, h)));
-            }}
-            onFormatChange={() => {}}
-            disabledAlpha={!alpha}
-        />
+        <div className="flex items-center space-x-2">
+            <ColorPicker
+                format={"hex"}
+                // somehow need to set default value to show properly
+                defaultValue={getColor(data)}
+                // it's fine to pass string!!
+                color={getColor(data) as any}
+                onChange={(c, h) => {
+                    setData(produce(data, (draft) => mutateColor(draft, h)));
+                }}
+                onFormatChange={() => {}}
+                disabledAlpha={!alpha}
+            />
+            <p className="text-gray-700"> {getColor(data).toUpperCase()}</p>
+        </div>
     );
 }
