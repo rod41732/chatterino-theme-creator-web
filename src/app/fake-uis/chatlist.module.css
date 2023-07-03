@@ -320,6 +320,7 @@
 .replyIndicator {
     border: 1px solid var(--opposite-of-icon-theme);
     color: var(--similar-to-icon-theme);
+    background-color: var(--splits-input-background);
 }
 
 .window {
