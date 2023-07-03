@@ -12,6 +12,7 @@ export function ChatterinoSplit({
     previewSplit = false,
     showReply = false,
     showCompletion = false,
+    showScrollToBottom = false,
 }: {
     name: string;
     active?: boolean;
@@ -19,6 +20,7 @@ export function ChatterinoSplit({
     previewSplit?: boolean;
     showReply?: boolean;
     showCompletion?: boolean;
+    showScrollToBottom?: boolean;
 }) {
     const [animationState, setAnimationState] = useState(0);
     const [input, setInput] = useState("");
@@ -85,7 +87,7 @@ export function ChatterinoSplit({
                 </button>
             </div>
             <div
-                className={`overflow-y-auto flex-grow flex-shrink ${styles.list}`}
+                className={`overflow-y-auto relative flex-grow flex-shrink ${styles.list}`}
             >
                 {chatMessages.map((it, idx) => (
                     <Message
@@ -95,6 +97,13 @@ export function ChatterinoSplit({
                         animationState={animationState}
                     />
                 ))}
+                {showScrollToBottom && (
+                    <div
+                        className={`sticky bottom-0 left-0 right-0 py-1 ${styles.scrollToBottom}`}
+                    >
+                        More messages below.
+                    </div>
+                )}
             </div>
             {showReply && (
                 <div

@@ -3,7 +3,6 @@ import { Tabs } from "antd";
 import { ReactNode, useMemo, useState } from "react";
 import {
     ChatterinoDragSplitPreview,
-    ChatterinoSingle,
     ChatterinoSplitAdvanced,
     ChatterinoSplitResize,
     ChatterinoSplitVertical,
@@ -74,14 +73,9 @@ export default function Home() {
     const previewTabs: Tab[] = [
         {
             label: "Chat",
-            key: "chat",
-            children: <ChatterinoSingle chatMessages={fakeChatListLarge} />,
-        },
-        {
-            label: "Split Basic",
             key: "spilt_basic",
             children: (
-                <div className="p-4 bg-gray-800">
+                <div className="p-4 bg-gray-800 h-full overflow-hidden">
                     <ChatterinoSplitVertical
                         chatMessages={fakeChatListSmall}
                         extraClasses={clsx("h-[1000px]")}
@@ -93,7 +87,7 @@ export default function Home() {
             label: "Split Drop Preivew",
             key: "spilt_drop_preview",
             children: (
-                <div className="p-4 bg-gray-800 relative">
+                <div className="p-4 bg-gray-800 h-full overflow-hidden">
                     <ChatterinoDragSplitPreview
                         chatMessages={fakeChatListSmall}
                         extraClasses={clsx("h-[1000px]")}
@@ -105,7 +99,7 @@ export default function Home() {
             label: "Split Drop Target",
             key: "spilt_drop_target",
             children: (
-                <div className="p-4 bg-gray-800 relative">
+                <div className="p-4 bg-gray-800 h-full overflow-hidden">
                     <ChatterinoSplitAdvanced
                         chatMessages={fakeChatListVerySmall}
                         extraClasses={clsx("h-[1000px]")}
@@ -117,7 +111,7 @@ export default function Home() {
             label: "Split Resize",
             key: "spilt_resize",
             children: (
-                <div className="p-4 bg-gray-800 relative">
+                <div className="p-4 bg-gray-800 h-full overflow-hidden">
                     <ChatterinoSplitResize
                         chatMessages={fakeChatListVerySmall}
                         extraClasses={clsx("h-[1000px]")}

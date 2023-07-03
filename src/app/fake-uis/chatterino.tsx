@@ -4,45 +4,6 @@ import { ChatterinoSplit } from "@/app/fake-uis/chatterinoSplit.component";
 import { ChatterinoFakeTab } from "@/app/fake-uis/chatterinoFakeTab";
 import clsx from "clsx";
 
-/** normal chat list */
-export function ChatterinoSingle({
-    chatMessages,
-    extraClasses = "",
-}: {
-    chatMessages: FakeChatMessage[];
-    extraClasses?: string;
-}) {
-    return (
-        <div
-            className={`flex flex-col h-full overflow-hidden ${extraClasses} ${styles.window}`}
-        >
-            {/*tab TODO: unknown background */}
-            <div className="flex-shrink-0">
-                <ChatterinoFakeTab />
-            </div>
-            <div className={styles.splitContainerCol}>
-                {/*<div className={styles.splitContainerRow}>*/}
-                {/*    <ChatterinoSplit*/}
-                {/*        name="pajlada"*/}
-                {/*        chatMessages={chatMessages}*/}
-                {/*    />*/}
-                {/*    <ChatterinoSplit*/}
-                {/*        name="pajlada"*/}
-                {/*        chatMessages={chatMessages}*/}
-                {/*    />*/}
-                {/*</div>*/}
-                {/*<ChatterinoSplit name="pajlada" chatMessages={chatMessages} />*/}
-                <ChatterinoSplit
-                    name="pajlada"
-                    chatMessages={chatMessages}
-                    showCompletion={true}
-                    showReply={true}
-                />
-            </div>
-        </div>
-    );
-}
-
 /** basic split */
 export function ChatterinoSplitVertical({
     chatMessages,
@@ -53,17 +14,23 @@ export function ChatterinoSplitVertical({
 }) {
     return (
         <div
-            className={`flex flex-col ${extraClasses} overflow-auto ${styles.split}`}
+            className={`${extraClasses} ${styles.window} ${styles.chatterinoWindow}`}
         >
-            {/*tab TODO: unknown background */}
-
             <ChatterinoFakeTab />
-            <ChatterinoSplit name="active tab" chatMessages={chatMessages} />
-            <ChatterinoSplit
-                name="inactive tab"
-                chatMessages={chatMessages}
-                active={false}
-            />
+            <div className={styles.splitContainerCol}>
+                <ChatterinoSplit
+                    name="active tab"
+                    chatMessages={chatMessages}
+                    showCompletion={true}
+                />
+                <ChatterinoSplit
+                    name="inactive tab"
+                    chatMessages={chatMessages}
+                    active={false}
+                    showReply={true}
+                    showScrollToBottom={true}
+                />
+            </div>
         </div>
     );
 }
@@ -76,21 +43,23 @@ export function ChatterinoDragSplitPreview({
 }) {
     return (
         <div
-            className={`flex flex-col ${extraClasses} overflow-auto ${styles.split}`}
+            className={`${extraClasses} ${styles.window} ${styles.chatterinoWindow}`}
         >
             {/*tab TODO: unknown background */}
 
             <ChatterinoFakeTab />
-            <ChatterinoSplit
-                name="active tab"
-                chatMessages={chatMessages}
-                previewSplit={true}
-            />
-            <ChatterinoSplit
-                name="inactive tab"
-                chatMessages={chatMessages}
-                active={false}
-            />
+            <div className={styles.splitContainerCol}>
+                <ChatterinoSplit
+                    name="active tab"
+                    chatMessages={chatMessages}
+                    previewSplit={true}
+                />
+                <ChatterinoSplit
+                    name="inactive tab"
+                    chatMessages={chatMessages}
+                    active={false}
+                />
+            </div>
         </div>
     );
 }
@@ -104,7 +73,7 @@ export function ChatterinoSplitAdvanced({
 }) {
     return (
         <div
-            className={`flex flex-col ${extraClasses} overflow-auto ${styles.split}`}
+            className={`${extraClasses} ${styles.window} ${styles.chatterinoWindow}`}
         >
             {/*tab TODO: unknown background */}
 
@@ -180,7 +149,7 @@ export function ChatterinoSplitResize({
 }) {
     return (
         <div
-            className={`flex flex-col ${extraClasses} overflow-auto ${styles.split}`}
+            className={`${extraClasses} ${styles.window} ${styles.chatterinoWindow}`}
         >
             <ChatterinoFakeTab />
             <div className={styles.splitContainerCol}>

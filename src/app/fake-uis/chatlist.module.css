@@ -299,9 +299,6 @@
     z-index: 99;
 }
 
-.window {
-    background: var(--window-background);
-}
 
 .tabButton {
     color: var(--tabs-regular-text);
@@ -321,10 +318,19 @@
     color: var(--similar-to-icon-theme);
 }
 
-.window     {
+.window {
+    /*flex flex-col h-full overflow-hidden*/
     color: var(--window-text);
     background: var(--window-background);
 }
+
+.chatterinoWindow     {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
 .emoteSelect {
     background: var(--accent);
     opacity: 0.5;
@@ -332,4 +338,9 @@
 .completionMenu {
     /*yes this is hardcoded*/
     border: 1px solid #999999;
+}
+.scrollToBottom {
+    background-color: rgba(0, 0, 0, 0.66);
+    color: white;
+    text-align: center;
 }
