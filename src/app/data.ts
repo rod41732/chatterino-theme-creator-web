@@ -15,7 +15,9 @@ export const fakeChatListLarge: FakeChatMessage[] = [
     ...Array(100)
         .fill(null)
         .map((it, idx) => ({
-            chat: `historical message -${100 - idx}`,
+            chat: `historical ${idx % 5 == 0 ? "deleted " : ""}message -${
+                100 - idx
+            }`,
             highlight: false,
             history: true,
             id: `-${100 - idx}`,

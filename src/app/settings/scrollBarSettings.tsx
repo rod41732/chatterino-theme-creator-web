@@ -1,8 +1,9 @@
 import { ColorPickerWrapper } from "@/app/settings/messageSettings";
+import s from "./settings.module.css";
 
 export function ScrollBarSettings() {
     return (
-        <div className="grid grid-cols-2 gap-2 ">
+        <div className={`grid grid-cols-2 gap-2 ${s.container}`}>
             <div className="text-lg font-bold col-span-2">Scrollbar</div>
             <div> Background </div>
             <ColorPickerWrapper

@@ -1,5 +1,5 @@
 import { FakeChatMessage } from "@/app/data";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "@/app/fake-uis/chatlist.module.css";
 import clsx from "clsx";
 import { Message } from "@/app/fake-uis/message.component";
@@ -31,6 +31,7 @@ export function ChatterinoSplit({
             metadata: { iconTheme },
         },
     } = useConfigContext();
+    const chatContainerRef = useRef<HTMLDivElement>();
 
     useEffect(() => {
         let interval = setInterval(() => {
@@ -38,6 +39,15 @@ export function ChatterinoSplit({
         }, 500);
         return () => clearInterval(interval);
     });
+
+    useEffect(() => {
+        if (chatContainerRef.current) {
+            chatContainerRef.current.scrollTo(
+                0,
+                chatContainerRef.current?.scrollHeight!
+            );
+        }
+    }, [chatMessages]);
 
     return (
         // make it so that split take space evenly
@@ -89,7 +99,10 @@ export function ChatterinoSplit({
                 </button>
             </div>
             <div className="relative flex-grow flex-shrink overflow-hidden">
-                <div className={`overflow-y-auto h-full ${styles.list}`}>
+                <div
+                    className={`overflow-y-auto h-full ${styles.list}`}
+                    ref={(it) => (chatContainerRef.current = it!)}
+                >
                     {chatMessages.map((it, idx) => (
                         <Message
                             key={it.id}

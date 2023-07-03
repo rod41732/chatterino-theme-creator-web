@@ -1,12 +1,16 @@
 import { ThemeData, useConfigContext } from "@/app/color-context-provider";
 import { produce } from "immer";
-import { ColorPicker, Switch } from "antd";
+import { Checkbox, ColorPicker, Switch } from "antd";
 import { WritableDraft } from "immer/src/types/types-external";
+import s from "./settings.module.css";
+import { ColorPickerWrapper } from "@/app/settings/messageSettings";
 
 export function SplitSettings() {
     const { settings, setSettings } = useConfigContext();
     return (
-        <div className="grid grid-cols-[1fr,auto,auto] gap-2 h-full overflow-auto">
+        <div
+            className={`grid grid-cols-[1fr,auto,auto] gap-2 h-full overflow-auto ${s.container}`}
+        >
             <div> Background </div>
             <div className="col-span-2">
                 <ColorPickerWrapper
@@ -17,12 +21,10 @@ export function SplitSettings() {
                 />
             </div>
             <p className="text-gray-500 col-span-3 -mt-3 mb-1">
-                Empty area in split, also thin border
+                Empty area in split, also seen as thin border between splits
             </p>
 
-            <h2 className="text-lg font-bold col-span-3">Header</h2>
-            {/*columns*/}
-            <div> Color </div>
+            <h2 className="text-lg font-bold">Header</h2>
             <div> Focused (Selected) </div>
             <div> Unfocused </div>
 
@@ -72,56 +74,58 @@ export function SplitSettings() {
             <p className="text-gray-500 col-span-3 -mt-3 mb-1">
                 Hint rectangle when you drag and drop split
             </p>
+
+            {/*columns*/}
+            <div> </div>
             <div> Border </div>
-            <div className="col-span-2">
-                <ColorPickerWrapper
-                    mutateColor={(data, newColor) => {
-                        data.colors.splits.dropPreviewBorder = newColor;
-                    }}
-                    getColor={(data) => data.colors.splits.dropPreviewBorder}
-                />
-            </div>
             <div> Area </div>
-            <div className="col-span-2">
-                <ColorPickerWrapper
-                    mutateColor={(data, newColor) => {
-                        data.colors.splits.dropPreview = newColor;
-                    }}
-                    getColor={(data) => data.colors.splits.dropPreview}
-                    alpha={true}
-                />
-            </div>
+
+            <div> Color </div>
+            <ColorPickerWrapper
+                mutateColor={(data, newColor) => {
+                    data.colors.splits.dropPreviewBorder = newColor;
+                }}
+                getColor={(data) => data.colors.splits.dropPreviewBorder}
+            />
+            <ColorPickerWrapper
+                mutateColor={(data, newColor) => {
+                    data.colors.splits.dropPreview = newColor;
+                }}
+                getColor={(data) => data.colors.splits.dropPreview}
+                alpha={true}
+            />
 
             <h2 className="text-lg font-bold col-span-3">Split Drop Target</h2>
             <p className="text-gray-500 col-span-3 -mt-3 mb-1">
                 Target that is used for adding split in certain situations
             </p>
+
+            {/*columns*/}
+            <div> </div>
             <div> Border </div>
-            <div className="col-span-2">
-                <ColorPickerWrapper
-                    mutateColor={(data, newColor) => {
-                        data.colors.splits.dropTargetRectBorder = newColor;
-                    }}
-                    getColor={(data) => data.colors.splits.dropTargetRectBorder}
-                    alpha={true}
-                />
-            </div>
             <div> Area </div>
-            <div className="col-span-2">
-                <ColorPickerWrapper
-                    mutateColor={(data, newColor) => {
-                        data.colors.splits.dropTargetRect = newColor;
-                    }}
-                    getColor={(data) => data.colors.splits.dropTargetRect}
-                    alpha={true}
-                />
-            </div>
+
+            <div> Color </div>
+            <ColorPickerWrapper
+                mutateColor={(data, newColor) => {
+                    data.colors.splits.dropTargetRectBorder = newColor;
+                }}
+                getColor={(data) => data.colors.splits.dropTargetRectBorder}
+                alpha={true}
+            />
+            <ColorPickerWrapper
+                mutateColor={(data, newColor) => {
+                    data.colors.splits.dropTargetRect = newColor;
+                }}
+                getColor={(data) => data.colors.splits.dropTargetRect}
+                alpha={true}
+            />
 
             <h2 className="text-lg font-bold col-span-3">Input</h2>
             <p className="text-gray-500 col-span-3 -mt-3 mb-1">
                 Chat Input Field
             </p>
-            <div> Text Color </div>
+            <div> Character counter color</div>
             <div className="col-span-2">
                 <ColorPickerWrapper
                     mutateColor={(data, newColor) => {
@@ -131,9 +135,6 @@ export function SplitSettings() {
                     alpha={true}
                 />
             </div>
-            <p className="text-gray-500 col-span-3 -mt-3 mb-1">
-                Color for character counter, if enabled.
-            </p>
             <div> Background color </div>
             <div className="col-span-2">
                 <ColorPickerWrapper
@@ -147,6 +148,15 @@ export function SplitSettings() {
 
             <div className="col-span-3 py-4"></div>
 
+            <div className="flex space-x-2 items-center col-span-3">
+                <Checkbox
+                    checked={settings.messageSeparator}
+                    onChange={(c) => {
+                        setSettings({ messageSeparator: c.target.checked });
+                    }}
+                />
+                <div>Enable message sep (for preview only)</div>
+            </div>
             <div> Message separator </div>
             <div className="col-span-2">
                 <ColorPickerWrapper
@@ -165,72 +175,26 @@ export function SplitSettings() {
                 Resize handles shows when you hold Ctrl to resize split in
                 chatterino.
             </p>
-            <div> Handle Color </div>
-            <div className="col-span-2">
-                <ColorPickerWrapper
-                    mutateColor={(data, newColor) => {
-                        data.colors.splits.resizeHandle = newColor;
-                    }}
-                    getColor={(data) => data.colors.splits.resizeHandle}
-                />
-            </div>
-            <p className="text-gray-500 col-span-3 -mt-3 mb-1">
-                Middle of resize handle color
-            </p>
-            <div> Background Color </div>
-            <div className="col-span-2">
-                <ColorPickerWrapper
-                    mutateColor={(data, newColor) => {
-                        data.colors.splits.resizeHandleBackground = newColor;
-                    }}
-                    getColor={(data) =>
-                        data.colors.splits.resizeHandleBackground
-                    }
-                    alpha={true}
-                />
-            </div>
-            <p className="text-gray-500 col-span-3 -mt-3 mb-1">
-                &quot;glow&quot; area around handle&#39;s color.
-            </p>
 
-            <hr className="col-span-3" />
+            {/*columns*/}
+            <div> </div>
+            <div> Handle </div>
+            <div> Glow </div>
 
-            <div className="col-span-2">Enable message sep (preview only)</div>
-            <div>
-                <Switch
-                    checked={settings.messageSeparator}
-                    onChange={(c) => {
-                        setSettings({ messageSeparator: c });
-                    }}
-                />
-            </div>
+            <div> Color </div>
+            <ColorPickerWrapper
+                mutateColor={(data, newColor) => {
+                    data.colors.splits.resizeHandle = newColor;
+                }}
+                getColor={(data) => data.colors.splits.resizeHandle}
+            />
+            <ColorPickerWrapper
+                mutateColor={(data, newColor) => {
+                    data.colors.splits.resizeHandleBackground = newColor;
+                }}
+                getColor={(data) => data.colors.splits.resizeHandleBackground}
+                alpha={true}
+            />
         </div>
-    );
-}
-
-interface ColorPickerWrapperProps {
-    mutateColor: (draft: WritableDraft<ThemeData>, color: string) => void;
-    getColor: (data: ThemeData) => string;
-    alpha?: boolean;
-}
-export function ColorPickerWrapper({
-    mutateColor,
-    getColor,
-    alpha = false,
-}: ColorPickerWrapperProps) {
-    const { data, setData } = useConfigContext();
-    return (
-        <ColorPicker
-            format={"hex"}
-            // somehow need to set default value to show properly
-            defaultValue={getColor(data)}
-            // it's fine to pass string!!
-            color={getColor(data) as any}
-            onChange={(c, h) => {
-                setData(produce(data, (draft) => mutateColor(draft, h)));
-            }}
-            onFormatChange={() => {}}
-            disabledAlpha={!alpha}
-        />
     );
 }

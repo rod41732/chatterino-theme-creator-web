@@ -2,10 +2,11 @@ import { ThemeData, useConfigContext } from "@/app/color-context-provider";
 import { produce } from "immer";
 import { ColorPicker } from "antd";
 import { WritableDraft } from "immer/src/types/types-external";
+import s from "./settings.module.css";
 
 export function MessageSettings() {
     return (
-        <div className="grid grid-cols-2 gap-2">
+        <div className={`grid grid-cols-2 gap-2 ${s.container}`}>
             <div className="text-lg font-bold col-span-2">Backgrounds</div>
             <div> Regular </div>
             <ColorPickerWrapper
@@ -148,7 +149,9 @@ export function ColorPickerWrapper({
 }: ColorPickerWrapperProps) {
     const { data, setData } = useConfigContext();
     return (
-        <div className="flex items-center space-x-2">
+        <div
+            className={`flex flex-wrap items-center justify-center space-x-2 ${s.container}`}
+        >
             <ColorPicker
                 format={"hex"}
                 // somehow need to set default value to show properly
@@ -161,7 +164,10 @@ export function ColorPickerWrapper({
                 onFormatChange={() => {}}
                 disabledAlpha={!alpha}
             />
-            <p className="text-gray-700"> {getColor(data).toUpperCase()}</p>
+            <p className="text-gray-700 text-xs">
+                {" "}
+                {getColor(data).toUpperCase()}
+            </p>
         </div>
     );
 }
