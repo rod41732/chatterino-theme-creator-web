@@ -21,12 +21,21 @@ export function SplitSettings() {
                 />
             </div>
             <p className="text-gray-500 col-span-3 -mt-3 mb-1">
-                Empty area in split, also seen as thin border between splits
+                Empty area in split (e.g. when there are few messages in split),
+                also seen as thin border between splits
             </p>
 
+            <hr className="col-span-3 my-2" />
+
             <h2 className="text-lg font-bold">Header</h2>
-            <div> Focused (Selected) </div>
-            <div> Unfocused </div>
+            <div className="self-end text-gray-500 text-center">
+                {" "}
+                Focused (Selected){" "}
+            </div>
+            <div className="self-end text-gray-500 text-center">
+                {" "}
+                Unfocused{" "}
+            </div>
 
             <div> Background </div>
             <ColorPickerWrapper
@@ -70,15 +79,16 @@ export function SplitSettings() {
                 getColor={(data) => data.colors.splits.header.border}
             />
 
-            <h2 className="text-lg font-bold col-span-3">Split Drop Preview</h2>
-            <p className="text-gray-500 col-span-3 -mt-3 mb-1">
-                Hint rectangle when you drag and drop split
-            </p>
+            <hr className="col-span-3 my-2" />
 
-            {/*columns*/}
-            <div> </div>
-            <div> Border </div>
-            <div> Area </div>
+            <div>
+                <h2 className={s.sectionTitle}>Split Drop Preview</h2>
+                <p className="text-gray-500 -mt-3 mb-1">
+                    Hint rectangle when you drag and drop split
+                </p>
+            </div>
+            <div className="self-end text-gray-500 text-center"> Border </div>
+            <div className="self-end text-gray-500 text-center"> Area </div>
 
             <div> Color </div>
             <ColorPickerWrapper
@@ -95,15 +105,15 @@ export function SplitSettings() {
                 alpha={true}
             />
 
-            <h2 className="text-lg font-bold col-span-3">Split Drop Target</h2>
-            <p className="text-gray-500 col-span-3 -mt-3 mb-1">
-                Target that is used for adding split in certain situations
-            </p>
+            <div>
+                <h2 className={s.sectionTitle}>Split Drop Target</h2>
+                <p className="text-gray-500 col-span-3 -mt-3 mb-1">
+                    Target that is used for adding split in certain situations
+                </p>
+            </div>
 
-            {/*columns*/}
-            <div> </div>
-            <div> Border </div>
-            <div> Area </div>
+            <div className="self-end text-gray-500 text-center"> Border </div>
+            <div className="self-end text-gray-500 text-center"> Area </div>
 
             <div> Color </div>
             <ColorPickerWrapper
@@ -120,6 +130,8 @@ export function SplitSettings() {
                 getColor={(data) => data.colors.splits.dropTargetRect}
                 alpha={true}
             />
+
+            <hr className="col-span-3 my-2" />
 
             <h2 className="text-lg font-bold col-span-3">Input</h2>
             <p className="text-gray-500 col-span-3 -mt-3 mb-1">
@@ -146,7 +158,7 @@ export function SplitSettings() {
                 />
             </div>
 
-            <div className="col-span-3 py-4"></div>
+            <hr className="col-span-3 my-2" />
 
             <div className="flex space-x-2 items-center col-span-3">
                 <Checkbox
@@ -155,7 +167,10 @@ export function SplitSettings() {
                         setSettings({ messageSeparator: c.target.checked });
                     }}
                 />
-                <div>Enable message sep (for preview only)</div>
+                <div>
+                    Enable message sep (for preview only, you still need to
+                    enable the setting in chatterino)
+                </div>
             </div>
             <div> Message separator </div>
             <div className="col-span-2">
@@ -170,16 +185,18 @@ export function SplitSettings() {
                 Separation line between message, if enabled.
             </p>
 
-            <h2 className="text-lg font-bold col-span-3">Resize</h2>
-            <p className="text-gray-500 col-span-3 -mt-3 mb-1">
-                Resize handles shows when you hold Ctrl to resize split in
-                chatterino.
-            </p>
+            <hr className="col-span-3 my-2" />
 
-            {/*columns*/}
-            <div> </div>
-            <div> Handle </div>
-            <div> Glow </div>
+            <div>
+                <h2 className={s.sectionTitle}>Resize</h2>
+
+                <p className="text-gray-500  -mt-3 mb-1">
+                    Resize handles shows when you hold Ctrl to resize split in
+                    chatterino.
+                </p>
+            </div>
+            <div className="self-end text-gray-500 text-center"> Handle </div>
+            <div className="self-end text-gray-500 text-center"> Glow </div>
 
             <div> Color </div>
             <ColorPickerWrapper

@@ -21,7 +21,7 @@ export function TabsSettings() {
                 />
             </div>
 
-            <div className="py-2 col-span-4"></div>
+            <hr className="col-span-4 my-2" />
 
             <h2>
                 <p className={s.sectionTitle}>Regular Tabs</p>
@@ -87,7 +87,7 @@ export function TabsSettings() {
                 />
             </div>
 
-            <div className="py-2 col-span-4"></div>
+            <hr className="col-span-4 my-2" />
 
             <h2>
                 <p className={s.sectionTitle}>Selected Tab</p>
@@ -150,6 +150,8 @@ export function TabsSettings() {
                     getColor={(data) => data.colors.tabs.selected.text}
                 />
             </div>
+
+            <hr className="col-span-4 my-2" />
 
             <h2>
                 <p className={s.sectionTitle}>Highlight Tabs</p>
@@ -218,7 +220,7 @@ export function TabsSettings() {
                 />
             </div>
 
-            <div className="py-2 col-span-4"></div>
+            <hr className="col-span-4 my-2" />
 
             <h2>
                 <p className={s.sectionTitle}>New Message Tabs</p>
@@ -284,8 +286,6 @@ export function TabsSettings() {
                     getColor={(data) => data.colors.tabs.newMessage.text}
                 />
             </div>
-
-            <div className="py-2 col-span-4"></div>
         </div>
     );
 }

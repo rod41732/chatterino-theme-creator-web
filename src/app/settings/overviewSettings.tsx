@@ -56,7 +56,7 @@ export function OverviewSettings() {
                 </div>
             </div>
 
-            <div className="my-2">&nbsp;</div>
+            <hr className="my-4" />
 
             <div className={s.sectionTitle}>Accent color</div>
             <div className="grid grid-cols-[auto,1fr] gap-y-2 gap-x-4 items-center">
