@@ -75,9 +75,9 @@ export default function Home() {
             label: "Chat",
             key: "chat",
             children: (
-                <div className="p-4 bg-gray-800 h-full overflow-hidden">
+                <div className="p-4 bg-gray-800 text-white h-full overflow-hidden flex flex-col">
                     <ChatterinoSplitVertical
-                        chatMessages={fakeChatListSmall}
+                        chatMessages={fakeChatListLarge}
                         extraClasses={clsx("h-[1000px]")}
                     />
                 </div>
@@ -87,10 +87,13 @@ export default function Home() {
             label: "Split Drop Preivew",
             key: "spilt_drop_preview",
             children: (
-                <div className="p-4 bg-gray-800 h-full overflow-hidden">
+                <div className="p-4 bg-gray-800 text-white h-full overflow-hidden">
+                    <div>
+                        Hover mouse around split & drop target to simulate
+                        dragging split
+                    </div>
                     <ChatterinoDragSplitPreview
                         chatMessages={fakeChatListSmall}
-                        extraClasses={clsx("h-[1000px]")}
                     />
                 </div>
             ),
@@ -99,10 +102,13 @@ export default function Home() {
             label: "Split Drop Target",
             key: "spilt_drop_target",
             children: (
-                <div className="p-4 bg-gray-800 h-full overflow-hidden">
+                <div className="p-4 bg-gray-800 text-white h-full overflow-hidden flex flex-col">
+                    <div>
+                        Hover mouse around split & drop target to simulate
+                        dragging split
+                    </div>
                     <ChatterinoSplitAdvanced
                         chatMessages={fakeChatListVerySmall}
-                        extraClasses={clsx("h-[1000px]")}
                     />
                 </div>
             ),
@@ -111,10 +117,9 @@ export default function Home() {
             label: "Split Resize",
             key: "spilt_resize",
             children: (
-                <div className="p-4 bg-gray-800 h-full overflow-hidden">
+                <div className="p-4 bg-gray-800 text-white h-full overflow-hidden flex flex-col">
                     <ChatterinoSplitResize
                         chatMessages={fakeChatListVerySmall}
-                        extraClasses={clsx("h-[1000px]")}
                     />
                 </div>
             ),
@@ -122,7 +127,11 @@ export default function Home() {
         {
             label: "Tab States",
             key: "tab_states",
-            children: <ChatterinoTabPreview />,
+            children: (
+                <div className="p-4 bg-gray-800 h-full overflow-auto flex flex-col">
+                    <ChatterinoTabPreview />
+                </div>
+            ),
         },
     ];
     return (
