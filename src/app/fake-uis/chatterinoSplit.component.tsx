@@ -139,7 +139,6 @@ export function ChatterinoSplit({
                         "absolute top-1 right-1"
                     )}
                 >
-                    {" "}
                     {input.length}
                 </div>
                 <img

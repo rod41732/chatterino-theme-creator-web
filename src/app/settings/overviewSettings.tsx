@@ -20,8 +20,6 @@ export function OverviewSettings() {
 
     return (
         <div className="">
-            <hr className="col-span-2" />
-
             <div className="text-lg font-bold col-span-2">Icon theme</div>
             <Radio.Group
                 value={iconTheme}

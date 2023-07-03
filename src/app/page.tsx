@@ -93,10 +93,14 @@ export default function Home() {
                     {/*left col*/}
                     <div className="flex-1 flex-shrink overflow-hidden">
                         {/*tab bar*/}
-                        <div className="flex items-center overflow-x-auto">
+                        <div className="flex items-center overflow-x-auto border-b border-gray-200 mb-4">
                             {tabs.map((it) => (
                                 <button
-                                    className="mx-5 border"
+                                    className={clsx(
+                                        "mx-3 py-3   min-w-[80px]",
+                                        "hover:text-sky-500",
+                                        it.key == activeTab && "text-sky-500"
+                                    )}
                                     key={it.key}
                                     onClick={() => setActiveTab(it.key)}
                                 >
@@ -115,7 +119,12 @@ export default function Home() {
                         <div className="flex items-center overflow-x-auto">
                             {previewTabs.map((it) => (
                                 <button
-                                    className="mx-5 border"
+                                    className={clsx(
+                                        "mx-3 py-3   min-w-[80px]",
+                                        "hover:text-sky-500",
+                                        it.key == activePreviewTab &&
+                                            "text-sky-500"
+                                    )}
                                     key={it.key}
                                     onClick={() => setActivePreviewTab(it.key)}
                                 >
@@ -157,11 +166,7 @@ const tabs: Tab[] = [
     {
         label: "Splits",
         key: "splits",
-        children: (
-            <div className="max-h-full overflow-y-scroll">
-                <SplitSettings />
-            </div>
-        ),
+        children: <SplitSettings />,
     },
     {
         label: "Tabs",
