@@ -148,7 +148,7 @@ export function ColorPickerWrapper({
     getColor,
     alpha = false,
 }: ColorPickerWrapperProps) {
-    const { data: _data, setData } = useConfigContext();
+    const { data: _data, setData, setState } = useConfigContext();
     const data = useMemo(() => _data!, [_data]);
 
     return (
@@ -163,6 +163,7 @@ export function ColorPickerWrapper({
                 color={getColor(data) as any}
                 onChange={(c, h) => {
                     setData(produce(data, (draft) => mutateColor(draft, h)));
+                    setState({ hasChange: true });
                 }}
                 onFormatChange={() => {}}
                 disabledAlpha={!alpha}

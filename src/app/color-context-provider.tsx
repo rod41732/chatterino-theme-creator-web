@@ -16,15 +16,22 @@ export interface ThemeData {
 
 export interface ChatterinoSettings {
     messageSeparator: boolean;
+    confirmBeforeLeave: boolean;
+}
+
+export interface TempState {
+    hasChange: boolean;
 }
 
 type ValueOrFactory<T> = T | ((old: T) => T);
 
 interface ConfigContext {
     data: ThemeData | null;
+    state: TempState;
     settings: ChatterinoSettings;
     setData: (newValue: ValueOrFactory<ThemeData | null>) => void;
     setSettings: (newValue: ValueOrFactory<ChatterinoSettings>) => void;
+    setState: (newValue: ValueOrFactory<TempState>) => void;
 }
 
 const ConfigContext = createContext<ConfigContext>(null as any);
@@ -37,6 +44,10 @@ export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
     const [data, setData] = useState<ThemeData | null>(null);
     const [settings, setSettings] = useState<ChatterinoSettings>({
         messageSeparator: false,
+        confirmBeforeLeave: false,
+    });
+    const [state, setState] = useState<TempState>({
+        hasChange: false,
     });
 
     useEffect(() => {
@@ -96,7 +107,7 @@ export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
 
     return (
         <ConfigContext.Provider
-            value={{ data, setData, settings, setSettings }}
+            value={{ data, setData, settings, setSettings, state, setState }}
         >
             {children}
         </ConfigContext.Provider>
