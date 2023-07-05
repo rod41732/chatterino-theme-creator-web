@@ -44,7 +44,7 @@ export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
     const [data, setData] = useState<ThemeData | null>(null);
     const [settings, setSettings] = useState<ChatterinoSettings>({
         messageSeparator: false,
-        confirmBeforeLeave: false,
+        confirmBeforeLeave: true,
     });
     const [state, setState] = useState<TempState>({
         hasChange: false,

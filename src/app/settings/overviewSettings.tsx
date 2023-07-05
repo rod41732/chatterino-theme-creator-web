@@ -2,17 +2,16 @@ import { ColorPickerWrapper } from "@/app/settings/messageSettings";
 import { useConfigContext } from "@/app/color-context-provider";
 import { useCallback } from "react";
 import { produce } from "immer";
-import { Radio } from "antd";
 import s from "./settings.module.css";
 import clsx from "clsx";
 
 export function OverviewSettings() {
-    const { data, setData } = useConfigContext();
-    const iconTheme = data.metadata.iconTheme;
+    const { data, setData, setState } = useConfigContext();
+    const iconTheme = data!.metadata.iconTheme;
     const setIconTheme = useCallback(
         (color: "light" | "dark") => {
             setData((cur) =>
-                produce(cur, (draft) => {
+                produce(cur!, (draft) => {
                     draft.metadata.iconTheme = color;
                 })
             );
@@ -31,7 +30,10 @@ export function OverviewSettings() {
                             ? "border-gray-700 bg-gray-700 text-white"
                             : "border-gray-300 text-gray-700"
                     )}
-                    onClick={() => setIconTheme("light")}
+                    onClick={() => {
+                        setState({ hasChange: true });
+                        setIconTheme("light");
+                    }}
                 >
                     Light
                 </button>
@@ -46,7 +48,10 @@ export function OverviewSettings() {
                             ? "border-gray-700 bg-gray-700 text-white"
                             : "border-gray-300 text-gray-700"
                     )}
-                    onClick={() => setIconTheme("dark")}
+                    onClick={() => {
+                        setState({ hasChange: true });
+                        setIconTheme("dark");
+                    }}
                 >
                     Dark
                 </button>

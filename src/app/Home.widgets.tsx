@@ -4,9 +4,9 @@ import {
     ThemeData,
     useConfigContext,
 } from "@/app/color-context-provider";
-import { Button, Modal } from "antd";
+import { Button, Checkbox, Modal } from "antd";
 import { css2qt, qt2css } from "@/utils";
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import clsx from "clsx";
 import {
     CHATTERINO_BLACK_THEME,
@@ -14,6 +14,7 @@ import {
     CHATTERINO_LIGHT_THEME,
     CHATTERINO_WHITE_THEME,
 } from "@/resources";
+import { immerable, produce } from "immer";
 
 /** create theme modal */
 export function ThemeModal({
@@ -141,15 +142,50 @@ export function ThemeModal({
     );
 }
 
+const listener: (e: BeforeUnloadEvent) => void = (e) => {
+    e.preventDefault();
+    e.returnValue = "";
+};
 export function ThemeButtons() {
-    const { data } = useConfigContext();
+    const { data, setState, state, settings, setSettings } = useConfigContext();
     const [isOpen, setOpen] = useState(false);
     const [saved, setSaved] = useState(false);
+
+    const confirmBeforeLeave = useMemo(
+        () => settings.confirmBeforeLeave,
+        [settings]
+    );
+    const setConfirmBeforeLeave = useCallback(
+        (newValue: boolean) => {
+            setSettings((old) =>
+                produce(old, (draft) => {
+                    draft.confirmBeforeLeave = newValue;
+                })
+            );
+        },
+        [setSettings]
+    );
+
+    // not sure if this is the best place to put
+    useEffect(() => {
+        if (state.hasChange && settings.confirmBeforeLeave) {
+            window.addEventListener("beforeunload", listener, {
+                capture: true,
+            });
+        } else {
+            window.removeEventListener("beforeunload", listener, {
+                capture: true,
+            });
+        }
+    }, [state, settings]);
 
     return (
         data && (
             <>
                 <div className="flex-grow"></div>
+                <p className="text-sm text-gray-500">
+                    {state.hasChange ? "Unsaved changes" : "No changes"}
+                </p>
                 <Button
                     type="primary"
                     className="border-gray-200 text-gray-800 font-bold"
@@ -157,6 +193,15 @@ export function ThemeButtons() {
                 >
                     New
                 </Button>
+                <label className="flex items-center space-x-2 text-sm text-gray-700">
+                    <Checkbox
+                        checked={confirmBeforeLeave}
+                        onChange={(e) =>
+                            setConfirmBeforeLeave(e.target.checked)
+                        }
+                    />
+                    <p> Confirm Before Leave </p>
+                </label>
                 <Button
                     type="primary"
                     className={clsx(
@@ -168,6 +213,7 @@ export function ThemeButtons() {
                     )}
                     onClick={() => {
                         setSaved(true);
+                        setState({ hasChange: false });
                         setTimeout(() => {
                             setSaved(false);
                         }, 500);
