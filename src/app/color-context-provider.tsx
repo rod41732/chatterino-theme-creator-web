@@ -7,6 +7,7 @@ import {
     useState,
 } from "react";
 import { COLOR, flattenKV } from "@/app/themes-data";
+import { GrUserFemale } from "react-icons/gr";
 
 // used for generating theme
 export interface ThemeData {
@@ -20,26 +21,22 @@ export interface ChatterinoSettings {
 type ValueOrFactory<T> = T | ((old: T) => T);
 
 interface ConfigContext {
-    data: ThemeData;
+    data: ThemeData | null;
     settings: ChatterinoSettings;
-    setData: (newValue: ValueOrFactory<ThemeData>) => void;
+    setData: (newValue: ValueOrFactory<ThemeData | null>) => void;
     setSettings: (newValue: ValueOrFactory<ChatterinoSettings>) => void;
 }
 
 const ConfigContext = createContext<ConfigContext>(null as any);
 
 export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
-    const [data, setData] = useState<ThemeData>({
-        colors: COLOR,
-        metadata: {
-            iconTheme: "light",
-        },
-    });
+    const [data, setData] = useState<ThemeData | null>(null);
     const [settings, setSettings] = useState<ChatterinoSettings>({
         messageSeparator: false,
     });
 
     useEffect(() => {
+        if (!data) return;
         // the convention used for generating
         const cssVariables = flattenKV("--", data.colors, "-");
         for (const [variable, val] of cssVariables) {
@@ -50,9 +47,10 @@ export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
             "set props",
             cssVariables.map((it) => it.join(": ") + ";").join("\n")
         );
-    }, [data.colors]);
+    }, [data]);
 
     useEffect(() => {
+        if (!data) return;
         // some "hard coded" color values that are based on theme
 
         document.body.style.setProperty(
@@ -67,7 +65,7 @@ export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
             "--empty-split-color",
             data.metadata.iconTheme == "light" ? "#555555" : "#999999"
         );
-    }, [data.metadata]);
+    }, [data]);
 
     useEffect(() => {
         document.body.style.setProperty(
@@ -76,11 +74,26 @@ export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
         );
     }, [settings]);
 
+    useEffect(() => {
+        const storedData = localStorage.getItem("themeData");
+        if (!storedData) {
+            console.log("no data in storage");
+            return;
+        }
+        try {
+            setData(JSON.parse(storedData));
+            console.log("loaded data from storage");
+        } catch (err) {
+            console.error("Error loading data", err, "data was", {
+                storedData,
+            });
+        }
+    }, []);
+
     return (
         <ConfigContext.Provider
             value={{ data, setData, settings, setSettings }}
         >
-            {" "}
             {children}
         </ConfigContext.Provider>
     );
