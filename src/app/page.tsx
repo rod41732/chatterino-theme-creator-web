@@ -9,6 +9,8 @@ import {
 } from "@/app/fake-uis/chatterino";
 import {
     ConfigContextProvider,
+    saveTheme,
+    THEME_DATA_KEY,
     ThemeData,
     useConfigContext,
 } from "@/app/color-context-provider";
@@ -32,6 +34,7 @@ import {
     CHATTERINO_WHITE_THEME,
 } from "@/resources";
 import { css2qt, qt2css } from "@/utils";
+import { TbHomeEdit } from "react-icons/tb";
 
 interface Tab {
     label: string;
@@ -72,6 +75,8 @@ function ExportButton() {
 function ThemeButtons() {
     const { data } = useConfigContext();
     const [isOpen, setOpen] = useState(false);
+    const [saved, setSaved] = useState(false);
+
     return (
         data && (
             <>
@@ -82,6 +87,28 @@ function ThemeButtons() {
                     onClick={() => setOpen(true)}
                 >
                     New
+                </Button>
+                <Button
+                    type="primary"
+                    className={clsx(
+                        "font-bold",
+                        "hover:border-gray-800 hover:bg-gray-800 hover:text-gray-200",
+                        saved
+                            ? "border-gray-800 bg-gray-800 text-gray-200"
+                            : "border-gray-200 text-gray-800 bg-white"
+                    )}
+                    onClick={() => {
+                        setSaved(true);
+                        setTimeout(() => {
+                            setSaved(false);
+                        }, 500);
+                        localStorage.setItem(
+                            THEME_DATA_KEY,
+                            JSON.stringify(data)
+                        );
+                    }}
+                >
+                    {saved ? "Saved!" : "Save"}
                 </Button>
                 <ExportButton />
                 <ThemeModal isOpen={isOpen} setOpen={setOpen} />
@@ -113,7 +140,7 @@ function ColorApp() {
     const { data, setData } = useConfigContext();
 
     // modal
-    const [selectedPreset, setSelectedPreset] = useState("dark");
+    const [selectedPreset, setSelectedPreset] = useState("");
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement>();
 
@@ -241,10 +268,15 @@ function ColorApp() {
 
                 <button
                     className={clsx(
-                        "w-full py-4 rounded-md border font-mono my-4",
-                        "hover:bg-blue-700 hover:text-blue-100 hover:border-blue-100 ",
-                        "bg-blue-100 text-blue-700 border-blue-700 "
+                        "w-full py-4 rounded-md border font-mono my-8",
+                        "hover:bg-blue-500 hover:text-blue-100 hover:border-blue-100 ",
+                        "bg-blue-700 text-blue-100 border-blue-100",
+                        "disabled:bg-blue-100 disabled:text-blue-700 disabled:border-blue-700"
                     )}
+                    disabled={
+                        !selectedPreset ||
+                        (selectedPreset == "custom" && selectedFile == null)
+                    }
                     onClick={() => {
                         switch (selectedPreset) {
                             case "light":
@@ -405,15 +437,19 @@ function ThemeModal({
                 switch (selectedPreset) {
                     case "light":
                         setData(CHATTERINO_LIGHT_THEME);
+                        saveTheme(CHATTERINO_LIGHT_THEME);
                         break;
                     case "dark":
                         setData(CHATTERINO_DARK_THEME);
+                        saveTheme(CHATTERINO_DARK_THEME);
                         break;
                     case "white":
                         setData(CHATTERINO_WHITE_THEME);
+                        saveTheme(CHATTERINO_WHITE_THEME);
                         break;
                     case "black":
                         setData(CHATTERINO_BLACK_THEME);
+                        saveTheme(CHATTERINO_BLACK_THEME);
                         break;
                     case "custom":
                         if (!selectedFile) {
@@ -425,7 +461,9 @@ function ThemeModal({
                             .then((res) => {
                                 // TODO: extra no validation
                                 const theme = JSON.parse(res) as ThemeData;
-                                setData(qt2css(theme));
+                                const convertedTheme = qt2css(theme);
+                                setData(convertedTheme);
+                                saveTheme(convertedTheme);
                             })
                             .catch((err) => {
                                 console.error("Error reading file", err);

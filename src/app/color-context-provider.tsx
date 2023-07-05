@@ -6,14 +6,14 @@ import {
     useEffect,
     useState,
 } from "react";
-import { COLOR, flattenKV } from "@/app/themes-data";
-import { GrUserFemale } from "react-icons/gr";
+import { flattenKV } from "@/app/themes-data";
 
 // used for generating theme
 export interface ThemeData {
     colors: ColorScheme;
     metadata: ThemeMetadata;
 }
+
 export interface ChatterinoSettings {
     messageSeparator: boolean;
 }
@@ -29,6 +29,10 @@ interface ConfigContext {
 
 const ConfigContext = createContext<ConfigContext>(null as any);
 
+export const THEME_DATA_KEY = "themeData";
+export function saveTheme(theme: ThemeData) {
+    localStorage.setItem(THEME_DATA_KEY, JSON.stringify(theme));
+}
 export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
     const [data, setData] = useState<ThemeData | null>(null);
     const [settings, setSettings] = useState<ChatterinoSettings>({
@@ -43,10 +47,10 @@ export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
             document.body.style.setProperty(variable, val);
         }
         // log css xd
-        console.log(
-            "set props",
-            cssVariables.map((it) => it.join(": ") + ";").join("\n")
-        );
+        // console.log(
+        //     "set props",
+        //     cssVariables.map((it) => it.join(": ") + ";").join("\n")
+        // );
     }, [data]);
 
     useEffect(() => {
@@ -75,7 +79,7 @@ export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
     }, [settings]);
 
     useEffect(() => {
-        const storedData = localStorage.getItem("themeData");
+        const storedData = localStorage.getItem(THEME_DATA_KEY);
         if (!storedData) {
             console.log("no data in storage");
             return;

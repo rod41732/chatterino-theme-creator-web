@@ -3,6 +3,7 @@ import { produce } from "immer";
 import { ColorPicker } from "antd";
 import { WritableDraft } from "immer/src/types/types-external";
 import s from "./settings.module.css";
+import { useMemo } from "react";
 
 export function MessageSettings() {
     return (
@@ -147,7 +148,9 @@ export function ColorPickerWrapper({
     getColor,
     alpha = false,
 }: ColorPickerWrapperProps) {
-    const { data, setData } = useConfigContext();
+    const { data: _data, setData } = useConfigContext();
+    const data = useMemo(() => _data!, [_data]);
+
     return (
         <div
             className={`flex flex-wrap items-center justify-center space-x-2 ${s.container}`}
