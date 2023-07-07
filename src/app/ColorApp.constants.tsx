@@ -18,6 +18,7 @@ import {
 import clsx from "clsx";
 import { ChatterinoTabPreview } from "@/app/fake-uis/chatterinoTabPreview.component";
 import { ReactNode } from "react";
+import { ChatterinoEmptySplit } from "@/app/fake-uis/emptysplit";
 
 interface Tab {
     label: string;
@@ -103,6 +104,15 @@ export const PREVIEW_TABS: Tab[] = [
         children: (
             <div className="p-4 bg-gray-800 text-white h-full overflow-hidden flex flex-col">
                 <ChatterinoSplitResize chatMessages={fakeChatListVerySmall} />
+            </div>
+        ),
+    },
+    {
+        label: "Empty Split",
+        key: "emptt_split",
+        children: (
+            <div className="p-4 bg-gray-800 text-white h-full overflow-hidden flex flex-col">
+                <ChatterinoEmptySplit />
             </div>
         ),
     },

@@ -1,7 +1,6 @@
-import { ThemeData, useConfigContext } from "@/app/color-context-provider";
+import { useConfigContext } from "@/app/color-context-provider";
 import { produce } from "immer";
-import { Checkbox, ColorPicker, Switch } from "antd";
-import { WritableDraft } from "immer/src/types/types-external";
+import { Checkbox } from "antd";
 import s from "./settings.module.css";
 import { ColorPickerWrapper } from "@/app/settings/messageSettings";
 
@@ -64,6 +63,9 @@ export function SplitSettings() {
                 }}
                 getColor={(data) => data.colors.splits.header.text}
             />
+            <p className="col-span-3">
+                Unfocused text color is also used for empty split text
+            </p>
 
             <div> Border </div>
             <ColorPickerWrapper
@@ -164,7 +166,11 @@ export function SplitSettings() {
                 <Checkbox
                     checked={settings.messageSeparator}
                     onChange={(c) => {
-                        setSettings({ messageSeparator: c.target.checked });
+                        setSettings((cur) =>
+                            produce(cur, (draft) => {
+                                draft.messageSeparator = c.target.checked;
+                            })
+                        );
                     }}
                 />
                 <div>
