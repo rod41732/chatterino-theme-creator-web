@@ -368,3 +368,7 @@
     color: var(--window-text);
     font-size: 0.75rem;
 }
+
+.divider    {
+    background-color: #99999999;
+}

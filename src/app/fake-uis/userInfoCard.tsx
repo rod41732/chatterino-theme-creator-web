@@ -64,7 +64,7 @@ export function UserCard() {
                         <div> ★ Previously subscribed for 14 months</div>
                     </div>
                 </div>
-                <hr />
+                <div className={clsx(styles.divider, "h-px")} />
                 {/*action row*/}
                 <div className="flex space-x-4 justify-center">
                     <div className="flex space-x-2">
@@ -77,7 +77,7 @@ export function UserCard() {
                     </div>
                     <div>Usercard</div>
                 </div>
-                <hr />
+                <div className={clsx(styles.divider, "h-0.5")} />
                 <ChatterinoSplit
                     name=""
                     chatMessages={fakeChatListSmall}
