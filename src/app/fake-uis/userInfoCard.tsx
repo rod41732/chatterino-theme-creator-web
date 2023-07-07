@@ -27,7 +27,7 @@ export function UserCard() {
                     <img src="/pajlada.png" className="w-32 h-32" />
                     <div className="flex-grow">
                         <div className="flex space-x-2 items-center">
-                            <div> Supibot </div>
+                            <div> pajlada </div>
                             <img
                                 src={
                                     iconTheme == "light"
@@ -37,7 +37,7 @@ export function UserCard() {
                                 className="opacity-[0.15] p-1 hover:opacity-100 hover:bg-black/50 w-[26px] h-[26px]"
                             />
                             <div className="flex-grow"></div>
-                            <div> ID: 68136884 </div>
+                            <div> ID: 123456 </div>
                             <img
                                 src={
                                     iconTheme == "light"
@@ -58,8 +58,8 @@ export function UserCard() {
                                 onClick={() => setIsPin((e) => !e)}
                             />
                         </div>
-                        <div> Followers: 918 </div>
-                        <div> Created: 2014-06-10 </div>
+                        <div> Followers: 1337 </div>
+                        <div> Created: 2013-01-01 </div>
 
                         <div> ★ Previously subscribed for 14 months</div>
                     </div>
