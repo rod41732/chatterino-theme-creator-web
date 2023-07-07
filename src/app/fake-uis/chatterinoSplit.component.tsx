@@ -1,5 +1,5 @@
 import { FakeChatMessage } from "@/app/data";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "@/app/fake-uis/chatlist.module.css";
 import clsx from "clsx";
 import { Message } from "@/app/fake-uis/message.component";
@@ -30,11 +30,10 @@ export function ChatterinoSplit({
 }) {
     const [animationState, setAnimationState] = useState(0);
     const [input, setInput] = useState("");
-    const {
-        data: {
-            metadata: { iconTheme },
-        },
-    } = useConfigContext();
+    const { data } = useConfigContext();
+    const iconTheme = useMemo(() => {
+        return data!.metadata.iconTheme;
+    }, [data]);
     const chatContainerRef = useRef<HTMLDivElement>();
 
     useEffect(() => {
