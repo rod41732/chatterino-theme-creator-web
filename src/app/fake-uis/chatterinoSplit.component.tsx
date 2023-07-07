@@ -61,6 +61,10 @@ export function ChatterinoSplit({
                 )}
             >
                 <div className="flex-grow text-center py-1">{name}</div>
+                <div className={styles.splitHeaderChatRoomStatus}>
+                    {" "}
+                    follow (10,080m){" "}
+                </div>
                 <button className="self-stretch flex items-center -m-px mx-2 opacity-50">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
