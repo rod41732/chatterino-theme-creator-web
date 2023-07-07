@@ -138,6 +138,19 @@ export function MessageSettings() {
     );
 }
 
+function trimOpacity(hexString: string): string {
+    if (hexString.length == 9) {
+        return hexString.substring(0, 7);
+    }
+    return hexString;
+}
+function ensureOpactiy(hexString: string): string {
+    if (hexString.length == 7) {
+        return hexString + "ff";
+    }
+    return hexString;
+}
+
 interface ColorPickerWrapperProps {
     mutateColor: (draft: WritableDraft<ThemeData>, color: string) => void;
     getColor: (data: ThemeData) => string;
@@ -162,7 +175,12 @@ export function ColorPickerWrapper({
                 // it's fine to pass string!!
                 color={getColor(data) as any}
                 onChange={(c, h) => {
-                    setData(produce(data, (draft) => mutateColor(draft, h)));
+                    const finalValue = alpha
+                        ? ensureOpactiy(h)
+                        : trimOpacity(h);
+                    setData(
+                        produce(data, (draft) => mutateColor(draft, finalValue))
+                    );
                     setState({ hasChange: true });
                 }}
                 onFormatChange={() => {}}
