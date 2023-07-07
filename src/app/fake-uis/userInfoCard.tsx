@@ -1,12 +1,11 @@
 import styles from "./chatlist.module.css";
 import clsx from "clsx";
-import { QtCheckbox, QtRadio } from "@/app/fake-uis/FakeQt.component";
+import { QtCheckbox, QtInput } from "@/app/fake-uis/FakeQt.component";
 import { ChatterinoSplit } from "@/app/fake-uis/chatterinoSplit.component";
-import { fakeChatListSmall, fakeChatListVerySmall } from "@/app/data";
+import { fakeChatListSmall } from "@/app/data";
 import { useConfigContext } from "@/app/color-context-provider";
 import { useMemo, useState } from "react";
-import { PiHouseSimpleThin } from "react-icons/pi";
-import { Checkbox } from "antd";
+
 export function UserCard() {
     const { data } = useConfigContext();
     const iconTheme = useMemo(() => {
@@ -81,7 +80,67 @@ export function UserCard() {
                 <ChatterinoSplit
                     name=""
                     chatMessages={fakeChatListSmall}
-                    chatOnly={true}
+                    hideTab={true}
+                    hideInput={true}
+                />
+            </div>
+        </div>
+    );
+}
+
+export function ThreadPopup() {
+    const { data } = useConfigContext();
+    const iconTheme = useMemo(() => {
+        return data!.metadata.iconTheme;
+    }, [data]);
+    const [isPin, setIsPin] = useState(false);
+
+    return (
+        <div
+            className={clsx(
+                styles.window,
+                styles.chatterinoWindow,
+                "max-h-[500px] text-sm"
+            )}
+        >
+            <div className="flex h-full overflow-hidden flex-col">
+                <div className={clsx(styles.window, "p-2 flex space-x-1")}>
+                    <QtCheckbox selected={true} />
+                    <p className="text-sm"> Subscribe to thread</p>
+                </div>
+                <ChatterinoSplit
+                    name=""
+                    chatMessages={fakeChatListSmall}
+                    hideTab={true}
+                />
+            </div>
+        </div>
+    );
+}
+
+export function FindPopup() {
+    const { data } = useConfigContext();
+    const iconTheme = useMemo(() => {
+        return data!.metadata.iconTheme;
+    }, [data]);
+    const [isPin, setIsPin] = useState(false);
+
+    return (
+        <div
+            className={clsx(
+                styles.window,
+                styles.chatterinoWindow,
+                "max-h-[500px] text-sm"
+            )}
+        >
+            <div className="flex h-full overflow-hidden flex-col">
+                <div className={clsx(styles.window, "p-2 flex space-x-1")}>
+                    <QtInput placeholder="Type to search" />
+                </div>
+                <ChatterinoSplit
+                    name=""
+                    chatMessages={fakeChatListSmall}
+                    hideTab={true}
                 />
             </div>
         </div>

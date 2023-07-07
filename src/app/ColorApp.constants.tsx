@@ -20,7 +20,7 @@ import { ChatterinoTabPreview } from "@/app/fake-uis/chatterinoTabPreview.compon
 import { ReactNode } from "react";
 import { ChatterinoEmptySplit } from "@/app/fake-uis/emptysplit";
 import { EmoteMenu, NewSplitMenu } from "@/app/fake-uis/newSplitMenu";
-import { UserCard } from "@/app/fake-uis/userInfoCard";
+import { FindPopup, ThreadPopup, UserCard } from "@/app/fake-uis/userInfoCard";
 
 interface Tab {
     label: string;
@@ -151,6 +151,24 @@ export const PREVIEW_TABS: Tab[] = [
         children: (
             <div className="p-4 bg-gray-800 h-full overflow-auto flex flex-col">
                 <UserCard />
+            </div>
+        ),
+    },
+    {
+        label: "Thread popup",
+        key: "thread_popup",
+        children: (
+            <div className="p-4 bg-gray-800 h-full overflow-auto flex flex-col">
+                <ThreadPopup />
+            </div>
+        ),
+    },
+    {
+        label: "Find popup",
+        key: "fin_popup",
+        children: (
+            <div className="p-4 bg-gray-800 h-full overflow-auto flex flex-col">
+                <FindPopup />
             </div>
         ),
     },

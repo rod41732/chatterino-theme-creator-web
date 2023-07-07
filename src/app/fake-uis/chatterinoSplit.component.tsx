@@ -14,7 +14,8 @@ export function ChatterinoSplit({
     showReply = false,
     showCompletion = false,
     showScrollToBottom = false,
-    chatOnly = false,
+    hideTab = false,
+    hideInput = false,
 }: {
     name: string;
     active?: boolean;
@@ -24,7 +25,8 @@ export function ChatterinoSplit({
     showReply?: boolean;
     showCompletion?: boolean;
     showScrollToBottom?: boolean;
-    chatOnly?: boolean;
+    hideTab?: boolean;
+    hideInput?: boolean;
 }) {
     const [animationState, setAnimationState] = useState(0);
     const [input, setInput] = useState("");
@@ -55,11 +57,11 @@ export function ChatterinoSplit({
         // make it so that split take space evenly
         <div
             className={`${
-                chatOnly ? styles.embeddedSplit : styles.split
+                hideTab ? styles.embeddedSplit : styles.split
             } flex-1 flex flex-col relative overflow-hidden`}
         >
             {/*header*/}
-            {!chatOnly && (
+            {!hideTab && (
                 <div
                     className={clsx(
                         active ? styles.splitHeaderFocused : styles.splitHeader,
@@ -136,7 +138,7 @@ export function ChatterinoSplit({
             </div>
 
             {/*reply, chat box, etc*/}
-            {showReply && !chatOnly && (
+            {showReply && !hideInput && (
                 <div
                     className={clsx(
                         styles.replyIndicator,
@@ -155,7 +157,7 @@ export function ChatterinoSplit({
                     />
                 </div>
             )}
-            {!chatOnly && (
+            {!hideInput && (
                 <div
                     className={clsx(
                         "flex-shrink-0 relative",
