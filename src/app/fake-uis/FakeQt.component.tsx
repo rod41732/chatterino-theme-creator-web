@@ -2,6 +2,7 @@
 
 import clsx from "clsx";
 import { PropsWithChildren } from "react";
+import { BsCheck } from "react-icons/bs";
 
 /**
  *
@@ -18,7 +19,7 @@ export function QtRadio({
         <div
             role="button"
             onClick={onClick}
-            className="p-[3px] rounded-full  border-black border bg-[#333333] flex items-center justify-center"
+            className="p-[3px] rounded-full  border-black border bg-[#333333] flex items-center justify-center self-center w-min"
         >
             <div
                 className={clsx(
@@ -46,5 +47,27 @@ export function QtButton({ children }: PropsWithChildren<{}>) {
         <button className="bg-[#595959] w-[100px] rounded-sm shadow-[inset_0px_0px_2px_#999999] text-white text-sm py-[3px]">
             {children}
         </button>
+    );
+}
+export function QtCheckbox({
+    selected,
+    onClick,
+}: {
+    selected: boolean;
+    onClick?: () => void;
+}) {
+    return (
+        <div
+            role="button"
+            onClick={onClick}
+            className="border-black border bg-[#333333] flex items-center justify-center self-center w-min"
+        >
+            <BsCheck
+                className={clsx(
+                    selected ? "text-white" : "text-transparent",
+                    "-m-0.5 text-lg"
+                )}
+            />
+        </div>
     );
 }

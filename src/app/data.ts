@@ -243,4 +243,10 @@ export const fakeChatListVerySmall: FakeChatMessage[] = [
         username: "doge",
         chat: "fforsen forsen forsen forsen forsen forsen forsen forsen orsen forsen ",
     },
+    {
+        id: "13",
+        timestampText: "20:32",
+        username: "doge",
+        chat: "fforsen forsen forsen forsen forsen forsen forsen forsen orsen forsen ",
+    },
 ];

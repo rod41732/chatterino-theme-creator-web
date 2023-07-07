@@ -177,6 +177,10 @@
     border: 1px solid var(--splits-background);
 }
 
+.embeddedSplit {
+    background-color: var(--splits-background);
+}
+
 
 .splitContainerRow {
     display: flex;

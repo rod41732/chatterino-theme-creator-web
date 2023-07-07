@@ -20,6 +20,7 @@ import { ChatterinoTabPreview } from "@/app/fake-uis/chatterinoTabPreview.compon
 import { ReactNode } from "react";
 import { ChatterinoEmptySplit } from "@/app/fake-uis/emptysplit";
 import { EmoteMenu, NewSplitMenu } from "@/app/fake-uis/newSplitMenu";
+import { UserCard } from "@/app/fake-uis/userInfoCard";
 
 interface Tab {
     label: string;
@@ -141,6 +142,15 @@ export const PREVIEW_TABS: Tab[] = [
         children: (
             <div className="p-4 bg-gray-800 h-full overflow-auto flex flex-col">
                 <ChatterinoTabPreview />
+            </div>
+        ),
+    },
+    {
+        label: "User card",
+        key: "user_card",
+        children: (
+            <div className="p-4 bg-gray-800 h-full overflow-auto flex flex-col">
+                <UserCard />
             </div>
         ),
     },

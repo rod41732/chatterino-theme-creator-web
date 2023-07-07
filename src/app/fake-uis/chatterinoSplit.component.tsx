@@ -14,6 +14,7 @@ export function ChatterinoSplit({
     showReply = false,
     showCompletion = false,
     showScrollToBottom = false,
+    chatOnly = false,
 }: {
     name: string;
     active?: boolean;
@@ -23,6 +24,7 @@ export function ChatterinoSplit({
     showReply?: boolean;
     showCompletion?: boolean;
     showScrollToBottom?: boolean;
+    chatOnly?: boolean;
 }) {
     const [animationState, setAnimationState] = useState(0);
     const [input, setInput] = useState("");
@@ -52,56 +54,63 @@ export function ChatterinoSplit({
     return (
         // make it so that split take space evenly
         <div
-            className={`${styles.split} flex-1 flex flex-col relative overflow-hidden`}
+            className={`${
+                chatOnly ? styles.embeddedSplit : styles.split
+            } flex-1 flex flex-col relative overflow-hidden`}
         >
-            <div
-                className={clsx(
-                    active ? styles.splitHeaderFocused : styles.splitHeader,
-                    styles.splitHeaderBase
-                )}
-            >
-                <div className="flex-grow text-center py-1">{name}</div>
-                <div className={styles.splitHeaderChatRoomStatus}>
-                    {" "}
-                    follow (10,080m){" "}
+            {/*header*/}
+            {!chatOnly && (
+                <div
+                    className={clsx(
+                        active ? styles.splitHeaderFocused : styles.splitHeader,
+                        styles.splitHeaderBase
+                    )}
+                >
+                    <div className="flex-grow text-center py-1">{name}</div>
+                    <div className={styles.splitHeaderChatRoomStatus}>
+                        {" "}
+                        follow (10,080m){" "}
+                    </div>
+                    <button className="self-stretch flex items-center -m-px mx-2 opacity-50">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                            alt="viewers list"
+                            src={
+                                iconTheme == "dark"
+                                    ? "/chatterino-icons/viewersDark.png"
+                                    : "/chatterino-icons/viewersLight.png"
+                            }
+                            className="h-5 w-5 object-contain"
+                        />
+                    </button>
+                    <button className="self-stretch flex items-center -m-px mx-2 opacity-50">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                            alt="split menu"
+                            src={
+                                iconTheme == "dark"
+                                    ? "/chatterino-icons/menuDark.png"
+                                    : "/chatterino-icons/menuLight.png"
+                            }
+                            className="h-5 w-5 object-contain"
+                        />
+                    </button>
+                    <button className="self-stretch flex items-center -m-px opacity-50">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                            alt="add split"
+                            src={
+                                iconTheme == "dark"
+                                    ? "/chatterino-icons/addSplitDark.png"
+                                    : "/chatterino-icons/addSplit.png"
+                            }
+                            className="h-8 w-auto"
+                        />
+                    </button>
                 </div>
-                <button className="self-stretch flex items-center -m-px mx-2 opacity-50">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                        alt="viewers list"
-                        src={
-                            iconTheme == "dark"
-                                ? "/chatterino-icons/viewersDark.png"
-                                : "/chatterino-icons/viewersLight.png"
-                        }
-                        className="h-5 w-5 object-contain"
-                    />
-                </button>
-                <button className="self-stretch flex items-center -m-px mx-2 opacity-50">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                        alt="split menu"
-                        src={
-                            iconTheme == "dark"
-                                ? "/chatterino-icons/menuDark.png"
-                                : "/chatterino-icons/menuLight.png"
-                        }
-                        className="h-5 w-5 object-contain"
-                    />
-                </button>
-                <button className="self-stretch flex items-center -m-px opacity-50">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                        alt="add split"
-                        src={
-                            iconTheme == "dark"
-                                ? "/chatterino-icons/addSplitDark.png"
-                                : "/chatterino-icons/addSplit.png"
-                        }
-                        className="h-8 w-auto"
-                    />
-                </button>
-            </div>
+            )}
+
+            {/*list */}
             <div className="relative flex-grow flex-shrink overflow-hidden">
                 <div
                     className={`overflow-y-auto overflow-x-hidden h-full ${styles.list}`}
@@ -115,6 +124,7 @@ export function ChatterinoSplit({
                             animationState={animationState}
                         />
                     ))}
+                    <div className={clsx("h-[8px]", styles.split)}></div>
                 </div>
                 {showScrollToBottom && (
                     <div
@@ -124,7 +134,9 @@ export function ChatterinoSplit({
                     </div>
                 )}
             </div>
-            {showReply && (
+
+            {/*reply, chat box, etc*/}
+            {showReply && !chatOnly && (
                 <div
                     className={clsx(
                         styles.replyIndicator,
@@ -143,40 +155,77 @@ export function ChatterinoSplit({
                     />
                 </div>
             )}
-            <div className={clsx("flex-shrink-0 relative", styles.inputBorder)}>
-                <input
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    className={`${styles.input} w-full px-2 py-2 outline-0`}
-                    placeholder="Try typing message here..."
-                />
+            {!chatOnly && (
                 <div
                     className={clsx(
-                        styles.characterCount,
-                        "absolute top-1 right-1"
+                        "flex-shrink-0 relative",
+                        styles.inputBorder
                     )}
                 >
-                    {input.length}
-                </div>
-                <img
-                    className={clsx("absolute bottom-1 right-1", "w-4 h-4")}
-                    src={
-                        iconTheme == "light"
-                            ? "/chatterino-icons/emote.svg"
-                            : "/chatterino-icons/emoteDark.svg"
-                    }
-                />
-                {showCompletion && (
+                    <input
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        className={`${styles.input} w-full px-2 py-2 outline-0`}
+                        placeholder="Try typing message here..."
+                    />
                     <div
-                        className={`text-base w-[300px] h-[200px] absolute top-0 left-1/2 -translate-y-full -translate-x-1/2 p-2 ${styles.window}  ${styles.completionMenu}`}
+                        className={clsx(
+                            styles.characterCount,
+                            "absolute top-1 right-1"
+                        )}
                     >
-                        <div className="relative">
-                            <div
-                                className={clsx(
-                                    styles.emoteSelect,
-                                    "absolute inset-0"
-                                )}
-                            ></div>
+                        {input.length}
+                    </div>
+                    <img
+                        className={clsx("absolute bottom-1 right-1", "w-4 h-4")}
+                        src={
+                            iconTheme == "light"
+                                ? "/chatterino-icons/emote.svg"
+                                : "/chatterino-icons/emoteDark.svg"
+                        }
+                    />
+                    {showCompletion && (
+                        <div
+                            className={`text-base w-[300px] h-[200px] absolute top-0 left-1/2 -translate-y-full -translate-x-1/2 p-2 ${styles.window}  ${styles.completionMenu}`}
+                        >
+                            <div className="relative">
+                                <div
+                                    className={clsx(
+                                        styles.emoteSelect,
+                                        "absolute inset-0"
+                                    )}
+                                ></div>
+                                <div className="flex items-center relative">
+                                    <img
+                                        src="https://cdn.frankerfacez.com/emote/536927/4"
+                                        className="h-8 w-auto mx-2"
+                                    />
+                                    <p
+                                        className={clsx(
+                                            styles.windowText,
+                                            "text-xs"
+                                        )}
+                                    >
+                                        {" "}
+                                        FeelsDankMan - Global FrankerFaceZ{" "}
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex items-center relative">
+                                <img
+                                    src="https://cdn.frankerfacez.com/emote/536927/4"
+                                    className="h-8 w-auto mx-2"
+                                />
+                                <p
+                                    className={clsx(
+                                        styles.windowText,
+                                        "text-xs"
+                                    )}
+                                >
+                                    {" "}
+                                    FeelsDankMan - Global FrankerFaceZ{" "}
+                                </p>
+                            </div>
                             <div className="flex items-center relative">
                                 <img
                                     src="https://cdn.frankerfacez.com/emote/536927/4"
@@ -193,29 +242,9 @@ export function ChatterinoSplit({
                                 </p>
                             </div>
                         </div>
-                        <div className="flex items-center relative">
-                            <img
-                                src="https://cdn.frankerfacez.com/emote/536927/4"
-                                className="h-8 w-auto mx-2"
-                            />
-                            <p className={clsx(styles.windowText, "text-xs")}>
-                                {" "}
-                                FeelsDankMan - Global FrankerFaceZ{" "}
-                            </p>
-                        </div>
-                        <div className="flex items-center relative">
-                            <img
-                                src="https://cdn.frankerfacez.com/emote/536927/4"
-                                className="h-8 w-auto mx-2"
-                            />
-                            <p className={clsx(styles.windowText, "text-xs")}>
-                                {" "}
-                                FeelsDankMan - Global FrankerFaceZ{" "}
-                            </p>
-                        </div>
-                    </div>
-                )}
-            </div>
+                    )}
+                </div>
+            )}
             {!previewSplit && persistentPreviewSplit && (
                 <div
                     className={clsx(
