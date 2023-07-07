@@ -100,7 +100,7 @@ export function ChatterinoSplit({
             </div>
             <div className="relative flex-grow flex-shrink overflow-hidden">
                 <div
-                    className={`overflow-y-auto h-full ${styles.list}`}
+                    className={`overflow-y-auto overflow-x-hidden h-full ${styles.list}`}
                     ref={(it) => (chatContainerRef.current = it!)}
                 >
                     {chatMessages.map((it, idx) => (

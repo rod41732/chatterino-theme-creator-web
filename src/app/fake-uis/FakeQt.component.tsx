@@ -32,16 +32,19 @@ export function QtRadio({
     );
 }
 
-export function QtInput() {
+export function QtInput({ placeholder }: { placeholder?: string }) {
     return (
-        <input className="w-full border-black focus:outline-[#53A0ED] outline-none bg-[#333333] text-white caret-white rounded-sm" />
+        <input
+            className="w-full border-black focus:border-[#53A0ED] border-2 outline-none bg-[#333333] text-white text-sm caret-white rounded-sm placeholder:text-[#7D7F7D] px-1"
+            placeholder={placeholder}
+        />
     );
 }
 
 export function QtButton({ children }: PropsWithChildren<{}>) {
     return (
-        <button className="bg-[#595959] w-[100px] rounded-sm shadow-[inset_0px_0px_2px_#999999]">
-            OK
+        <button className="bg-[#595959] w-[100px] rounded-sm shadow-[inset_0px_0px_2px_#999999] text-white text-sm py-[3px]">
+            {children}
         </button>
     );
 }

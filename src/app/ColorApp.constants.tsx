@@ -19,7 +19,7 @@ import clsx from "clsx";
 import { ChatterinoTabPreview } from "@/app/fake-uis/chatterinoTabPreview.component";
 import { ReactNode } from "react";
 import { ChatterinoEmptySplit } from "@/app/fake-uis/emptysplit";
-import { NewSplitMenu } from "@/app/fake-uis/newSplitMenu";
+import { EmoteMenu, NewSplitMenu } from "@/app/fake-uis/newSplitMenu";
 
 interface Tab {
     label: string;
@@ -123,6 +123,15 @@ export const PREVIEW_TABS: Tab[] = [
         children: (
             <div className="p-4 bg-gray-800 text-white h-full overflow-hidden flex flex-col">
                 <NewSplitMenu />
+            </div>
+        ),
+    },
+    {
+        label: "Emote Menu",
+        key: "emote_menu",
+        children: (
+            <div className="p-4 bg-gray-800 text-white h-full overflow-hidden flex flex-col">
+                <EmoteMenu />
             </div>
         ),
     },

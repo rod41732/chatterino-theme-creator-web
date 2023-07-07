@@ -45,6 +45,7 @@
 }
 
 
+/** list that apply custom scrollbar */
 .list {
     /*scrollbar-color: red black;*/
     position: relative;
