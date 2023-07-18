@@ -9,10 +9,11 @@ import {
 } from "@/resources";
 import { qt2css } from "@/utils";
 import { PREVIEW_TABS, TABS } from "@/app/ColorApp.constants";
+import { useTabContext } from "@/app/tab-context-provider";
 
 export function ColorApp() {
-    const [activeTab, setActiveTab] = useState("overview");
-    const [activePreviewTab, setActivePreviewTab] = useState("chat");
+    const { setPreviewTab, setSettingsTab, settingsTab, previewTab } =
+        useTabContext();
     const { data, setData } = useConfigContext();
 
     // modal
@@ -31,17 +32,17 @@ export function ColorApp() {
                             className={clsx(
                                 "mx-3 py-3   min-w-[80px]",
                                 "hover:text-sky-500",
-                                it.key == activeTab && "text-sky-500"
+                                it.key == settingsTab && "text-sky-500",
                             )}
                             key={it.key}
-                            onClick={() => setActiveTab(it.key)}
+                            onClick={() => setSettingsTab(it.key)}
                         >
                             {it.label}
                         </button>
                     ))}
                 </div>
                 <div className="overflow-auto max-h-full">
-                    {TABS.find((it) => it.key == activeTab)?.children}
+                    {TABS.find((it) => it.key == settingsTab)?.children}
                 </div>
             </div>
 
@@ -54,20 +55,17 @@ export function ColorApp() {
                             className={clsx(
                                 "mx-3 py-3   min-w-[80px]",
                                 "hover:text-sky-500",
-                                it.key == activePreviewTab && "text-sky-500"
+                                it.key == previewTab && "text-sky-500",
                             )}
                             key={it.key}
-                            onClick={() => setActivePreviewTab(it.key)}
+                            onClick={() => setPreviewTab(it.key)}
                         >
                             {it.label}
                         </button>
                     ))}
                 </div>
                 <div className="overflow-hidden relative flex-1">
-                    {
-                        PREVIEW_TABS.find((it) => it.key == activePreviewTab)
-                            ?.children
-                    }
+                    {PREVIEW_TABS.find((it) => it.key == previewTab)?.children}
                 </div>
             </div>
         </div>
@@ -90,7 +88,7 @@ export function ColorApp() {
                                 "w-full py-4 rounded-md border font-mono",
                                 selectedPreset == it
                                     ? "bg-gray-700 text-gray-100 border-gray-100 "
-                                    : "bg-gray-100 text-gray-700 border-gray-700 "
+                                    : "bg-gray-100 text-gray-700 border-gray-700 ",
                             )}
                             onClick={() => setSelectedPreset(it)}
                         >
@@ -107,7 +105,7 @@ export function ColorApp() {
                             "w-full py-4 rounded-md border font-mono",
                             selectedPreset == "custom"
                                 ? "bg-gray-700 text-gray-100 border-gray-100 "
-                                : "bg-gray-100 text-gray-700 border-gray-700 "
+                                : "bg-gray-100 text-gray-700 border-gray-700 ",
                         )}
                         onClick={() => {
                             setSelectedPreset("custom");
@@ -147,7 +145,7 @@ export function ColorApp() {
                         "w-full py-4 rounded-md border font-mono my-8",
                         "hover:bg-blue-500 hover:text-blue-100 hover:border-blue-100 ",
                         "bg-blue-700 text-blue-100 border-blue-100",
-                        "disabled:bg-blue-100 disabled:text-blue-700 disabled:border-blue-700"
+                        "disabled:bg-blue-100 disabled:text-blue-700 disabled:border-blue-700",
                     )}
                     disabled={
                         !selectedPreset ||
@@ -177,17 +175,18 @@ export function ColorApp() {
                                     .then((res) => {
                                         // TODO: extra no validation
                                         const theme = JSON.parse(
-                                            res
+                                            res,
                                         ) as ThemeData;
                                         setData(qt2css(theme));
                                     })
                                     .catch((err) => {
                                         console.error(
                                             "Error reading file",
-                                            err
+                                            err,
                                         );
                                         alert(
-                                            "Error reading file: " + err.message
+                                            "Error reading file: " +
+                                                err.message,
                                         );
                                     });
                         }

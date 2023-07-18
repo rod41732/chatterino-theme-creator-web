@@ -172,7 +172,7 @@ export function ColorPickerWrapper({
 
     return (
         <div
-            className={`flex flex-wrap items-center justify-center space-x-2 ${s.container}`}
+            className={`flex flex-wrap items-center justify-center space-x-2 ${s.container} mb-2`}
         >
             <Popover
                 content={
@@ -198,7 +198,7 @@ export function ColorPickerWrapper({
                 overlayClassName={clsx("bg-red p-0")}
             >
                 <div
-                    className="w-7 h-7 border-white border-4 rounded-md shadow-md shadow-black/50 relative group bgg300"
+                    className="w-7 h-7 border-white border-4 rounded-md outline outline-1 outline-gray-300 relative group"
                     style={{ background: getColor(data) }}
                 ></div>
             </Popover>
