@@ -1,15 +1,18 @@
 import { ThemeData, useConfigContext } from "@/app/color-context-provider";
 import { produce } from "immer";
-import { ColorPicker } from "antd";
+import { ColorPicker, Popover } from "antd";
 import { WritableDraft } from "immer/src/types/types-external";
 import s from "./settings.module.css";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { ChromePicker } from "react-color";
+import clsx from "clsx";
+import { EditableInput } from "react-color/lib/components/common";
 
 export function MessageSettings() {
     return (
-        <div className={`grid grid-cols-2 gap-2 ${s.container}`}>
+        <div className={`grid grid-cols-2 gap-2 ${s.container} `}>
             <div className="text-lg font-bold col-span-2">Backgrounds</div>
-            <div> Regular </div>
+            <div> Regular</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
                     data.colors.messages.backgrounds.regular = newColor;
@@ -17,7 +20,7 @@ export function MessageSettings() {
                 getColor={(data) => data.colors.messages.backgrounds.regular}
             />
 
-            <div> Alternate </div>
+            <div> Alternate</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
                     data.colors.messages.backgrounds.alternate = newColor;
@@ -28,7 +31,7 @@ export function MessageSettings() {
             {/*sep */}
             <hr className="col-span-2 my-2" />
 
-            <div> Disabled </div>
+            <div> Disabled</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
                     data.colors.messages.disabled = newColor;
@@ -40,7 +43,7 @@ export function MessageSettings() {
                 Overlay color over historical or timed out messages
             </p>
 
-            <div> Highlight Animation Start </div>
+            <div> Highlight Animation Start</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
                     data.colors.messages.highlightAnimationStart = newColor;
@@ -54,7 +57,7 @@ export function MessageSettings() {
                 Flashing color when [Go to message] is used
             </p>
 
-            <div> Highlight Animation End </div>
+            <div> Highlight Animation End</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
                     data.colors.messages.highlightAnimationEnd = newColor;
@@ -66,7 +69,7 @@ export function MessageSettings() {
                 Color when [Go to message] end (usually transparent)
             </p>
 
-            <div> Selection </div>
+            <div> Selection</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
                     data.colors.messages.selection = newColor;
@@ -81,7 +84,7 @@ export function MessageSettings() {
             <hr className="col-span-2 my-2" />
 
             <div className="text-lg font-bold col-span-2">Text Colors</div>
-            <div> Regular message </div>
+            <div> Regular message</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
                     data.colors.messages.textColors.regular = newColor;
@@ -89,7 +92,7 @@ export function MessageSettings() {
                 getColor={(data) => data.colors.messages.textColors.regular}
             />
 
-            <div> Caret </div>
+            <div> Caret</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
                     data.colors.messages.textColors.caret = newColor;
@@ -100,7 +103,7 @@ export function MessageSettings() {
                 Caret (blinking cursor) color. might not work on some platform.
             </p>
 
-            <div> Chat Placeholder </div>
+            <div> Chat Placeholder</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
                     data.colors.messages.textColors.chatPlaceholder = newColor;
@@ -113,7 +116,7 @@ export function MessageSettings() {
                 Placeholder in chat field
             </p>
 
-            <div> Link </div>
+            <div> Link</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
                     data.colors.messages.textColors.link = newColor;
@@ -124,7 +127,7 @@ export function MessageSettings() {
                 Color when [Go to message] end (usually transparent)
             </p>
 
-            <div> System </div>
+            <div> System</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
                     data.colors.messages.textColors.system = newColor;
@@ -144,6 +147,7 @@ function trimOpacity(hexString: string): string {
     }
     return hexString;
 }
+
 function ensureOpactiy(hexString: string): string {
     if (hexString.length == 7) {
         return hexString + "ff";
@@ -156,6 +160,7 @@ interface ColorPickerWrapperProps {
     getColor: (data: ThemeData) => string;
     alpha?: boolean;
 }
+
 export function ColorPickerWrapper({
     mutateColor,
     getColor,
@@ -163,33 +168,84 @@ export function ColorPickerWrapper({
 }: ColorPickerWrapperProps) {
     const { data: _data, setData, setState } = useConfigContext();
     const data = useMemo(() => _data!, [_data]);
+    const [showPicker, setShowPicker] = useState(false);
 
     return (
         <div
             className={`flex flex-wrap items-center justify-center space-x-2 ${s.container}`}
         >
-            <ColorPicker
-                format={"hex"}
-                // somehow need to set default value to show properly
-                defaultValue={getColor(data)}
-                // it's fine to pass string!!
-                color={getColor(data) as any}
-                onChange={(c, h) => {
-                    const finalValue = alpha
-                        ? ensureOpactiy(h)
-                        : trimOpacity(h);
-                    setData(
-                        produce(data, (draft) => mutateColor(draft, finalValue))
-                    );
-                    setState({ hasChange: true });
+            <Popover
+                content={
+                    <ChromePicker
+                        className="!shadow-none"
+                        color={getColor(data)}
+                        onChange={(color) => {
+                            const alphaValue = Math.floor(
+                                (color.rgb.a ?? 1) * 256,
+                            );
+                            const alphaPart = alpha
+                                ? alphaValue.toString(16).padStart(2, "0")
+                                : "";
+
+                            setData(
+                                produce(data, (draft) =>
+                                    mutateColor(draft, color.hex + alphaPart),
+                                ),
+                            );
+                        }}
+                    />
+                }
+                overlayClassName={clsx("bg-red p-0")}
+            >
+                <div
+                    className="w-7 h-7 border-white border-4 rounded-md shadow-md shadow-black/50 relative group bgg300"
+                    style={{ background: getColor(data) }}
+                ></div>
+            </Popover>
+
+            <EditableInput
+                value={getColor(data)}
+                label="hex"
+                style={{
+                    label: { display: "none" },
+                    input: {
+                        width: "80px",
+                        fontSize: "14px",
+                        border: "1px solid rgb(209, 213, 219)",
+                    },
                 }}
-                onFormatChange={() => {}}
-                disabledAlpha={!alpha}
+                onChange={(e) => {
+                    let colorString = e.hex;
+                    colorString = colorString.replace(/^#/, "");
+                    if (colorString.length != 6 && colorString.length != 8) {
+                        // console.log(
+                        //     "invalid color length (only 6 or 8)",
+                        //     colorString,
+                        // );
+                        return;
+                    }
+                    if (!/^[0-9a-f]+$/i.test(colorString)) {
+                        // console.log(
+                        //     `invalid character in color [${colorString}]`,
+                        // );
+                        return;
+                    }
+
+                    if (alpha && colorString.length == 6) {
+                        colorString = colorString + "ff";
+                    } else if (!alpha && colorString.length == 8) {
+                        colorString = colorString.substring(0, 6);
+                    }
+
+                    colorString = "#" + colorString;
+
+                    setData(
+                        produce(data, (draft) =>
+                            mutateColor(draft, colorString),
+                        ),
+                    );
+                }}
             />
-            <p className="text-gray-700 text-xs">
-                {" "}
-                {getColor(data).toUpperCase()}
-            </p>
         </div>
     );
 }
