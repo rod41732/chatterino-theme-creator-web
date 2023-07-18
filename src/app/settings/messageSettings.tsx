@@ -1,17 +1,44 @@
-import { ThemeData, useConfigContext } from "@/app/color-context-provider";
-import { produce } from "immer";
-import { ColorPicker, Popover } from "antd";
-import { WritableDraft } from "immer/src/types/types-external";
 import s from "./settings.module.css";
-import { useMemo, useState } from "react";
-import { ChromePicker } from "react-color";
-import clsx from "clsx";
-import { EditableInput } from "react-color/lib/components/common";
+import { ColorPickerWrapper } from "@/app/settings/ColorPickerWrapper.component";
+import { JumpIcon } from "@/app/settings/JumpIcon.component";
+import { useTabContext } from "@/app/tab-context-provider";
+
+import { PreviewTab } from "@/app/tab.types";
 
 export function MessageSettings() {
+    const { setPreviewTab } = useTabContext();
     return (
         <div className={`grid grid-cols-2 gap-2 ${s.container} `}>
+            <div className="flex items-center col-span-2">
+                <h1 className="text-xl  font-bold">
+                    Settings Related to chat messages
+                </h1>
+                <JumpIcon onClick={() => setPreviewTab(PreviewTab.CHAT)} />
+            </div>
+
             <div className="text-lg font-bold col-span-2">Backgrounds</div>
+            <ul className="col-span-2 text-gray-500 list-disc ml-7">
+                <li>
+                    Message Background are visible in chat room.
+                    <JumpIcon onClick={() => setPreviewTab(PreviewTab.CHAT)} />
+                </li>
+                <li>
+                    Also thread popup{" "}
+                    <JumpIcon
+                        onClick={() => setPreviewTab(PreviewTab.THREAD_POPUP)}
+                    />
+                    and find popup{" "}
+                    <JumpIcon
+                        onClick={() => setPreviewTab(PreviewTab.FIND_POPUP)}
+                    />
+                </li>
+                <li>
+                    They are also used for each row in Emote Menu
+                    <JumpIcon
+                        onClick={() => setPreviewTab(PreviewTab.EMOTE_MENU)}
+                    />
+                </li>
+            </ul>
             <div> Regular</div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
@@ -137,117 +164,6 @@ export function MessageSettings() {
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
                 System message, timestamp. etc.
             </p>
-        </div>
-    );
-}
-
-function trimOpacity(hexString: string): string {
-    if (hexString.length == 9) {
-        return hexString.substring(0, 7);
-    }
-    return hexString;
-}
-
-function ensureOpactiy(hexString: string): string {
-    if (hexString.length == 7) {
-        return hexString + "ff";
-    }
-    return hexString;
-}
-
-interface ColorPickerWrapperProps {
-    mutateColor: (draft: WritableDraft<ThemeData>, color: string) => void;
-    getColor: (data: ThemeData) => string;
-    alpha?: boolean;
-}
-
-export function ColorPickerWrapper({
-    mutateColor,
-    getColor,
-    alpha = false,
-}: ColorPickerWrapperProps) {
-    const { data: _data, setData, setState } = useConfigContext();
-    const data = useMemo(() => _data!, [_data]);
-    const [showPicker, setShowPicker] = useState(false);
-
-    return (
-        <div
-            className={`flex flex-wrap items-center justify-center space-x-2 ${s.container} mb-2`}
-        >
-            <Popover
-                content={
-                    <ChromePicker
-                        className="!shadow-none"
-                        color={getColor(data)}
-                        onChange={(color) => {
-                            const alphaValue = Math.floor(
-                                (color.rgb.a ?? 1) * 256,
-                            );
-                            const alphaPart = alpha
-                                ? alphaValue.toString(16).padStart(2, "0")
-                                : "";
-
-                            setData(
-                                produce(data, (draft) =>
-                                    mutateColor(draft, color.hex + alphaPart),
-                                ),
-                            );
-                        }}
-                    />
-                }
-                overlayClassName={clsx("bg-red p-0")}
-            >
-                <div className="border-white border-4 rounded-md outline outline-1 outline-gray-200">
-                    <div
-                        className="w-5 h-5 outline outline-1 outline-gray-300 rounded-sm"
-                        style={{ background: getColor(data) }}
-                    ></div>
-                </div>
-            </Popover>
-
-            <EditableInput
-                value={getColor(data)}
-                label="hex"
-                style={{
-                    label: { display: "none" },
-                    input: {
-                        width: "80px",
-                        fontSize: "14px",
-                        border: "1px solid rgb(209, 213, 219)",
-                    },
-                }}
-                onChange={(e) => {
-                    let colorString = e.hex;
-                    colorString = colorString.replace(/^#/, "");
-                    if (colorString.length != 6 && colorString.length != 8) {
-                        // console.log(
-                        //     "invalid color length (only 6 or 8)",
-                        //     colorString,
-                        // );
-                        return;
-                    }
-                    if (!/^[0-9a-f]+$/i.test(colorString)) {
-                        // console.log(
-                        //     `invalid character in color [${colorString}]`,
-                        // );
-                        return;
-                    }
-
-                    if (alpha && colorString.length == 6) {
-                        colorString = colorString + "ff";
-                    } else if (!alpha && colorString.length == 8) {
-                        colorString = colorString.substring(0, 6);
-                    }
-
-                    colorString = "#" + colorString;
-
-                    setData(
-                        produce(data, (draft) =>
-                            mutateColor(draft, colorString),
-                        ),
-                    );
-                }}
-            />
         </div>
     );
 }

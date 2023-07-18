@@ -1,11 +1,35 @@
-import { ColorPickerWrapper } from "@/app/settings/messageSettings";
 import s from "./settings.module.css";
+import { ColorPickerWrapper } from "@/app/settings/ColorPickerWrapper.component";
+import { Jim_Nightshade } from "next/dist/compiled/@next/font/dist/google";
+import { JumpIcon } from "@/app/settings/JumpIcon.component";
+import { useTabContext } from "@/app/tab-context-provider";
+import { PreviewTab } from "@/app/tab.types";
 
 export function TabsSettings() {
+    const { setPreviewTab } = useTabContext();
     return (
         <div
             className={`grid grid-cols-[300px,auto,auto,auto] gap-2 ${s.container}`}
         >
+            <div className="col-span-4">
+                <h1 className="text-xl font-bold">Tab Settings</h1>
+                <p>
+                    See all posseble states of tabs here
+                    <JumpIcon
+                        onClick={() => setPreviewTab(PreviewTab.TAB_STATES)}
+                    />
+                </p>
+                <p>
+                    Tab are also visible in Emote Menu
+                    <JumpIcon
+                        onClick={() => setPreviewTab(PreviewTab.TAB_STATES)}
+                    />
+                    and New Split Menu
+                    <JumpIcon
+                        onClick={() => setPreviewTab(PreviewTab.NEW_SPLIT_MENU)}
+                    />
+                </p>
+            </div>
             <div>
                 <p className={s.sectionTitle}> Divider Line</p>
                 <div className="text-gray-500">

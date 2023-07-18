@@ -2,10 +2,16 @@ import { useConfigContext } from "@/app/color-context-provider";
 import { produce } from "immer";
 import { Checkbox } from "antd";
 import s from "./settings.module.css";
-import { ColorPickerWrapper } from "@/app/settings/messageSettings";
+
+import { ColorPickerWrapper } from "@/app/settings/ColorPickerWrapper.component";
+import { JumpIcon } from "@/app/settings/JumpIcon.component";
+import { useTabContext } from "@/app/tab-context-provider";
+
+import { PreviewTab } from "@/app/tab.types";
 
 export function SplitSettings() {
     const { settings, setSettings } = useConfigContext();
+    const { setPreviewTab } = useTabContext();
     return (
         <div
             className={`grid grid-cols-[1fr,auto,auto] gap-2 h-full overflow-auto ${s.container}`}
@@ -21,12 +27,34 @@ export function SplitSettings() {
             </div>
             <p className="text-gray-500 col-span-3 -mt-3 mb-1">
                 Empty area in split (e.g. when there are few messages in split),
-                also seen as thin border between splits
+                also seen as thin border between splits. Also very visible in
+                empty split{" "}
             </p>
+            <ul className="col-span-3 list-disc ml-6 text-gray-500">
+                <li>
+                    Noticeable in tab with empty space (few messages).
+                    <JumpIcon
+                        onClick={() =>
+                            setPreviewTab(PreviewTab.SPILT_DROP_TARGET)
+                        }
+                    />
+                </li>
+                <li>
+                    Noticeable in empty split (when you create new tab).
+                    <JumpIcon
+                        onClick={() => setPreviewTab(PreviewTab.EMPTY_SPLIT)}
+                    />
+                </li>
+            </ul>
 
             <hr className="col-span-3 my-2" />
 
-            <h2 className="text-lg font-bold">Header</h2>
+            <h2 className="text-lg font-bold">
+                Header{" "}
+                <JumpIcon
+                    onClick={() => setPreviewTab(PreviewTab.SPILT_DROP_PREVIEW)}
+                />
+            </h2>
             <div className="self-end text-gray-500 text-center">
                 {" "}
                 Focused (Selected){" "}
@@ -84,7 +112,14 @@ export function SplitSettings() {
             <hr className="col-span-3 my-2" />
 
             <div>
-                <h2 className={s.sectionTitle}>Split Drop Preview</h2>
+                <h2 className={s.sectionTitle}>
+                    Split Drop Preview{" "}
+                    <JumpIcon
+                        onClick={() =>
+                            setPreviewTab(PreviewTab.SPILT_DROP_PREVIEW)
+                        }
+                    />
+                </h2>
                 <p className="text-gray-500 -mt-3 mb-1">
                     Hint rectangle when you drag and drop split
                 </p>
@@ -108,7 +143,14 @@ export function SplitSettings() {
             />
 
             <div>
-                <h2 className={s.sectionTitle}>Split Drop Target</h2>
+                <h2 className={s.sectionTitle}>
+                    Split Drop Target
+                    <JumpIcon
+                        onClick={() =>
+                            setPreviewTab(PreviewTab.SPILT_DROP_TARGET)
+                        }
+                    />
+                </h2>
                 <p className="text-gray-500 col-span-3 -mt-3 mb-1">
                     Target that is used for adding split in certain situations
                 </p>
@@ -135,7 +177,10 @@ export function SplitSettings() {
 
             <hr className="col-span-3 my-2" />
 
-            <h2 className="text-lg font-bold col-span-3">Input</h2>
+            <h2 className="text-lg font-bold col-span-3">
+                Input
+                <JumpIcon onClick={() => setPreviewTab(PreviewTab.CHAT)} />
+            </h2>
             <p className="text-gray-500 col-span-3 -mt-3 mb-1">
                 Chat Input Field
             </p>
@@ -169,7 +214,7 @@ export function SplitSettings() {
                         setSettings((cur) =>
                             produce(cur, (draft) => {
                                 draft.messageSeparator = c.target.checked;
-                            })
+                            }),
                         );
                     }}
                 />
@@ -194,7 +239,12 @@ export function SplitSettings() {
             <hr className="col-span-3 my-2" />
 
             <div>
-                <h2 className={s.sectionTitle}>Resize</h2>
+                <h2 className={s.sectionTitle}>
+                    Resize
+                    <JumpIcon
+                        onClick={() => setPreviewTab(PreviewTab.SPILT_RESIZE)}
+                    />
+                </h2>
 
                 <p className="text-gray-500  -mt-3 mb-1">
                     Resize handles shows when you hold Ctrl to resize split in

@@ -1,17 +1,18 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
+import { PreviewTab, SettingsTab } from "@/app/tab.types";
 
 interface TabContextData {
-    setSettingsTab: (newTab: string) => void;
-    settingsTab: string;
-    setPreviewTab: (newTab: string) => void;
-    previewTab: string;
+    setSettingsTab: (newTab: SettingsTab) => void;
+    settingsTab: SettingsTab;
+    setPreviewTab: (newTab: PreviewTab) => void;
+    previewTab: PreviewTab;
 }
 
 const TabContext = createContext<TabContextData>({
-    previewTab: "",
-    setPreviewTab(newTab: string): void {},
-    setSettingsTab(newTab: string): void {},
-    settingsTab: "",
+    previewTab: PreviewTab.CHAT,
+    setPreviewTab(newTab: PreviewTab): void {},
+    setSettingsTab(newTab: SettingsTab): void {},
+    settingsTab: SettingsTab.OVERVIEW,
 });
 
 export const useTabContext = () => {
@@ -19,8 +20,8 @@ export const useTabContext = () => {
 };
 
 export function TabContextProvider({ children }: PropsWithChildren<{}>) {
-    const [settingsTab, setSettingsTab] = useState("overview");
-    const [previewTab, setPreviewTab] = useState("chat");
+    const [settingsTab, setSettingsTab] = useState(SettingsTab.OVERVIEW);
+    const [previewTab, setPreviewTab] = useState(PreviewTab.CHAT);
     return (
         <TabContext.Provider
             value={{

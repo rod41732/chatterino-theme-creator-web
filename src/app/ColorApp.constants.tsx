@@ -21,6 +21,7 @@ import { ReactNode } from "react";
 import { ChatterinoEmptySplit } from "@/app/fake-uis/emptysplit";
 import { EmoteMenu, NewSplitMenu } from "@/app/fake-uis/newSplitMenu";
 import { FindPopup, ThreadPopup, UserCard } from "@/app/fake-uis/userInfoCard";
+import { PreviewTab, SettingsTab } from "@/app/tab.types";
 
 interface Tab {
     label: string;
@@ -31,32 +32,32 @@ interface Tab {
 export const TABS: Tab[] = [
     {
         label: "Overview",
-        key: "overview",
+        key: SettingsTab.OVERVIEW,
         children: <OverviewSettings />,
     },
     {
         label: "Messages",
-        key: "messages",
+        key: SettingsTab.MESSAGES,
         children: <MessageSettings />,
     },
     {
         label: "Scrollbars",
-        key: "scrollbars",
+        key: SettingsTab.SCROLLBARS,
         children: <ScrollBarSettings />,
     },
     {
         label: "Splits",
-        key: "splits",
+        key: SettingsTab.SPLITS,
         children: <SplitSettings />,
     },
     {
         label: "Tabs",
-        key: "tabs",
+        key: SettingsTab.TABS,
         children: <TabsSettings />,
     },
     {
         label: "Window",
-        key: "window",
+        key: SettingsTab.WINDOW,
         children: <WindowSettings />,
     },
 ];
@@ -64,7 +65,7 @@ export const TABS: Tab[] = [
 export const PREVIEW_TABS: Tab[] = [
     {
         label: "Chat",
-        key: "chat",
+        key: PreviewTab.CHAT,
         children: (
             <div className="p-4 bg-gray-800 text-white h-full overflow-hidden flex flex-col">
                 <ChatterinoSplitVertical
@@ -76,7 +77,7 @@ export const PREVIEW_TABS: Tab[] = [
     },
     {
         label: "Split Drop Preivew",
-        key: "spilt_drop_preview",
+        key: PreviewTab.SPILT_DROP_PREVIEW,
         children: (
             <div className="p-4 bg-gray-800 text-white h-full overflow-hidden">
                 <div>
@@ -89,7 +90,7 @@ export const PREVIEW_TABS: Tab[] = [
     },
     {
         label: "Split Drop Target",
-        key: "spilt_drop_target",
+        key: PreviewTab.SPILT_DROP_TARGET,
         children: (
             <div className="p-4 bg-gray-800 text-white h-full overflow-hidden flex flex-col">
                 <div>
@@ -102,7 +103,7 @@ export const PREVIEW_TABS: Tab[] = [
     },
     {
         label: "Split Resize",
-        key: "spilt_resize",
+        key: PreviewTab.SPILT_RESIZE,
         children: (
             <div className="p-4 bg-gray-800 text-white h-full overflow-hidden flex flex-col">
                 <ChatterinoSplitResize chatMessages={fakeChatListVerySmall} />
@@ -111,7 +112,7 @@ export const PREVIEW_TABS: Tab[] = [
     },
     {
         label: "Empty Split",
-        key: "empty_split",
+        key: PreviewTab.EMPTY_SPLIT,
         children: (
             <div className="p-4 bg-gray-800 text-white h-full overflow-hidden flex flex-col">
                 <ChatterinoEmptySplit />
@@ -120,7 +121,7 @@ export const PREVIEW_TABS: Tab[] = [
     },
     {
         label: "New Split Menu",
-        key: "new_split_menu",
+        key: PreviewTab.NEW_SPLIT_MENU,
         children: (
             <div className="p-4 bg-gray-800 text-white h-full overflow-hidden flex flex-col">
                 <NewSplitMenu />
@@ -129,7 +130,7 @@ export const PREVIEW_TABS: Tab[] = [
     },
     {
         label: "Emote Menu",
-        key: "emote_menu",
+        key: PreviewTab.EMOTE_MENU,
         children: (
             <div className="p-4 bg-gray-800 text-white h-full overflow-hidden flex flex-col">
                 <EmoteMenu />
@@ -138,7 +139,7 @@ export const PREVIEW_TABS: Tab[] = [
     },
     {
         label: "Tab States",
-        key: "tab_states",
+        key: PreviewTab.TAB_STATES,
         children: (
             <div className="p-4 bg-gray-800 h-full overflow-auto flex flex-col">
                 <ChatterinoTabPreview />
@@ -147,7 +148,7 @@ export const PREVIEW_TABS: Tab[] = [
     },
     {
         label: "User card",
-        key: "user_card",
+        key: PreviewTab.USER_CARD,
         children: (
             <div className="p-4 bg-gray-800 h-full overflow-auto flex flex-col">
                 <UserCard />
@@ -156,7 +157,7 @@ export const PREVIEW_TABS: Tab[] = [
     },
     {
         label: "Thread popup",
-        key: "thread_popup",
+        key: PreviewTab.THREAD_POPUP,
         children: (
             <div className="p-4 bg-gray-800 h-full overflow-auto flex flex-col">
                 <ThreadPopup />
@@ -165,7 +166,7 @@ export const PREVIEW_TABS: Tab[] = [
     },
     {
         label: "Find popup",
-        key: "fin_popup",
+        key: PreviewTab.FIND_POPUP,
         children: (
             <div className="p-4 bg-gray-800 h-full overflow-auto flex flex-col">
                 <FindPopup />

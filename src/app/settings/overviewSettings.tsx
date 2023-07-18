@@ -1,9 +1,13 @@
-import { ColorPickerWrapper } from "@/app/settings/messageSettings";
 import { useConfigContext } from "@/app/color-context-provider";
 import { useCallback } from "react";
 import { produce } from "immer";
 import s from "./settings.module.css";
 import clsx from "clsx";
+import { useTabContext } from "@/app/tab-context-provider";
+import { JumpIcon } from "@/app/settings/JumpIcon.component";
+import { ColorPickerWrapper } from "@/app/settings/ColorPickerWrapper.component";
+
+import { PreviewTab } from "@/app/tab.types";
 
 export function OverviewSettings() {
     const { data, setData, setState } = useConfigContext();
@@ -13,11 +17,12 @@ export function OverviewSettings() {
             setData((cur) =>
                 produce(cur!, (draft) => {
                     draft.metadata.iconTheme = color;
-                })
+                }),
             );
         },
-        [setData]
+        [setData],
     );
+    const { setPreviewTab } = useTabContext();
 
     return (
         <div className={s.container}>
@@ -28,7 +33,7 @@ export function OverviewSettings() {
                         "w-[80px] px-3 py-1 border rounded-md",
                         iconTheme == "light"
                             ? "border-gray-700 bg-gray-700 text-white"
-                            : "border-gray-300 text-gray-700"
+                            : "border-gray-300 text-gray-700",
                     )}
                     onClick={() => {
                         setState({ hasChange: true });
@@ -46,7 +51,7 @@ export function OverviewSettings() {
                         "w-[80px] px-3 py-1 border rounded-md",
                         iconTheme == "dark"
                             ? "border-gray-700 bg-gray-700 text-white"
-                            : "border-gray-300 text-gray-700"
+                            : "border-gray-300 text-gray-700",
                     )}
                     onClick={() => {
                         setState({ hasChange: true });
@@ -71,7 +76,14 @@ export function OverviewSettings() {
                     }}
                     getColor={(data) => data.colors.accent}
                 />
-                <p className="text-gray-500 ">Used in some part</p>
+                <p className="text-gray-500 ">
+                    Used in Suggestion Menu Highlight{" "}
+                    <JumpIcon
+                        onClick={() => {
+                            setPreviewTab(PreviewTab.CHAT);
+                        }}
+                    />
+                </p>
             </div>
         </div>
     );

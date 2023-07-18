@@ -1,10 +1,62 @@
-import { ColorPickerWrapper } from "@/app/settings/messageSettings";
 import s from "./settings.module.css";
+import { ColorPickerWrapper } from "@/app/settings/ColorPickerWrapper.component";
+import { JumpIcon } from "@/app/settings/JumpIcon.component";
+import { useTabContext } from "@/app/tab-context-provider";
+import { PreviewTab } from "@/app/tab.types";
 
 export function WindowSettings() {
+    const { setPreviewTab } = useTabContext();
     return (
         <div className={`grid grid-cols-2 gap-2 ${s.container}`}>
             <div className="text-lg font-bold col-span-2">Window</div>
+            <p className="text-gray-500 col-span-2">
+                Window background/text are mostly used in &quot;Non-Chat&quot;
+                part of UI. For example
+                <ul className="ml-7 list-disc">
+                    <li>
+                        Header of chat
+                        <JumpIcon
+                            onClick={() => setPreviewTab(PreviewTab.CHAT)}
+                        />
+                        and other part of UI that have tabs: Emote Menu
+                        <JumpIcon
+                            onClick={() => setPreviewTab(PreviewTab.EMOTE_MENU)}
+                        />
+                    </li>
+                    <li>
+                        Completion Menu
+                        <JumpIcon
+                            onClick={() => setPreviewTab(PreviewTab.CHAT)}
+                        />
+                    </li>
+                    <li>
+                        New Split Menu
+                        <JumpIcon
+                            onClick={() =>
+                                setPreviewTab(PreviewTab.NEW_SPLIT_MENU)
+                            }
+                        />
+                    </li>
+                    <li>
+                        User Card
+                        <JumpIcon
+                            onClick={() => setPreviewTab(PreviewTab.USER_CARD)}
+                        />
+                    </li>
+                    <li>
+                        Top of Thread Popup
+                        <JumpIcon
+                            onClick={() =>
+                                setPreviewTab(PreviewTab.THREAD_POPUP)
+                            }
+                        />
+                        and Find popup
+                        <JumpIcon
+                            onClick={() => setPreviewTab(PreviewTab.FIND_POPUP)}
+                        />
+                    </li>
+                </ul>
+            </p>
             <div> Background </div>
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {

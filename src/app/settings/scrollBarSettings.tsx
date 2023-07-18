@@ -1,9 +1,29 @@
-import { ColorPickerWrapper } from "@/app/settings/messageSettings";
 import s from "./settings.module.css";
+import { ColorPickerWrapper } from "@/app/settings/ColorPickerWrapper.component";
+import { JumpIcon } from "@/app/settings/JumpIcon.component";
+import { useTabContext } from "@/app/tab-context-provider";
+
+import { PreviewTab } from "@/app/tab.types";
 
 export function ScrollBarSettings() {
+    const { setPreviewTab } = useTabContext();
     return (
         <div className={`grid grid-cols-2 gap-2 ${s.container}`}>
+            <h1 className="text-xl col-span-2 font-bold">Scrollbar settings</h1>
+
+            <ul className="col-span-2 list-disc ml-6 text-gray-500">
+                <li>
+                    Scrollbar are visible in chat with many messages.
+                    <JumpIcon onClick={() => setPreviewTab(PreviewTab.CHAT)} />
+                </li>
+                <li>
+                    They are also visible in emote menu
+                    <JumpIcon
+                        onClick={() => setPreviewTab(PreviewTab.EMOTE_MENU)}
+                    />
+                </li>
+            </ul>
+
             <div className="text-lg font-bold col-span-2">Scrollbar</div>
             <div> Background </div>
             <ColorPickerWrapper
