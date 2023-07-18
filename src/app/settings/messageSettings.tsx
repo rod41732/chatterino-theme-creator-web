@@ -197,10 +197,12 @@ export function ColorPickerWrapper({
                 }
                 overlayClassName={clsx("bg-red p-0")}
             >
-                <div
-                    className="w-7 h-7 border-white border-4 rounded-md outline outline-1 outline-gray-300 relative group"
-                    style={{ background: getColor(data) }}
-                ></div>
+                <div className="border-white border-4 rounded-md outline outline-1 outline-gray-200">
+                    <div
+                        className="w-5 h-5 outline outline-1 outline-gray-300 rounded-sm"
+                        style={{ background: getColor(data) }}
+                    ></div>
+                </div>
             </Popover>
 
             <EditableInput
