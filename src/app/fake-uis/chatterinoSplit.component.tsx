@@ -47,7 +47,7 @@ export function ChatterinoSplit({
         if (chatContainerRef.current) {
             chatContainerRef.current.scrollTo(
                 0,
-                chatContainerRef.current?.scrollHeight!
+                chatContainerRef.current?.scrollHeight!,
             );
         }
     }, [chatMessages]);
@@ -64,7 +64,7 @@ export function ChatterinoSplit({
                 <div
                     className={clsx(
                         active ? styles.splitHeaderFocused : styles.splitHeader,
-                        styles.splitHeaderBase
+                        styles.splitHeaderBase,
                     )}
                 >
                     <div className="flex-grow text-center py-1">{name}</div>
@@ -141,7 +141,7 @@ export function ChatterinoSplit({
                 <div
                     className={clsx(
                         styles.replyIndicator,
-                        "font-bold text-base py-1 px-2 flex items-center"
+                        "font-bold text-base py-1 px-2 flex items-center select-none",
                     )}
                 >
                     <p className="flex-grow"> Replying to @doge41732</p>
@@ -160,7 +160,7 @@ export function ChatterinoSplit({
                 <div
                     className={clsx(
                         "flex-shrink-0 relative",
-                        styles.inputBorder
+                        styles.inputBorder,
                     )}
                 >
                     <input
@@ -172,7 +172,7 @@ export function ChatterinoSplit({
                     <div
                         className={clsx(
                             styles.characterCount,
-                            "absolute top-1 right-1"
+                            "absolute top-1 right-1",
                         )}
                     >
                         {input.length}
@@ -193,7 +193,7 @@ export function ChatterinoSplit({
                                 <div
                                     className={clsx(
                                         styles.emoteSelect,
-                                        "absolute inset-0"
+                                        "absolute inset-0",
                                     )}
                                 ></div>
                                 <div className="flex items-center relative">
@@ -204,7 +204,7 @@ export function ChatterinoSplit({
                                     <p
                                         className={clsx(
                                             styles.windowText,
-                                            "text-xs"
+                                            "text-xs",
                                         )}
                                     >
                                         {" "}
@@ -220,7 +220,7 @@ export function ChatterinoSplit({
                                 <p
                                     className={clsx(
                                         styles.windowText,
-                                        "text-xs"
+                                        "text-xs",
                                     )}
                                 >
                                     {" "}
@@ -235,7 +235,7 @@ export function ChatterinoSplit({
                                 <p
                                     className={clsx(
                                         styles.windowText,
-                                        "text-xs"
+                                        "text-xs",
                                     )}
                                 >
                                     {" "}
@@ -250,7 +250,7 @@ export function ChatterinoSplit({
                 <div
                     className={clsx(
                         styles.dropPreviewRect,
-                        "absolute top-0 bottom-0 left-2/3 right-0"
+                        "absolute top-0 bottom-0 left-2/3 right-0",
                     )}
                 ></div>
             )}
@@ -260,7 +260,7 @@ export function ChatterinoSplit({
                 <div
                     className={clsx(
                         "absolute top-0 bottom-1/2 left-0 right-0 ",
-                        styles.droppable
+                        styles.droppable,
                         // 'bg-red-500/10'
                     )}
                 ></div>
@@ -270,7 +270,7 @@ export function ChatterinoSplit({
                 <div
                     className={clsx(
                         "absolute top-1/2 bottom-0 left-0 right-0 ",
-                        styles.droppable
+                        styles.droppable,
                         // 'bg-red-500/10'
                     )}
                 ></div>
@@ -280,7 +280,7 @@ export function ChatterinoSplit({
                 <div
                     className={clsx(
                         "absolute top-0 bottom-0 left-0 right-2/3 ",
-                        styles.droppable
+                        styles.droppable,
                         // 'bg-red-500/10'
                     )}
                 ></div>
@@ -290,7 +290,7 @@ export function ChatterinoSplit({
                 <div
                     className={clsx(
                         "absolute top-0 bottom-0 left-2/3 right-0 ",
-                        styles.droppable
+                        styles.droppable,
                         // 'bg-red-500/10'
                     )}
                 ></div>

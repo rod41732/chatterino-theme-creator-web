@@ -84,6 +84,7 @@
     font-size: 13px;
     position: relative;
     pointer-events: all;
+    user-select: none;
 }
 
 .tabBase.tabSelected, .tabBase.tabSelectedUnfocused, .tabBase.tabSelectedForceHover {
@@ -266,6 +267,7 @@
 .splitHeaderBase {
     display: flex;
     align-items: center;
+    user-select: none;
 }
 
 .splitHeader {
