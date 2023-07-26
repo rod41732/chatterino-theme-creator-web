@@ -11,6 +11,7 @@ import { qt2css } from "@/utils";
 import { PREVIEW_TABS, TABS } from "@/app/ColorApp.constants";
 import { useTabContext } from "@/app/tab-context-provider";
 import styles from "./dank.module.css";
+import { PreviewTab, SettingsTab } from "@/app/tab.types";
 
 export function ColorApp() {
     const { setPreviewTab, setSettingsTab, settingsTab, previewTab } =
@@ -36,7 +37,9 @@ export function ColorApp() {
                                 it.key == settingsTab && "text-sky-500",
                             )}
                             key={it.key}
-                            onClick={() => setSettingsTab(it.key)}
+                            onClick={() =>
+                                setSettingsTab(it.key as SettingsTab)
+                            }
                         >
                             {it.label}
                         </button>
@@ -61,7 +64,7 @@ export function ColorApp() {
                                 it.key == previewTab && "text-sky-500",
                             )}
                             key={it.key}
-                            onClick={() => setPreviewTab(it.key)}
+                            onClick={() => setPreviewTab(it.key as PreviewTab)}
                         >
                             {it.label}
                         </button>
