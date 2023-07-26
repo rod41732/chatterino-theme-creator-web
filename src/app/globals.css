@@ -126,7 +126,3 @@ body {
     --settings-message-separator-width: 0px;
 }
 
-::selection {
-    background: var(--messages-selection);
-}
-

@@ -10,6 +10,7 @@ import {
 import { qt2css } from "@/utils";
 import { PREVIEW_TABS, TABS } from "@/app/ColorApp.constants";
 import { useTabContext } from "@/app/tab-context-provider";
+import styles from "./dank.module.css";
 
 export function ColorApp() {
     const { setPreviewTab, setSettingsTab, settingsTab, previewTab } =
@@ -22,7 +23,7 @@ export function ColorApp() {
     const fileInputRef = useRef<HTMLInputElement>();
 
     return data ? (
-        <div className="h-full overflow-hidden flex">
+        <div className={`h-full overflow-hidden flex`}>
             {/*left col*/}
             <div className="flex-1 flex-shrink overflow-hidden">
                 {/*tab bar*/}
@@ -47,7 +48,9 @@ export function ColorApp() {
             </div>
 
             {/*right col*/}
-            <div className="flex-1 flex-shrink overflow-hidden flex flex-col">
+            <div
+                className={`flex-1 flex-shrink overflow-hidden flex flex-col ${styles.preview}`}
+            >
                 {/*tab bar*/}
                 <div className="flex items-center overflow-x-auto">
                     {PREVIEW_TABS.map((it) => (

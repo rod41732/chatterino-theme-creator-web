@@ -1,5 +1,10 @@
 .container {
     padding: 0 16px;
+
+}
+
+.container :not(input,button) {
+    user-select: none;
 }
 
 .sectionTitle {

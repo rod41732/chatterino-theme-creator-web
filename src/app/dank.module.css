@@ -1,0 +1,5 @@
+.preview  {
+}
+.preview *::selection {
+    background: var(--messages-selection);
+}
