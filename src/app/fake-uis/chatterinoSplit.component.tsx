@@ -172,7 +172,7 @@ export function ChatterinoSplit({
                     <div
                         className={clsx(
                             styles.characterCount,
-                            "absolute top-1 right-1",
+                            "absolute top-1 right-1 select-none",
                         )}
                     >
                         {input.length}
@@ -187,7 +187,7 @@ export function ChatterinoSplit({
                     />
                     {showCompletion && (
                         <div
-                            className={`text-base w-[300px] h-[200px] absolute top-0 left-1/2 -translate-y-full -translate-x-1/2 p-2 ${styles.window}  ${styles.completionMenu}`}
+                            className={`text-base w-[300px] h-[200px] absolute top-0 left-1/2 -translate-y-full -translate-x-1/2 p-2 ${styles.window}  ${styles.completionMenu} select-none`}
                         >
                             <div className="relative">
                                 <div
