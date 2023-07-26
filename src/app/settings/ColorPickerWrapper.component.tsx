@@ -30,12 +30,13 @@ export function ColorPickerWrapper({
             <Popover
                 content={
                     <ChromePicker
-                        className="!shadow-none"
+                        className="!shadow-none select-none"
                         color={getColor(data)}
                         onChange={(color) => {
-                            const alphaValue = Math.floor(
-                                (color.rgb.a ?? 1) * 256,
-                            );
+                            const alphaValue =
+                                Math.ceil((color.rgb.a ?? 1) * 256) - 1;
+                            console.log("alpha", alphaValue);
+
                             const alphaPart = alpha
                                 ? alphaValue.toString(16).padStart(2, "0")
                                 : "";
