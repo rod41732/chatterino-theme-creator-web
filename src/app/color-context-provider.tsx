@@ -2,6 +2,7 @@ import { ColorScheme, ThemeMetadata } from "@/app/model.types";
 import {
     createContext,
     PropsWithChildren,
+    useCallback,
     useContext,
     useEffect,
     useState,
@@ -40,12 +41,44 @@ export const THEME_DATA_KEY = "themeData";
 export function saveTheme(theme: ThemeData) {
     localStorage.setItem(THEME_DATA_KEY, JSON.stringify(theme));
 }
+
+function defaultDeserialize<T>(s: string | null, defaultValue: T): T {
+    if (s == null) return defaultValue;
+    try {
+        return JSON.parse(s);
+    } catch (err) {
+        console.error("Error parsing", { s }, err);
+    }
+    return defaultValue;
+}
+
+type SetState<T> = ReturnType<typeof useState<T>>[1];
+type SetStateArg<T> = Parameters<SetState<T>>;
+function usePersistedState<T>(
+    key: string,
+    defaultValue: T,
+    serialize: (v: T) => string = JSON.stringify,
+    deserialize: (s: string | null, def: T) => T = defaultDeserialize,
+) {
+    const [state, setState] = useState<T>(() => {
+        return deserialize(localStorage.getItem(key), defaultValue);
+    });
+    useEffect(() => {
+        localStorage.setItem(key, serialize(state));
+    }, [state]);
+
+    return [state, setState];
+}
+
 export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
     const [data, setData] = useState<ThemeData | null>(null);
-    const [settings, setSettings] = useState<ChatterinoSettings>({
-        messageSeparator: false,
-        confirmBeforeLeave: true,
-    });
+    const [settings, setSettings] = usePersistedState<ChatterinoSettings>(
+        "settings",
+        {
+            messageSeparator: false,
+            confirmBeforeLeave: true,
+        },
+    );
     const [state, setState] = useState<TempState>({
         hasChange: false,
     });
@@ -70,22 +103,22 @@ export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
 
         document.body.style.setProperty(
             "--opposite-of-icon-theme",
-            data.metadata.iconTheme == "light" ? "#000000" : "#ffffff"
+            data.metadata.iconTheme == "light" ? "#000000" : "#ffffff",
         );
         document.body.style.setProperty(
             "--similar-to-icon-theme",
-            data.metadata.iconTheme == "light" ? "#cccccc" : "#333333"
+            data.metadata.iconTheme == "light" ? "#cccccc" : "#333333",
         );
         document.body.style.setProperty(
             "--empty-split-color",
-            data.metadata.iconTheme == "light" ? "#555555" : "#999999"
+            data.metadata.iconTheme == "light" ? "#555555" : "#999999",
         );
     }, [data]);
 
     useEffect(() => {
         document.body.style.setProperty(
             "--settings-message-separator-width",
-            settings.messageSeparator ? "1px" : "0"
+            settings.messageSeparator ? "1px" : "0",
         );
     }, [settings]);
 
