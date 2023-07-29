@@ -1,6 +1,10 @@
-import { useRef, useState } from "react";
-import { ThemeData, useConfigContext } from "@/app/color-context-provider";
-import clsx from "clsx";
+import { PREVIEW_TABS, TABS } from "@/app/editor/ColorApp.constants";
+import {
+    ThemeData,
+    useConfigContext,
+} from "@/app/editor/color-context-provider";
+import { useTabContext } from "@/app/editor/tab-context-provider";
+import { PreviewTab, SettingsTab } from "@/app/editor/tab.types";
 import {
     CHATTERINO_BLACK_THEME,
     CHATTERINO_DARK_THEME,
@@ -8,10 +12,9 @@ import {
     CHATTERINO_WHITE_THEME,
 } from "@/resources";
 import { qt2css } from "@/utils";
-import { PREVIEW_TABS, TABS } from "@/app/ColorApp.constants";
-import { useTabContext } from "@/app/tab-context-provider";
+import clsx from "clsx";
+import { useRef, useState } from "react";
 import styles from "./dank.module.css";
-import { PreviewTab, SettingsTab } from "@/app/tab.types";
 
 export function ColorApp() {
     const { setPreviewTab, setSettingsTab, settingsTab, previewTab } =
@@ -77,14 +80,14 @@ export function ColorApp() {
         </div>
     ) : (
         <div className="flex items-center justify-center h-full w-full">
-            <div className="w-full max-w-[480px]">
-                <h1 className="col-span-2 text-xl font-bold">
+            <div className="w-full max-w-xl">
+                <h1 className="col-span-2 text-3xl font-bold">
                     Create Your first Chatterino Theme
                 </h1>
                 <hr className="my-4" />
                 {/*<div className="flex items-center space-x-2">*/}
                 <h2 className="col-span-2 text-base font-semibold my-4">
-                    From Chatterino Theme ...
+                    Based on Chatterino Theme ...
                 </h2>
                 <div className="space-y-2">
                     {["light", "dark", "white", "black"].map((it) => (

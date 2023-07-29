@@ -1,8 +1,8 @@
-import styles from "./chatlist.module.css";
-import { FakeChatMessage } from "@/app/data";
-import { ChatterinoSplit } from "@/app/fake-uis/chatterinoSplit.component";
+import { FakeChatMessage } from "@/app/editor/data";
 import { ChatterinoFakeTab } from "@/app/fake-uis/chatterinoFakeTab";
+import { ChatterinoSplit } from "@/app/fake-uis/chatterinoSplit.component";
 import clsx from "clsx";
+import styles from "./chatlist.module.css";
 
 /** basic split */
 export function ChatterinoSplitVertical({
@@ -84,7 +84,7 @@ export function ChatterinoSplitAdvanced({
                 <div
                     className={clsx(
                         styles.dropTargetRectVertical,
-                        styles.droppable
+                        styles.droppable,
                     )}
                 >
                     {" "}
@@ -95,7 +95,7 @@ export function ChatterinoSplitAdvanced({
                     <div
                         className={clsx(
                             styles.dropTargetRectHorizontal,
-                            styles.droppable
+                            styles.droppable,
                         )}
                     >
                         +
@@ -116,7 +116,7 @@ export function ChatterinoSplitAdvanced({
                     <div
                         className={clsx(
                             styles.dropTargetRectHorizontal,
-                            styles.droppable
+                            styles.droppable,
                         )}
                     >
                         {" "}
@@ -132,7 +132,7 @@ export function ChatterinoSplitAdvanced({
                 <div
                     className={clsx(
                         styles.dropTargetRectVertical,
-                        styles.droppable
+                        styles.droppable,
                     )}
                 >
                     {" "}

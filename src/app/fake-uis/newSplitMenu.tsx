@@ -1,16 +1,14 @@
-import styles from "./chatlist.module.css";
-import clsx from "clsx";
 import { QtButton, QtInput, QtRadio } from "@/app/fake-uis/FakeQt.component";
+import clsx from "clsx";
 import { useState } from "react";
-import { ChatterinoSplit } from "@/app/fake-uis/chatterinoSplit.component";
-import { fakeChatListVerySmall } from "@/app/data";
+import styles from "./chatlist.module.css";
 export function NewSplitMenu() {
     const [selectedMenu, setSelectedMenu] = useState("channel");
     return (
         <div
             className={clsx(
                 styles.window,
-                "h-full max-h-[300px] w-full max-h-[400px] flex flex-col overflow-hidden"
+                "h-full w-full max-h-[400px] flex flex-col overflow-hidden",
             )}
         >
             <div
@@ -78,7 +76,7 @@ export function EmoteMenu() {
         <div
             className={clsx(
                 styles.window,
-                "h-full max-h-[300px] w-full flex flex-col overflow-hidden"
+                "h-full max-h-[300px] w-full flex flex-col overflow-hidden",
             )}
         >
             <div className="p-4">
@@ -105,14 +103,14 @@ export function EmoteMenu() {
                 className={clsx(
                     styles.split,
                     "w-full h-full overflow-y-auto",
-                    styles.list
+                    styles.list,
                 )}
             >
                 <div
                     className={clsx(
                         styles.chatOdd,
                         styles.normalText,
-                        "px-2 py-1 relative text-center"
+                        "px-2 py-1 relative text-center",
                     )}
                 >
                     pajlada
@@ -121,7 +119,7 @@ export function EmoteMenu() {
                     className={clsx(
                         styles.chatEven,
                         styles.normalText,
-                        "px-2 py-1 relative flex items-center flex-wrap justify-center"
+                        "px-2 py-1 relative flex items-center flex-wrap justify-center",
                     )}
                 >
                     {Array(30)
@@ -138,7 +136,7 @@ export function EmoteMenu() {
                     className={clsx(
                         styles.chatOdd,
                         styles.normalText,
-                        "px-2 py-1 relative flex items-center flex-wrap justify-center"
+                        "px-2 py-1 relative flex items-center flex-wrap justify-center",
                     )}
                 >
                     {Array(12)
@@ -155,7 +153,7 @@ export function EmoteMenu() {
                     className={clsx(
                         styles.chatEven,
                         styles.normalText,
-                        "px-2 py-1 relative text-center"
+                        "px-2 py-1 relative text-center",
                     )}
                 >
                     forsen
@@ -164,7 +162,7 @@ export function EmoteMenu() {
                     className={clsx(
                         styles.chatOdd,
                         styles.normalText,
-                        "px-2 py-1 relative flex items-center flex-wrap justify-center"
+                        "px-2 py-1 relative flex items-center flex-wrap justify-center",
                     )}
                 >
                     {Array(12)

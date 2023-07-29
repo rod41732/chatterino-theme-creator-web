@@ -1,14 +1,13 @@
 "use client";
-import { ColorScheme, ThemeMetadata } from "@/app/model.types";
+import { ColorScheme, ThemeMetadata } from "@/app/editor/model.types";
+import { flattenKV } from "@/app/editor/themes-data";
 import {
-    createContext,
     PropsWithChildren,
-    useCallback,
+    createContext,
     useContext,
     useEffect,
     useState,
 } from "react";
-import { flattenKV } from "@/app/themes-data";
 
 // used for generating theme
 export interface ThemeData {

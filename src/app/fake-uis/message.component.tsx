@@ -1,4 +1,4 @@
-import { FakeChatMessage } from "@/app/data";
+import { FakeChatMessage } from "@/app/editor/data";
 import styles from "@/app/fake-uis/chatlist.module.css";
 import clsx from "clsx";
 
@@ -16,7 +16,7 @@ export function Message({
             className={clsx(
                 "px-2 py-1 relative",
                 idx % 2 == 0 ? styles.chatEven : styles.chatOdd,
-                styles.chatMessage
+                styles.chatMessage,
             )}
         >
             <span className={styles.systemText}> {it.timestampText}</span>

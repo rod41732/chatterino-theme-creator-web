@@ -1,34 +1,38 @@
 "use client";
-import { ConfigContextProvider } from "@/app/color-context-provider";
-import { ColorApp } from "@/app/ColorApp";
-import { ThemeButtons } from "@/app/Home.widgets";
-import { TabContextProvider } from "@/app/tab-context-provider";
+import { useRouter } from "next/navigation";
 import { FiGithub } from "react-icons/fi";
 
-export default function Home() {
+export default function () {
+    const router = useRouter();
     return (
-        <ConfigContextProvider>
-            <TabContextProvider>
-                <div className="h-full flex flex-col">
-                    <div className="px-4 border-b border-b-gray-200 flex-shrink-0 flex items-center space-x-2">
-                        <div className="text-2xl font-bold py-2">
-                            Chatterino Theme Creator
-                        </div>
-                        <ThemeButtons />
-                    </div>
-                    <div className="overflow-hidden flex-1">
-                        <ColorApp />
-                    </div>
-                    <Footer />
+        <div className="h-full w-full overflow-hidden flex flex-col">
+            <div className="flex-shrink h-2/3  relative flex flex-col items-center justify-center">
+                <h1 className="text-4xl font-bold justify-self-end">
+                    Welcome to Chatterino Theme Creator!
+                </h1>
+                <div className="space-y-4 mt-16">
+                    <button
+                        className="px-4 py-2 text-lg rounded-md block border border-gray-500 w-full"
+                        onClick={async () => {
+                            await router.push("./editor");
+                        }}
+                    >
+                        Create theme
+                    </button>
+                    <button className="px-4 py-2 text-lg rounded-md block border border-gray-500 w-full">
+                        Browse theme (Coming soon (TM))
+                    </button>
                 </div>
-            </TabContextProvider>
-        </ConfigContextProvider>
+            </div>
+            <div className="h-1/3"></div>
+            <MainFooter />
+        </div>
     );
 }
 
-function Footer() {
+function MainFooter() {
     return (
-        <div className="w-full bg-neutral-800 text-gray-400 px-4 py-2 mt-2 flex flex-wrap text-sm">
+        <div className="w-full text-gray-500 px-4 py-2 mt-2 flex flex-wrap text-sm justify-center gap-4">
             <div>
                 Chatterino Theme Creator is made by{" "}
                 <a
@@ -40,7 +44,6 @@ function Footer() {
                     @rod41732
                 </a>
             </div>
-            <div className="flex-grow"></div>
             <div className="flex items-center">
                 <a
                     href="https://github.com/rod41732/chatterino-theme-creator-web"
@@ -48,7 +51,7 @@ function Footer() {
                     rel="noreferrer"
                 >
                     <FiGithub className="inline-block mr-2 text-xl" />
-                    GitHub
+                    GitHub Repository
                 </a>
             </div>
         </div>

@@ -1,8 +1,8 @@
-import s from "./settings.module.css";
+import { useTabContext } from "@/app/editor/tab-context-provider";
+import { PreviewTab } from "@/app/editor/tab.types";
 import { ColorPickerWrapper } from "@/app/settings/ColorPickerWrapper.component";
 import { JumpIcon } from "@/app/settings/JumpIcon.component";
-import { useTabContext } from "@/app/tab-context-provider";
-import { PreviewTab } from "@/app/tab.types";
+import s from "./settings.module.css";
 
 export function WindowSettings() {
     const { setPreviewTab } = useTabContext();
