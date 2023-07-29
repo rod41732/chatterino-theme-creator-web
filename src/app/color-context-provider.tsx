@@ -1,3 +1,4 @@
+"use client";
 import { ColorScheme, ThemeMetadata } from "@/app/model.types";
 import {
     createContext,
@@ -54,6 +55,7 @@ function defaultDeserialize<T>(s: string | null, defaultValue: T): T {
 
 type SetState<T> = ReturnType<typeof useState<T>>[1];
 type SetStateArg<T> = Parameters<SetState<T>>;
+
 function usePersistedState<T>(
     key: string,
     defaultValue: T,
@@ -67,7 +69,7 @@ function usePersistedState<T>(
         localStorage.setItem(key, serialize(state));
     }, [state]);
 
-    return [state, setState];
+    return [state, setState] as const;
 }
 
 export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {

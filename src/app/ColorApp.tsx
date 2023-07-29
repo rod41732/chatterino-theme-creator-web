@@ -24,7 +24,7 @@ export function ColorApp() {
     const fileInputRef = useRef<HTMLInputElement>();
 
     return data ? (
-        <div className={`h-full overflow-hidden flex`}>
+        <div className={`h-full  flex`}>
             {/*left col*/}
             <div className="flex-1 flex-shrink overflow-hidden">
                 {/*tab bar*/}
