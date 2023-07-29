@@ -3,7 +3,7 @@ import {
     THEME_DATA_KEY,
     ThemeData,
     useConfigContext,
-} from "@/app/color-context-provider";
+} from "@/app/editor/color-context-provider";
 import { Button, Checkbox, Modal } from "antd";
 import { css2qt, qt2css } from "@/utils";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -80,7 +80,7 @@ export function ThemeModal({
             <hr className="my-4" />
             {/*<div className="flex items-center space-x-2">*/}
             <h2 className="col-span-2 text-base font-semibold my-4">
-                From Chatterino Theme ...
+                Based on Chatterino Theme ...
             </h2>
             <div className="space-y-2">
                 {["light", "dark", "white", "black"].map((it) => (
@@ -90,7 +90,7 @@ export function ThemeModal({
                             "w-full py-4 rounded-md border font-mono",
                             selectedPreset == it
                                 ? "bg-gray-700 text-gray-100 border-gray-100 "
-                                : "bg-gray-100 text-gray-700 border-gray-700 "
+                                : "bg-gray-100 text-gray-700 border-gray-700 ",
                         )}
                         onClick={() => setSelectedPreset(it)}
                     >
@@ -107,7 +107,7 @@ export function ThemeModal({
                         "w-full py-4 rounded-md border font-mono",
                         selectedPreset == "custom"
                             ? "bg-gray-700 text-gray-100 border-gray-100 "
-                            : "bg-gray-100 text-gray-700 border-gray-700 "
+                            : "bg-gray-100 text-gray-700 border-gray-700 ",
                     )}
                     onClick={() => {
                         setSelectedPreset("custom");
@@ -153,17 +153,17 @@ export function ThemeButtons() {
 
     const confirmBeforeLeave = useMemo(
         () => settings.confirmBeforeLeave,
-        [settings]
+        [settings],
     );
     const setConfirmBeforeLeave = useCallback(
         (newValue: boolean) => {
             setSettings((old) =>
                 produce(old, (draft) => {
                     draft.confirmBeforeLeave = newValue;
-                })
+                }),
             );
         },
-        [setSettings]
+        [setSettings],
     );
 
     // not sure if this is the best place to put
@@ -209,7 +209,7 @@ export function ThemeButtons() {
                         "hover:border-gray-800 hover:bg-gray-800 hover:text-gray-200",
                         saved
                             ? "border-gray-800 bg-gray-800 text-gray-200"
-                            : "border-gray-200 text-gray-800 bg-white"
+                            : "border-gray-200 text-gray-800 bg-white",
                     )}
                     onClick={() => {
                         setSaved(true);
@@ -219,7 +219,7 @@ export function ThemeButtons() {
                         }, 500);
                         localStorage.setItem(
                             THEME_DATA_KEY,
-                            JSON.stringify(data)
+                            JSON.stringify(data),
                         );
                     }}
                 >

@@ -1,12 +1,15 @@
-import { ThemeData, useConfigContext } from "@/app/color-context-provider";
-import { useMemo, useState } from "react";
+import {
+    ThemeData,
+    useConfigContext,
+} from "@/app/editor/color-context-provider";
 import s from "@/app/settings/settings.module.css";
 import { Popover } from "antd";
-import { ChromePicker } from "react-color";
-import { produce } from "immer";
 import clsx from "clsx";
-import { EditableInput } from "react-color/lib/components/common";
+import { produce } from "immer";
 import { WritableDraft } from "immer/src/types/types-external";
+import { useMemo, useState } from "react";
+import { ChromePicker } from "react-color";
+import { EditableInput } from "react-color/lib/components/common";
 
 interface ColorPickerWrapperProps {
     mutateColor: (draft: WritableDraft<ThemeData>, color: string) => void;

@@ -1,9 +1,9 @@
-import { FakeChatMessage } from "@/app/data";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useConfigContext } from "@/app/editor/color-context-provider";
+import { FakeChatMessage } from "@/app/editor/data";
 import styles from "@/app/fake-uis/chatlist.module.css";
-import clsx from "clsx";
 import { Message } from "@/app/fake-uis/message.component";
-import { useConfigContext } from "@/app/color-context-provider";
+import clsx from "clsx";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 export function ChatterinoSplit({
     name,

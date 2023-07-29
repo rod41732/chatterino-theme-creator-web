@@ -1,27 +1,27 @@
-import { OverviewSettings } from "@/app/settings/overviewSettings";
-import { MessageSettings } from "@/app/settings/messageSettings";
-import { ScrollBarSettings } from "@/app/settings/scrollBarSettings";
-import { SplitSettings } from "@/app/settings/splitSettings";
-import { TabsSettings } from "@/app/settings/tabsSettings";
-import { WindowSettings } from "@/app/settings/windowSettings";
+import {
+    fakeChatListLarge,
+    fakeChatListSmall,
+    fakeChatListVerySmall,
+} from "@/app/editor/data";
+import { PreviewTab, SettingsTab } from "@/app/editor/tab.types";
 import {
     ChatterinoDragSplitPreview,
     ChatterinoSplitAdvanced,
     ChatterinoSplitResize,
     ChatterinoSplitVertical,
 } from "@/app/fake-uis/chatterino";
-import {
-    fakeChatListLarge,
-    fakeChatListSmall,
-    fakeChatListVerySmall,
-} from "@/app/data";
-import clsx from "clsx";
 import { ChatterinoTabPreview } from "@/app/fake-uis/chatterinoTabPreview.component";
-import { ReactNode } from "react";
 import { ChatterinoEmptySplit } from "@/app/fake-uis/emptysplit";
 import { EmoteMenu, NewSplitMenu } from "@/app/fake-uis/newSplitMenu";
 import { FindPopup, ThreadPopup, UserCard } from "@/app/fake-uis/userInfoCard";
-import { PreviewTab, SettingsTab } from "@/app/tab.types";
+import { MessageSettings } from "@/app/settings/messageSettings";
+import { OverviewSettings } from "@/app/settings/overviewSettings";
+import { ScrollBarSettings } from "@/app/settings/scrollBarSettings";
+import { SplitSettings } from "@/app/settings/splitSettings";
+import { TabsSettings } from "@/app/settings/tabsSettings";
+import { WindowSettings } from "@/app/settings/windowSettings";
+import clsx from "clsx";
+import { ReactNode } from "react";
 
 interface Tab {
     label: string;

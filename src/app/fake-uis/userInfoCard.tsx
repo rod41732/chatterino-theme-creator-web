@@ -1,10 +1,10 @@
-import styles from "./chatlist.module.css";
-import clsx from "clsx";
+import { useConfigContext } from "@/app/editor/color-context-provider";
+import { fakeChatListSmall } from "@/app/editor/data";
 import { QtCheckbox, QtInput } from "@/app/fake-uis/FakeQt.component";
 import { ChatterinoSplit } from "@/app/fake-uis/chatterinoSplit.component";
-import { fakeChatListSmall } from "@/app/data";
-import { useConfigContext } from "@/app/color-context-provider";
+import clsx from "clsx";
 import { useMemo, useState } from "react";
+import styles from "./chatlist.module.css";
 
 export function UserCard() {
     const { data } = useConfigContext();
@@ -18,7 +18,7 @@ export function UserCard() {
             className={clsx(
                 styles.window,
                 styles.chatterinoWindow,
-                "max-h-[500px] text-sm p-4"
+                "max-h-[500px] text-sm p-4",
             )}
         >
             <div className="flex h-full overflow-hidden flex-col space-y-4">
@@ -100,7 +100,7 @@ export function ThreadPopup() {
             className={clsx(
                 styles.window,
                 styles.chatterinoWindow,
-                "max-h-[500px] text-sm"
+                "max-h-[500px] text-sm",
             )}
         >
             <div className="flex h-full overflow-hidden flex-col">
@@ -130,7 +130,7 @@ export function FindPopup() {
             className={clsx(
                 styles.window,
                 styles.chatterinoWindow,
-                "max-h-[500px] text-sm"
+                "max-h-[500px] text-sm",
             )}
         >
             <div className="flex h-full overflow-hidden flex-col">

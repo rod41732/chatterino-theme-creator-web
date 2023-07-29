@@ -1,5 +1,5 @@
 // NOTE: QT color is argb, but web color is rgba
-import { ColorScheme } from "@/app/model.types";
+import { ColorScheme } from "@/app/editor/model.types";
 
 /** default state / testing color */
 export const COLOR: ColorScheme = {
@@ -241,7 +241,7 @@ interface JSONData {
 export function flattenKV(
     prefix: string,
     obj: JSONData,
-    sep = "-"
+    sep = "-",
 ): [string, any][] {
     let out: [string, any][] = [];
     for (const [k, v] of Object.entries(obj)) {
