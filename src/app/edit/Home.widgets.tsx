@@ -1,9 +1,4 @@
-import {
-    saveTheme,
-    THEME_DATA_KEY,
-    ThemeData,
-    useConfigContext,
-} from "@/app/create/color-context-provider";
+import { ThemeData, useConfigContext } from "@/app/edit/color-context-provider";
 import { Button, Checkbox, Modal } from "antd";
 import { css2qt, qt2css } from "@/utils";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -15,6 +10,8 @@ import {
     CHATTERINO_WHITE_THEME,
 } from "@/resources";
 import { produce } from "immer";
+import { createAndSaveTheme, saveTheme } from "../../../lib/create-theme";
+import { useRouter } from "next/navigation";
 
 /** create theme modal */
 export function ThemeModal({
@@ -24,6 +21,7 @@ export function ThemeModal({
     isOpen: boolean;
     setOpen: (v: boolean) => void;
 }) {
+    const router = useRouter();
     const { setData } = useConfigContext();
     const [selectedPreset, setSelectedPreset] = useState("dark");
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -37,22 +35,34 @@ export function ThemeModal({
             }}
             onOk={() => {
                 switch (selectedPreset) {
-                    case "light":
-                        setData(CHATTERINO_LIGHT_THEME);
-                        saveTheme(CHATTERINO_LIGHT_THEME);
+                    case "light": {
+                        const themeId = createAndSaveTheme(
+                            CHATTERINO_LIGHT_THEME,
+                        );
+                        router.push("/edit/" + themeId);
                         break;
-                    case "dark":
-                        setData(CHATTERINO_DARK_THEME);
-                        saveTheme(CHATTERINO_DARK_THEME);
+                    }
+                    case "dark": {
+                        const themeId = createAndSaveTheme(
+                            CHATTERINO_DARK_THEME,
+                        );
+                        router.push("/edit/" + themeId);
                         break;
-                    case "white":
-                        setData(CHATTERINO_WHITE_THEME);
-                        saveTheme(CHATTERINO_WHITE_THEME);
+                    }
+                    case "white": {
+                        const themeId = createAndSaveTheme(
+                            CHATTERINO_WHITE_THEME,
+                        );
+                        router.push("/edit/" + themeId);
                         break;
-                    case "black":
-                        setData(CHATTERINO_BLACK_THEME);
-                        saveTheme(CHATTERINO_BLACK_THEME);
+                    }
+                    case "black": {
+                        const themeId = createAndSaveTheme(
+                            CHATTERINO_BLACK_THEME,
+                        );
+                        router.push("/edit/" + themeId);
                         break;
+                    }
                     case "custom":
                         if (!selectedFile) {
                             alert("No file selected!");
@@ -64,8 +74,9 @@ export function ThemeModal({
                                 // TODO: extra no validation
                                 const theme = JSON.parse(res) as ThemeData;
                                 const convertedTheme = qt2css(theme);
-                                setData(convertedTheme);
-                                saveTheme(convertedTheme);
+                                const themeId =
+                                    createAndSaveTheme(convertedTheme);
+                                router.push("/edit/" + themeId);
                             })
                             .catch((err) => {
                                 console.error("Error reading file", err);
@@ -146,7 +157,9 @@ const listener: (e: BeforeUnloadEvent) => void = (e) => {
     e.preventDefault();
     e.returnValue = "";
 };
-export function ThemeButtons() {
+export function ThemeButtons({ themeId }: { themeId: string }) {
+    const router = useRouter();
+
     const { data, setState, state, settings, setSettings } = useConfigContext();
     const [isOpen, setOpen] = useState(false);
     const [saved, setSaved] = useState(false);
@@ -217,10 +230,7 @@ export function ThemeButtons() {
                         setTimeout(() => {
                             setSaved(false);
                         }, 500);
-                        localStorage.setItem(
-                            THEME_DATA_KEY,
-                            JSON.stringify(data),
-                        );
+                        saveTheme(themeId, data);
                     }}
                 >
                     {saved ? "Saved!" : "Save"}

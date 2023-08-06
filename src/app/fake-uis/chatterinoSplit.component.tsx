@@ -1,5 +1,5 @@
-import { useConfigContext } from "@/app/create/color-context-provider";
-import { FakeChatMessage } from "@/app/create/data";
+import { useConfigContext } from "@/app/edit/color-context-provider";
+import { FakeChatMessage } from "@/app/edit/data";
 import styles from "@/app/fake-uis/chatlist.module.css";
 import { Message } from "@/app/fake-uis/message.component";
 import clsx from "clsx";
@@ -190,8 +190,9 @@ export function ChatterinoSplit({
                         }
                     />
                     {showCompletion && (
+                        // TODO: scrollbar is using accent color
                         <div
-                            className={`text-base w-[300px] h-[200px] absolute top-0 left-1/2 -translate-y-full -translate-x-1/2 p-2 ${styles.window}  ${styles.completionMenu} select-none`}
+                            className={`text-base w-[300px] h-[200px] absolute top-0 left-1/2 -translate-y-full -translate-x-1/2 p-2 ${styles.window}  ${styles.completionMenu} select-none overflow-auto`}
                         >
                             {Array(10)
                                 .fill(0)

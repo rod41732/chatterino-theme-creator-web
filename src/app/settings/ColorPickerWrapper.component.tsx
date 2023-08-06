@@ -1,7 +1,4 @@
-import {
-    ThemeData,
-    useConfigContext,
-} from "@/app/create/color-context-provider";
+import { ThemeData, useConfigContext } from "@/app/edit/color-context-provider";
 import s from "@/app/settings/settings.module.css";
 import { Popover } from "antd";
 import clsx from "clsx";
