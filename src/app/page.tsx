@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { FiGithub } from "react-icons/fi";
 
-export default function () {
+export default function HomePage() {
     const router = useRouter();
     return (
         <div className="h-full w-full overflow-hidden flex flex-col">

@@ -1,6 +1,6 @@
 "use client";
-import { ColorScheme, ThemeMetadata } from "@/app/editor/model.types";
-import { flattenKV } from "@/app/editor/themes-data";
+import { ColorScheme, ThemeMetadata } from "@/app/create/model.types";
+import { flattenKV } from "@/app/create/themes-data";
 import {
     PropsWithChildren,
     createContext,
