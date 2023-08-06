@@ -1,5 +1,6 @@
 import { createContext, PropsWithChildren, useContext } from "react";
-import { usePersistedState } from "@/app/edit/color-context-provider";
+
+import { usePersistedState } from "@/lib/use-persisted-state";
 
 interface _ThemeCreatorState {
     hasChange: boolean;
