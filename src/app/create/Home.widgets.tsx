@@ -3,7 +3,7 @@ import {
     THEME_DATA_KEY,
     ThemeData,
     useConfigContext,
-} from "@/app/editor/color-context-provider";
+} from "@/app/create/color-context-provider";
 import { Button, Checkbox, Modal } from "antd";
 import { css2qt, qt2css } from "@/utils";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";

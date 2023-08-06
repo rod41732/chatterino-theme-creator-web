@@ -1,7 +1,7 @@
 import {
     ThemeData,
     useConfigContext,
-} from "@/app/editor/color-context-provider";
+} from "@/app/create/color-context-provider";
 import s from "@/app/settings/settings.module.css";
 import { Popover } from "antd";
 import clsx from "clsx";

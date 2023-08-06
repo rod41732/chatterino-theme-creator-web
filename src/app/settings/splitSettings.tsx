@@ -1,13 +1,13 @@
-import { useConfigContext } from "@/app/editor/color-context-provider";
+import { useConfigContext } from "@/app/create/color-context-provider";
 import { Checkbox } from "antd";
 import { produce } from "immer";
 import s from "./settings.module.css";
 
-import { useTabContext } from "@/app/editor/tab-context-provider";
+import { useTabContext } from "@/app/create/tab-context-provider";
 import { ColorPickerWrapper } from "@/app/settings/ColorPickerWrapper.component";
 import { JumpIcon } from "@/app/settings/JumpIcon.component";
 
-import { PreviewTab } from "@/app/editor/tab.types";
+import { PreviewTab } from "@/app/create/tab.types";
 
 export function SplitSettings() {
     const { settings, setSettings } = useConfigContext();
