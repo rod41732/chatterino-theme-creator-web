@@ -10,7 +10,7 @@ import s from "./settings.module.css";
 import { PreviewTab } from "@/app/edit/tab.types";
 
 export function OverviewSettings() {
-    const { data, setData, setState } = useConfigContext();
+    const { data, setData } = useConfigContext();
     const iconTheme = data!.metadata.iconTheme;
     const setIconTheme = useCallback(
         (color: "light" | "dark") => {
@@ -36,7 +36,6 @@ export function OverviewSettings() {
                             : "border-gray-300 text-gray-700",
                     )}
                     onClick={() => {
-                        setState({ hasChange: true });
                         setIconTheme("light");
                     }}
                 >
@@ -54,7 +53,6 @@ export function OverviewSettings() {
                             : "border-gray-300 text-gray-700",
                     )}
                     onClick={() => {
-                        setState({ hasChange: true });
                         setIconTheme("dark");
                     }}
                 >

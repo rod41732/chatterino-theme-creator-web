@@ -8,7 +8,7 @@ import styles from "./dank.module.css";
 export function ColorApp() {
     const { setPreviewTab, setSettingsTab, settingsTab, previewTab } =
         useTabContext();
-    const { data, setData } = useConfigContext();
+    const { data } = useConfigContext();
 
     // modal
 

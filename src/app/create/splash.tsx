@@ -10,7 +10,7 @@ import { qt2css } from "@/utils";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { EditorFooter } from "@/app/create/EdtiorFooter";
-import { createAndSaveTheme } from "../../../lib/create-theme";
+import { createAndSaveTheme } from "@/lib/create-theme";
 
 export function Splash() {
     const router = useRouter();

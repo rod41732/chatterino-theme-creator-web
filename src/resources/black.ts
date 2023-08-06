@@ -1,4 +1,4 @@
-import { ThemeData } from "@/app/color-context-provider";
+import { ThemeData } from "@/app/edit/color-context-provider";
 
 export const CHATTERINO_BLACK_THEME: ThemeData = {
     metadata: {
@@ -109,5 +109,12 @@ export const CHATTERINO_BLACK_THEME: ThemeData = {
             background: "#040404",
             text: "#eeeeee",
         },
+    },
+    ctcMeta: {
+        checkeredRow: true,
+        createdAt: "1970-01-01T00:00:00Z",
+        messageSeparator: false,
+        modifiedAt: "1970-01-01T00:00:00Z",
+        name: "Black",
     },
 };
