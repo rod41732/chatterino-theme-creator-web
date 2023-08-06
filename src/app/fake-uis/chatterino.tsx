@@ -1,4 +1,4 @@
-import { FakeChatMessage } from "@/app/create/data";
+import { FakeChatMessage } from "@/app/edit/data";
 import { ChatterinoFakeTab } from "@/app/fake-uis/chatterinoFakeTab";
 import { ChatterinoSplit } from "@/app/fake-uis/chatterinoSplit.component";
 import clsx from "clsx";

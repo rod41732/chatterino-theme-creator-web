@@ -1,5 +1,5 @@
-import { ThemeData } from "@/app/color-context-provider";
 import { produce } from "immer";
+import { ThemeData } from "@/app/edit/color-context-provider";
 
 function qt2cssString(argb: string): string {
     return argb.replace(/#([0-9a-f]{2})([0-9a-f]{6})/, "#$2$1");

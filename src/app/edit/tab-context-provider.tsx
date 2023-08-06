@@ -1,5 +1,5 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
-import { PreviewTab, SettingsTab } from "@/app/create/tab.types";
+import { PreviewTab, SettingsTab } from "@/app/edit/tab.types";
 
 interface TabContextData {
     setSettingsTab: (newTab: SettingsTab) => void;

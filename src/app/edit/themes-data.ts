@@ -1,5 +1,5 @@
 // NOTE: QT color is argb, but web color is rgba
-import { ColorScheme } from "@/app/create/model.types";
+import { ColorScheme } from "@/app/edit/model.types";
 
 /** default state / testing color */
 export const COLOR: ColorScheme = {

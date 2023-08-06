@@ -5,17 +5,12 @@ import {
     CHATTERINO_LIGHT_THEME,
     CHATTERINO_WHITE_THEME,
 } from "@/resources";
-import { ThemeData } from "@/app/create/color-context-provider";
+import { ThemeData } from "@/app/edit/color-context-provider";
 import { qt2css } from "@/utils";
-import { EditorFooter } from "@/app/create/page";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-
-function createTheme(base: ThemeData): string {
-    const id = "local-" + btoa(Math.random().toString()).slice(5, 12);
-    localStorage.setItem("theme-" + id, JSON.stringify(base));
-    return id;
-}
+import { EditorFooter } from "@/app/create/EdtiorFooter";
+import { createAndSaveTheme } from "../../../lib/create-theme";
 
 export function Splash() {
     const router = useRouter();
@@ -120,28 +115,28 @@ export function Splash() {
                             onClick={() => {
                                 switch (selectedPreset) {
                                     case "light": {
-                                        const themeId = createTheme(
+                                        const themeId = createAndSaveTheme(
                                             CHATTERINO_LIGHT_THEME,
                                         );
                                         router.push("edit/" + themeId);
                                         break;
                                     }
                                     case "dark": {
-                                        const themeId = createTheme(
+                                        const themeId = createAndSaveTheme(
                                             CHATTERINO_DARK_THEME,
                                         );
                                         router.push("edit/" + themeId);
                                         break;
                                     }
                                     case "white": {
-                                        const themeId = createTheme(
+                                        const themeId = createAndSaveTheme(
                                             CHATTERINO_WHITE_THEME,
                                         );
                                         router.push("edit/" + themeId);
                                         break;
                                     }
                                     case "black": {
-                                        const themeId = createTheme(
+                                        const themeId = createAndSaveTheme(
                                             CHATTERINO_BLACK_THEME,
                                         );
                                         router.push("edit/" + themeId);
@@ -160,9 +155,10 @@ export function Splash() {
                                                     res,
                                                 ) as ThemeData;
 
-                                                const themeId = createTheme(
-                                                    qt2css(theme),
-                                                );
+                                                const themeId =
+                                                    createAndSaveTheme(
+                                                        qt2css(theme),
+                                                    );
                                                 router.push("edit/" + themeId);
                                             })
                                             .catch((err) => {

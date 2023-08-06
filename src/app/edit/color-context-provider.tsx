@@ -1,6 +1,6 @@
 "use client";
-import { ColorScheme, ThemeMetadata } from "@/app/create/model.types";
-import { flattenKV } from "@/app/create/themes-data";
+import { ColorScheme, ThemeMetadata } from "@/app/edit/model.types";
+import { flattenKV } from "@/app/edit/themes-data";
 import {
     createContext,
     PropsWithChildren,
@@ -8,6 +8,8 @@ import {
     useEffect,
     useState,
 } from "react";
+import { CHATTERINO_BLACK_THEME } from "@/resources";
+import { getThemeKey } from "../../../lib/create-theme";
 
 // used for generating theme
 export interface ThemeData {
@@ -27,20 +29,15 @@ export interface TempState {
 type ValueOrFactory<T> = T | ((old: T) => T);
 
 interface ConfigContext {
-    data: ThemeData | null;
+    data: ThemeData;
     state: TempState;
     settings: ChatterinoSettings;
-    setData: (newValue: ValueOrFactory<ThemeData | null>) => void;
+    setData: (newValue: ValueOrFactory<ThemeData>) => void;
     setSettings: (newValue: ValueOrFactory<ChatterinoSettings>) => void;
     setState: (newValue: ValueOrFactory<TempState>) => void;
 }
 
 const ConfigContext = createContext<ConfigContext>(null as any);
-
-export const THEME_DATA_KEY = "themeData";
-export function saveTheme(theme: ThemeData) {
-    localStorage.setItem(THEME_DATA_KEY, JSON.stringify(theme));
-}
 
 function defaultDeserialize<T>(s: string | null, defaultValue: T): T {
     if (s == null) return defaultValue;
@@ -68,8 +65,32 @@ function usePersistedState<T>(
     return [state, setState] as const;
 }
 
-export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
-    const [data, setData] = useState<ThemeData | null>(null);
+interface ThemeContextProps {
+    themeId: string;
+}
+
+export const ConfigContextProvider = ({
+    children,
+    themeId,
+}: PropsWithChildren<ThemeContextProps>) => {
+    const [data, setData] = useState<ThemeData>(CHATTERINO_BLACK_THEME);
+    // load theme from storage
+    useEffect(() => {
+        const storedData = localStorage.getItem(getThemeKey(themeId));
+        if (!storedData) {
+            console.log("no data in storage");
+            return;
+        }
+        try {
+            setData(JSON.parse(storedData));
+            console.log("loaded data from storage");
+        } catch (err) {
+            console.error("Error loading data", err, "data was", {
+                storedData,
+            });
+        }
+    }, [themeId]);
+
     const [settings, setSettings] = usePersistedState<ChatterinoSettings>(
         "settings",
         {
@@ -119,22 +140,6 @@ export const ConfigContextProvider = ({ children }: PropsWithChildren<{}>) => {
             settings.messageSeparator ? "1px" : "0",
         );
     }, [settings]);
-
-    useEffect(() => {
-        const storedData = localStorage.getItem(THEME_DATA_KEY);
-        if (!storedData) {
-            console.log("no data in storage");
-            return;
-        }
-        try {
-            setData(JSON.parse(storedData));
-            console.log("loaded data from storage");
-        } catch (err) {
-            console.error("Error loading data", err, "data was", {
-                storedData,
-            });
-        }
-    }, []);
 
     return (
         <ConfigContext.Provider

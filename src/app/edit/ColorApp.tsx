@@ -1,7 +1,7 @@
-import { PREVIEW_TABS, TABS } from "@/app/create/ColorApp.constants";
-import { useConfigContext } from "@/app/create/color-context-provider";
-import { useTabContext } from "@/app/create/tab-context-provider";
-import { PreviewTab, SettingsTab } from "@/app/create/tab.types";
+import { PREVIEW_TABS, TABS } from "@/app/edit/ColorApp.constants";
+import { useConfigContext } from "@/app/edit/color-context-provider";
+import { useTabContext } from "@/app/edit/tab-context-provider";
+import { PreviewTab, SettingsTab } from "@/app/edit/tab.types";
 import clsx from "clsx";
 import styles from "./dank.module.css";
 

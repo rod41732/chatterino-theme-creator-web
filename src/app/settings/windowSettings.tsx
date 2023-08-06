@@ -1,5 +1,5 @@
-import { useTabContext } from "@/app/create/tab-context-provider";
-import { PreviewTab } from "@/app/create/tab.types";
+import { useTabContext } from "@/app/edit/tab-context-provider";
+import { PreviewTab } from "@/app/edit/tab.types";
 import { ColorPickerWrapper } from "@/app/settings/ColorPickerWrapper.component";
 import { JumpIcon } from "@/app/settings/JumpIcon.component";
 import s from "./settings.module.css";
