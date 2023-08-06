@@ -1,7 +1,7 @@
 import { ThemeData, useConfigContext } from "@/app/edit/color-context-provider";
 import { Button, Checkbox, Modal } from "antd";
 import { css2qt, qt2css } from "@/utils";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import {
     CHATTERINO_BLACK_THEME,
@@ -10,8 +10,9 @@ import {
     CHATTERINO_WHITE_THEME,
 } from "@/resources";
 import { produce } from "immer";
-import { createAndSaveTheme, saveTheme } from "../../../lib/create-theme";
+import { createAndSaveTheme, saveTheme } from "@/lib/create-theme";
 import { useRouter } from "next/navigation";
+import { useThemeCreatorState } from "@/app/edit/settings-context-provider";
 
 /** create theme modal */
 export function ThemeModal({
@@ -22,7 +23,6 @@ export function ThemeModal({
     setOpen: (v: boolean) => void;
 }) {
     const router = useRouter();
-    const { setData } = useConfigContext();
     const [selectedPreset, setSelectedPreset] = useState("dark");
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement>();
@@ -158,30 +158,36 @@ const listener: (e: BeforeUnloadEvent) => void = (e) => {
     e.returnValue = "";
 };
 export function ThemeButtons({ themeId }: { themeId: string }) {
-    const router = useRouter();
+    const { state, setState } = useThemeCreatorState();
 
-    const { data, setState, state, settings, setSettings } = useConfigContext();
+    const { data } = useConfigContext();
     const [isOpen, setOpen] = useState(false);
     const [saved, setSaved] = useState(false);
 
-    const confirmBeforeLeave = useMemo(
-        () => settings.confirmBeforeLeave,
-        [settings],
-    );
-    const setConfirmBeforeLeave = useCallback(
+    const setWarnUnsavedChanges = useCallback(
         (newValue: boolean) => {
-            setSettings((old) =>
-                produce(old, (draft) => {
-                    draft.confirmBeforeLeave = newValue;
-                }),
-            );
+            setState((old) => {
+                return produce(old, (draft) => {
+                    draft.warnUnsavedChanges = newValue;
+                });
+            });
         },
-        [setSettings],
+        [setState],
     );
+    const lastData = useRef<ThemeData | null>(null);
+    useEffect(() => {
+        if (lastData.current == null) {
+            lastData.current = data;
+            return;
+        }
+        if (lastData.current != data) {
+            setState((old) => ({ ...old, hasChange: true }));
+        }
+    }, [data, setState]);
 
     // not sure if this is the best place to put
     useEffect(() => {
-        if (state.hasChange && settings.confirmBeforeLeave) {
+        if (state.hasChange && state.warnUnsavedChanges) {
             window.addEventListener("beforeunload", listener, {
                 capture: true,
             });
@@ -190,7 +196,7 @@ export function ThemeButtons({ themeId }: { themeId: string }) {
                 capture: true,
             });
         }
-    }, [state, settings]);
+    }, [state]);
 
     return (
         data && (
@@ -208,9 +214,9 @@ export function ThemeButtons({ themeId }: { themeId: string }) {
                 </Button>
                 <label className="flex items-center space-x-2 text-sm text-gray-700">
                     <Checkbox
-                        checked={confirmBeforeLeave}
+                        checked={state.warnUnsavedChanges}
                         onChange={(e) =>
-                            setConfirmBeforeLeave(e.target.checked)
+                            setWarnUnsavedChanges(e.target.checked)
                         }
                     />
                     <p> Confirm Before Leave </p>
@@ -226,7 +232,7 @@ export function ThemeButtons({ themeId }: { themeId: string }) {
                     )}
                     onClick={() => {
                         setSaved(true);
-                        setState({ hasChange: false });
+                        setState((cur) => ({ ...cur, hasChange: false }));
                         setTimeout(() => {
                             setSaved(false);
                         }, 500);

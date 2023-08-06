@@ -9,32 +9,28 @@ import {
     useState,
 } from "react";
 import { CHATTERINO_BLACK_THEME } from "@/resources";
-import { getThemeKey } from "../../../lib/create-theme";
+import { getThemeKey } from "@/lib/create-theme";
+import { ValueOrFactory } from "@/lib/react";
+
+interface ChatterinoThemeCreatorMetadata {
+    name: string;
+    createdAt: string;
+    modifiedAt: string;
+
+    checkeredRow: boolean;
+    messageSeparator: boolean;
+}
 
 // used for generating theme
 export interface ThemeData {
     colors: ColorScheme;
     metadata: ThemeMetadata;
+    ctcMeta: ChatterinoThemeCreatorMetadata;
 }
-
-export interface ChatterinoSettings {
-    messageSeparator: boolean;
-    confirmBeforeLeave: boolean;
-}
-
-export interface TempState {
-    hasChange: boolean;
-}
-
-type ValueOrFactory<T> = T | ((old: T) => T);
 
 interface ConfigContext {
     data: ThemeData;
-    state: TempState;
-    settings: ChatterinoSettings;
     setData: (newValue: ValueOrFactory<ThemeData>) => void;
-    setSettings: (newValue: ValueOrFactory<ChatterinoSettings>) => void;
-    setState: (newValue: ValueOrFactory<TempState>) => void;
 }
 
 const ConfigContext = createContext<ConfigContext>(null as any);
@@ -49,7 +45,7 @@ function defaultDeserialize<T>(s: string | null, defaultValue: T): T {
     return defaultValue;
 }
 
-function usePersistedState<T>(
+export function usePersistedState<T>(
     key: string,
     defaultValue: T,
     serialize: (v: T) => string = JSON.stringify,
@@ -69,7 +65,7 @@ interface ThemeContextProps {
     themeId: string;
 }
 
-export const ConfigContextProvider = ({
+export const ThemeContextProvider = ({
     children,
     themeId,
 }: PropsWithChildren<ThemeContextProps>) => {
@@ -90,17 +86,6 @@ export const ConfigContextProvider = ({
             });
         }
     }, [themeId]);
-
-    const [settings, setSettings] = usePersistedState<ChatterinoSettings>(
-        "settings",
-        {
-            messageSeparator: false,
-            confirmBeforeLeave: true,
-        },
-    );
-    const [state, setState] = useState<TempState>({
-        hasChange: false,
-    });
 
     useEffect(() => {
         if (!data) return;
@@ -132,19 +117,14 @@ export const ConfigContextProvider = ({
             "--empty-split-color",
             data.metadata.iconTheme == "light" ? "#555555" : "#999999",
         );
-    }, [data]);
-
-    useEffect(() => {
         document.body.style.setProperty(
             "--settings-message-separator-width",
-            settings.messageSeparator ? "1px" : "0",
+            data.ctcMeta.messageSeparator ? "1px" : "0",
         );
-    }, [settings]);
+    }, [data]);
 
     return (
-        <ConfigContext.Provider
-            value={{ data, setData, settings, setSettings, state, setState }}
-        >
+        <ConfigContext.Provider value={{ data, setData }}>
             {children}
         </ConfigContext.Provider>
     );
