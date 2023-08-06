@@ -71,7 +71,6 @@ export function NewSplitMenu() {
 }
 
 export function EmoteMenu() {
-    const [selectedMenu, setSelectedMenu] = useState("channel");
     return (
         <div
             className={clsx(
@@ -125,7 +124,9 @@ export function EmoteMenu() {
                     {Array(30)
                         .fill(null)
                         .map((_, idx) => (
+                            // eslint-disable-next-line @next/next/no-img-element
                             <img
+                                alt="FeelsDankMan"
                                 key={idx}
                                 src="https://cdn.frankerfacez.com/emote/536927/4"
                                 className="h-8 w-auto mx-0.5"
@@ -142,7 +143,9 @@ export function EmoteMenu() {
                     {Array(12)
                         .fill(null)
                         .map((_, idx) => (
+                            // eslint-disable-next-line @next/next/no-img-element
                             <img
+                                alt="FeelsDankMan"
                                 key={idx}
                                 src="https://cdn.frankerfacez.com/emote/536927/4"
                                 className="h-8 w-auto mx-0.5"
@@ -168,7 +171,9 @@ export function EmoteMenu() {
                     {Array(12)
                         .fill(null)
                         .map((_, idx) => (
+                            // eslint-disable-next-line @next/next/no-img-element
                             <img
+                                alt="FeelsDankMan"
                                 key={idx}
                                 src="https://cdn.frankerfacez.com/emote/536927/4"
                                 className="h-8 w-auto mx-0.5"
