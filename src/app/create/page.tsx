@@ -1,8 +1,4 @@
 "use client";
-import { ConfigContextProvider } from "@/app/create/color-context-provider";
-import { ColorApp } from "@/app/create/ColorApp";
-import { ThemeButtons } from "@/app/create/Home.widgets";
-import { TabContextProvider } from "@/app/create/tab-context-provider";
 import { FiGithub } from "react-icons/fi";
 import { Splash } from "@/app/create/splash";
 

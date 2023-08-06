@@ -7,7 +7,7 @@ import { Popover } from "antd";
 import clsx from "clsx";
 import { produce } from "immer";
 import { WritableDraft } from "immer/src/types/types-external";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { ChromePicker } from "react-color";
 import { EditableInput } from "react-color/lib/components/common";
 
@@ -22,9 +22,8 @@ export function ColorPickerWrapper({
     getColor,
     alpha = false,
 }: ColorPickerWrapperProps) {
-    const { data: _data, setData, setState } = useConfigContext();
+    const { data: _data, setData } = useConfigContext();
     const data = useMemo(() => _data!, [_data]);
-    const [showPicker, setShowPicker] = useState(false);
 
     return (
         <div

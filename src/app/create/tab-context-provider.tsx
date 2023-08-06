@@ -10,8 +10,8 @@ interface TabContextData {
 
 const TabContext = createContext<TabContextData>({
     previewTab: PreviewTab.CHAT,
-    setPreviewTab(newTab: PreviewTab): void {},
-    setSettingsTab(newTab: SettingsTab): void {},
+    setPreviewTab(_newTab: PreviewTab): void {},
+    setSettingsTab(_newTab: SettingsTab): void {},
     settingsTab: SettingsTab.OVERVIEW,
 });
 

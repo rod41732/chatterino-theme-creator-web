@@ -146,7 +146,9 @@ export function ChatterinoSplit({
                 >
                     <p className="flex-grow"> Replying to @doge41732</p>
 
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
+                        alt="cancel reply button"
                         className="w-4 h-4"
                         src={
                             iconTheme == "light"
@@ -177,7 +179,9 @@ export function ChatterinoSplit({
                     >
                         {input.length}
                     </div>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
+                        alt="emote menu button"
                         className={clsx("absolute bottom-1 right-1", "w-4 h-4")}
                         src={
                             iconTheme == "light"
@@ -189,59 +193,38 @@ export function ChatterinoSplit({
                         <div
                             className={`text-base w-[300px] h-[200px] absolute top-0 left-1/2 -translate-y-full -translate-x-1/2 p-2 ${styles.window}  ${styles.completionMenu} select-none`}
                         >
-                            <div className="relative">
-                                <div
-                                    className={clsx(
-                                        styles.emoteSelect,
-                                        "absolute inset-0",
-                                    )}
-                                ></div>
-                                <div className="flex items-center relative">
-                                    <img
-                                        src="https://cdn.frankerfacez.com/emote/536927/4"
-                                        className="h-8 w-auto mx-2"
-                                    />
-                                    <p
-                                        className={clsx(
-                                            styles.windowText,
-                                            "text-xs",
-                                        )}
-                                    >
-                                        {" "}
-                                        FeelsDankMan - Global FrankerFaceZ{" "}
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="flex items-center relative">
-                                <img
-                                    src="https://cdn.frankerfacez.com/emote/536927/4"
-                                    className="h-8 w-auto mx-2"
-                                />
-                                <p
-                                    className={clsx(
-                                        styles.windowText,
-                                        "text-xs",
-                                    )}
-                                >
-                                    {" "}
-                                    FeelsDankMan - Global FrankerFaceZ{" "}
-                                </p>
-                            </div>
-                            <div className="flex items-center relative">
-                                <img
-                                    src="https://cdn.frankerfacez.com/emote/536927/4"
-                                    className="h-8 w-auto mx-2"
-                                />
-                                <p
-                                    className={clsx(
-                                        styles.windowText,
-                                        "text-xs",
-                                    )}
-                                >
-                                    {" "}
-                                    FeelsDankMan - Global FrankerFaceZ{" "}
-                                </p>
-                            </div>
+                            {Array(10)
+                                .fill(0)
+                                .map((_, idx) => {
+                                    return (
+                                        <div key={idx} className="relative">
+                                            <div
+                                                className={clsx(
+                                                    styles.emoteSelect,
+                                                    "absolute inset-0",
+                                                )}
+                                            ></div>
+                                            <div className="flex items-center relative">
+                                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                <img
+                                                    alt="FeelsDankMan"
+                                                    src="https://cdn.frankerfacez.com/emote/536927/4"
+                                                    className="h-8 w-auto mx-2"
+                                                />
+                                                <p
+                                                    className={clsx(
+                                                        styles.windowText,
+                                                        "text-xs",
+                                                    )}
+                                                >
+                                                    {" "}
+                                                    FeelsDankMan - Global
+                                                    FrankerFaceZ{" "}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
                         </div>
                     )}
                 </div>

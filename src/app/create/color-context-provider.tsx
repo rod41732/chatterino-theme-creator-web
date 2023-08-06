@@ -2,8 +2,8 @@
 import { ColorScheme, ThemeMetadata } from "@/app/create/model.types";
 import { flattenKV } from "@/app/create/themes-data";
 import {
-    PropsWithChildren,
     createContext,
+    PropsWithChildren,
     useContext,
     useEffect,
     useState,
@@ -52,9 +52,6 @@ function defaultDeserialize<T>(s: string | null, defaultValue: T): T {
     return defaultValue;
 }
 
-type SetState<T> = ReturnType<typeof useState<T>>[1];
-type SetStateArg<T> = Parameters<SetState<T>>;
-
 function usePersistedState<T>(
     key: string,
     defaultValue: T,
@@ -66,7 +63,7 @@ function usePersistedState<T>(
     });
     useEffect(() => {
         localStorage.setItem(key, serialize(state));
-    }, [state]);
+    }, [state, key, serialize]);
 
     return [state, setState] as const;
 }

@@ -23,11 +23,18 @@ export function UserCard() {
         >
             <div className="flex h-full overflow-hidden flex-col space-y-4">
                 <div className="flex space-x-4">
-                    <img src="/pajlada.png" className="w-32 h-32" />
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                        alt="pajlada' profile image"
+                        src="/pajlada.png"
+                        className="w-32 h-32"
+                    />
                     <div className="flex-grow">
                         <div className="flex space-x-2 items-center">
                             <div> pajlada </div>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
+                                alt="copy name button"
                                 src={
                                     iconTheme == "light"
                                         ? "/chatterino-icons/copyLight.png"
@@ -37,7 +44,9 @@ export function UserCard() {
                             />
                             <div className="flex-grow"></div>
                             <div> ID: 123456 </div>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
+                                alt="ocpy ID button"
                                 src={
                                     iconTheme == "light"
                                         ? "/chatterino-icons/copyLight.png"
@@ -45,7 +54,9 @@ export function UserCard() {
                                 }
                                 className="opacity-[0.15] p-1 hover:opacity-100 hover:bg-black/50 w-[26px] h-[26px]"
                             />
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
+                                alt="pin user card button"
                                 src={
                                     isPin
                                         ? "/chatterino-icons/pinEnabled.png"
@@ -89,12 +100,6 @@ export function UserCard() {
 }
 
 export function ThreadPopup() {
-    const { data } = useConfigContext();
-    const iconTheme = useMemo(() => {
-        return data!.metadata.iconTheme;
-    }, [data]);
-    const [isPin, setIsPin] = useState(false);
-
     return (
         <div
             className={clsx(
@@ -119,12 +124,6 @@ export function ThreadPopup() {
 }
 
 export function FindPopup() {
-    const { data } = useConfigContext();
-    const iconTheme = useMemo(() => {
-        return data!.metadata.iconTheme;
-    }, [data]);
-    const [isPin, setIsPin] = useState(false);
-
     return (
         <div
             className={clsx(

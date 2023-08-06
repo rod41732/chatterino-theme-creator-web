@@ -1,5 +1,3 @@
-import { ThemeButtons } from "@/app/create/Home.widgets";
-import { ColorApp } from "@/app/create/ColorApp";
 import clsx from "clsx";
 import {
     CHATTERINO_BLACK_THEME,

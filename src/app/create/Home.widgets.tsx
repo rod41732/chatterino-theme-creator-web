@@ -14,7 +14,7 @@ import {
     CHATTERINO_LIGHT_THEME,
     CHATTERINO_WHITE_THEME,
 } from "@/resources";
-import { immerable, produce } from "immer";
+import { produce } from "immer";
 
 /** create theme modal */
 export function ThemeModal({
