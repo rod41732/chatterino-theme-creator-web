@@ -12,15 +12,6 @@ import { CHATTERINO_BLACK_THEME } from "@/resources";
 import { getThemeKey } from "@/lib/create-theme";
 import { ValueOrFactory } from "@/lib/react";
 
-interface ChatterinoThemeCreatorMetadata {
-    name: string;
-    createdAt: string;
-    modifiedAt: string;
-
-    checkeredRow: boolean;
-    messageSeparator: boolean;
-}
-
 // used for generating theme
 export interface ThemeData {
     colors: ColorScheme;
@@ -28,43 +19,15 @@ export interface ThemeData {
     ctcMeta: ChatterinoThemeCreatorMetadata;
 }
 
-interface ConfigContext {
+interface ThemeContextData {
     data: ThemeData;
     setData: (newValue: ValueOrFactory<ThemeData>) => void;
 }
-
-const ConfigContext = createContext<ConfigContext>(null as any);
-
-function defaultDeserialize<T>(s: string | null, defaultValue: T): T {
-    if (s == null) return defaultValue;
-    try {
-        return JSON.parse(s);
-    } catch (err) {
-        console.error("Error parsing", { s }, err);
-    }
-    return defaultValue;
-}
-
-export function usePersistedState<T>(
-    key: string,
-    defaultValue: T,
-    serialize: (v: T) => string = JSON.stringify,
-    deserialize: (s: string | null, def: T) => T = defaultDeserialize,
-) {
-    const [state, setState] = useState<T>(() => {
-        return deserialize(localStorage.getItem(key), defaultValue);
-    });
-    useEffect(() => {
-        localStorage.setItem(key, serialize(state));
-    }, [state, key, serialize]);
-
-    return [state, setState] as const;
-}
+const ThemeContext = createContext<ThemeContextData>(null as any);
 
 interface ThemeContextProps {
     themeId: string;
 }
-
 export const ThemeContextProvider = ({
     children,
     themeId,
@@ -124,14 +87,22 @@ export const ThemeContextProvider = ({
     }, [data]);
 
     return (
-        <ConfigContext.Provider value={{ data, setData }}>
+        <ThemeContext.Provider value={{ data, setData }}>
             {children}
-        </ConfigContext.Provider>
+        </ThemeContext.Provider>
     );
 };
 
 export const useConfigContext = () => {
-    const v = useContext(ConfigContext);
+    const v = useContext(ThemeContext);
     if (v == null) throw new Error("Missing context provider");
     return v;
 };
+interface ChatterinoThemeCreatorMetadata {
+    name: string;
+    createdAt: string;
+    modifiedAt: string;
+
+    checkeredRow: boolean;
+    messageSeparator: boolean;
+}
