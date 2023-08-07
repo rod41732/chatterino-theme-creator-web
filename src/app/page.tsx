@@ -14,7 +14,7 @@ export default function HomePage() {
                     <button
                         className="px-4 py-2 text-lg rounded-md block border border-gray-500 w-full"
                         onClick={async () => {
-                            await router.push("./editor");
+                            await router.push("/create");
                         }}
                     >
                         Create theme
