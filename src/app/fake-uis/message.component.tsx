@@ -1,4 +1,4 @@
-import { FakeChatMessage } from "@/app/edit/data";
+import { FakeChatMessage } from "@/data/fake-chat";
 import styles from "@/app/fake-uis/chatlist.module.css";
 import clsx from "clsx";
 

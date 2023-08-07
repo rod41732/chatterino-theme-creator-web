@@ -2,8 +2,8 @@ import {
     fakeChatListLarge,
     fakeChatListSmall,
     fakeChatListVerySmall,
-} from "@/app/edit/data";
-import { PreviewTab, SettingsTab } from "@/app/edit/tab.types";
+} from "@/data/fake-chat";
+import { PreviewTab, SettingsTab } from "@/app/edit/editor-tab.types";
 import {
     ChatterinoDragSplitPreview,
     ChatterinoSplitAdvanced,

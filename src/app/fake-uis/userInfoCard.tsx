@@ -1,5 +1,5 @@
-import { useConfigContext } from "@/app/edit/color-context-provider";
-import { fakeChatListSmall } from "@/app/edit/data";
+import { useConfigContext } from "@/app/edit/ThemeContextProvider";
+import { fakeChatListSmall } from "@/data/fake-chat";
 import { QtCheckbox, QtInput } from "@/app/fake-uis/FakeQt.component";
 import { ChatterinoSplit } from "@/app/fake-uis/chatterinoSplit.component";
 import clsx from "clsx";

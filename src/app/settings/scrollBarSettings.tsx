@@ -1,9 +1,9 @@
 import s from "./settings.module.css";
 import { ColorPickerWrapper } from "@/app/settings/ColorPickerWrapper.component";
 import { JumpIcon } from "@/app/settings/JumpIcon.component";
-import { useTabContext } from "@/app/edit/tab-context-provider";
+import { useTabContext } from "@/app/edit/TabContextProvider";
 
-import { PreviewTab } from "@/app/edit/tab.types";
+import { PreviewTab } from "@/app/edit/editor-tab.types";
 
 export function ScrollBarSettings() {
     const { setPreviewTab } = useTabContext();

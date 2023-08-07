@@ -1,4 +1,4 @@
-import { ThemeData } from "@/app/edit/color-context-provider";
+import { ThemeData } from "@/app/edit/ThemeContextProvider";
 export function getThemeKey(themeId: string): string {
     return "theme-" + themeId;
 }
