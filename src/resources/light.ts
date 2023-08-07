@@ -115,6 +115,6 @@ export const CHATTERINO_LIGHT_THEME: ThemeData = {
         createdAt: "1970-01-01T00:00:00Z",
         messageSeparator: false,
         modifiedAt: "1970-01-01T00:00:00Z",
-        name: "Black",
+        name: "Light",
     },
 };

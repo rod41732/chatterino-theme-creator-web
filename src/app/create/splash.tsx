@@ -7,10 +7,43 @@ import {
 } from "@/resources";
 import { ThemeData } from "@/app/edit/ThemeContextProvider";
 import { qt2css } from "@/utils";
-import { useRef, useState } from "react";
+import { ElementRef, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { EditorFooter } from "@/app/create/EdtiorFooter";
 import { createAndSaveTheme } from "@/lib/create-theme";
+import Link from "next/link";
+import styles from "../fake-uis/chatlist.module.css";
+import { MdOutlineModeEditOutline } from "react-icons/md";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { BiSolidDuplicate } from "react-icons/bi";
+
+function localStorageKeys(): string[] {
+    return Array(localStorage.length)
+        .fill(0)
+        .map((_, idx) => localStorage.key(idx)!);
+}
+
+interface ThemeEntry {
+    id: string;
+    data: ThemeData;
+}
+
+function listThemes() {
+    return localStorageKeys()
+        .filter((it) => it.startsWith("theme-"))
+        .map((it): ThemeEntry | null => {
+            try {
+                return {
+                    id: it.slice("theme-".length),
+                    data: JSON.parse(localStorage.getItem(it)!),
+                };
+            } catch (err) {
+                console.warn("Error parsing theme from key", it, err);
+                return null;
+            }
+        })
+        .filter((it): it is ThemeEntry => it != null);
+}
 
 export function Splash() {
     const router = useRouter();
@@ -18,6 +51,11 @@ export function Splash() {
     const [selectedPreset, setSelectedPreset] = useState("");
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement>();
+
+    const [themes, setThemes] = useState<ThemeEntry[]>([]);
+    useEffect(() => {
+        setThemes(listThemes());
+    }, []);
 
     return (
         <>
@@ -28,39 +66,41 @@ export function Splash() {
                 {/*<ThemeButtons />*/}
             </div>
             <div className="flex-1 overflow-hidden">
-                <div className="flex items-center justify-center h-full w-full">
-                    <div className="w-full max-w-xl">
-                        <h1 className="col-span-2 text-3xl font-bold">
-                            Create Your first Chatterino Theme
+                <div className="flex  items-center gap-x-8 h-full w-full px-8">
+                    <div className="mt-6 flex-[1_0_0]">
+                        <h1 className="text-2xl font-bold">
+                            Create New Chatterino Theme
                         </h1>
+
                         <hr className="my-4" />
                         {/*<div className="flex items-center space-x-2">*/}
                         <h2 className="col-span-2 text-base font-semibold my-4">
-                            Based on Chatterino Theme ...
+                            Based on Chatterino Default themes ...
                         </h2>
-                        <div className="space-y-2">
+                        <div className="flex flex-wrap">
                             {["light", "dark", "white", "black"].map((it) => (
-                                <button
-                                    key={it}
-                                    className={clsx(
-                                        "w-full py-4 rounded-md border font-mono",
-                                        selectedPreset == it
-                                            ? "bg-gray-700 text-gray-100 border-gray-100 "
-                                            : "bg-gray-100 text-gray-700 border-gray-700 ",
-                                    )}
-                                    onClick={() => setSelectedPreset(it)}
-                                >
-                                    {it.toUpperCase()}
-                                </button>
+                                <div key={it} className="w-1/4 p-2">
+                                    <button
+                                        className={clsx(
+                                            "w-full py-2 rounded-md border font-mono",
+                                            selectedPreset == it
+                                                ? "bg-gray-700 text-gray-100 border-gray-100 "
+                                                : "bg-gray-100 text-gray-700 border-gray-700 ",
+                                        )}
+                                        onClick={() => setSelectedPreset(it)}
+                                    >
+                                        {it.toUpperCase()}
+                                    </button>
+                                </div>
                             ))}
                         </div>
                         <h2 className="col-span-2 text-base font-semibold my-4">
-                            Import from your existing theme
+                            ... Or Upload theme file to edit
                         </h2>
                         <div className="space-y-2">
                             <button
                                 className={clsx(
-                                    "w-full py-4 rounded-md border font-mono",
+                                    "w-full py-2 rounded-md border font-mono",
                                     selectedPreset == "custom"
                                         ? "bg-gray-700 text-gray-100 border-gray-100 "
                                         : "bg-gray-100 text-gray-700 border-gray-700 ",
@@ -102,7 +142,7 @@ export function Splash() {
 
                         <button
                             className={clsx(
-                                "w-full py-4 rounded-md border font-mono my-8",
+                                "w-full py-2 rounded-md border font-mono my-2",
                                 "hover:bg-blue-500 hover:text-blue-100 hover:border-blue-100 ",
                                 "bg-blue-700 text-blue-100 border-blue-100",
                                 "disabled:bg-blue-100 disabled:text-blue-700 disabled:border-blue-700",
@@ -176,12 +216,153 @@ export function Splash() {
                                 }
                             }}
                         >
-                            Create theme
+                            Create new theme
                         </button>
+                    </div>
+
+                    <div className="flex-[2_0_0]">
+                        <h2 className="text-xl font-bold mb-2">
+                            ... Or Edit your existing themes
+                        </h2>
+                        <div className="overflow-auto  p-2 ">
+                            {themes.map((theme) => {
+                                const messageCol = theme.data.colors.messages;
+                                return (
+                                    <ThemePreview
+                                        theme={theme}
+                                        key={theme.id}
+                                        onDelete={() => {
+                                            localStorage.removeItem(
+                                                "theme-" + theme.id,
+                                            );
+                                            setThemes(listThemes());
+                                        }}
+                                    />
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
             </div>
             <EditorFooter />
         </>
+    );
+}
+
+function ThemePreview({
+    theme,
+    onDelete,
+}: {
+    theme: ThemeEntry;
+    onDelete: () => void;
+}) {
+    const router = useRouter();
+    const ref = useRef<ElementRef<"div">>(null);
+    const messageCol = theme.data.colors.messages;
+    const scrollbarsCol = theme.data.colors.scrollbars;
+    useEffect(() => {
+        if (ref.current) {
+            ref.current?.style.setProperty(
+                "--scrollbars-background",
+                scrollbarsCol.background,
+            );
+            ref.current?.style.setProperty(
+                "--scrollbars-thumb",
+                scrollbarsCol.thumb,
+            );
+            ref.current?.style.setProperty(
+                "--scrollbars-thumbSelected",
+                scrollbarsCol.thumbSelected,
+            );
+            ref.current?.style.setProperty(
+                "--splits-background",
+                theme.data.colors.splits.background,
+            );
+            console.log("set color of theme", theme.id, "to div", ref.current);
+        } else {
+            console.log("cannot find ref");
+        }
+    }, [theme]);
+
+    return (
+        <div className={"flex border border-gray-400 rounded-md m-2"} ref={ref}>
+            <div className="block mr-2 flex-grow p-2">
+                <Link
+                    href={"/edit/" + theme.id}
+                    className="block text-lg font-semibold"
+                >
+                    {/*{theme.id}:*/}
+                    {theme.data.ctcMeta.name}
+                </Link>
+                <div className="flex items-center space-x-2">
+                    <button
+                        className="p-2 hover:bg-gray-200 cursor-pointer rounded-full"
+                        onClick={() => {
+                            router.push("/edit/" + theme.id);
+                        }}
+                    >
+                        <AiFillEdit />
+                    </button>
+                    <button
+                        className="p-2 hover:bg-gray-200 cursor-pointer rounded-full"
+                        onClick={() => {
+                            const themeId = createAndSaveTheme(theme.data);
+                            router.push("/edit/" + themeId);
+                        }}
+                    >
+                        <BiSolidDuplicate />
+                    </button>
+                    <button
+                        className="p-2 hover:bg-gray-200 cursor-pointer rounded-full"
+                        onClick={onDelete}
+                    >
+                        <AiFillDelete />
+                    </button>
+                </div>
+            </div>
+            <div className={clsx(styles.split)}>
+                <div
+                    className={clsx(
+                        "overflow-y-auto w-[300px] max-h-24",
+                        styles.list,
+                    )}
+                >
+                    {Array(10)
+                        .fill(0)
+                        .map((_, idx) => (
+                            <div
+                                key={idx}
+                                style={{
+                                    background:
+                                        idx % 2 == 0
+                                            ? messageCol.backgrounds.regular
+                                            : messageCol.backgrounds.alternate,
+                                    color: messageCol.textColors.regular,
+                                }}
+                                className="relative"
+                            >
+                                <div>
+                                    <span
+                                        style={{
+                                            color: messageCol.textColors.system,
+                                        }}
+                                    >
+                                        {" "}
+                                        13:37{" "}
+                                    </span>
+                                    <span className="text-red-500 font-bold">
+                                        {" "}
+                                        doge:{" "}
+                                    </span>
+                                    <span>This is message</span>
+                                </div>
+                                {/*<div className="absolute r-0 t-0 w-4 h-4 bg-red-500">*/}
+                                {/*    forsen*/}
+                                {/*</div>*/}
+                            </div>
+                        ))}
+                </div>
+            </div>
+        </div>
     );
 }
