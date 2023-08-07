@@ -1,6 +1,6 @@
 "use client";
-import { ColorScheme, ThemeMetadata } from "@/app/edit/model.types";
-import { flattenKV } from "@/app/edit/themes-data";
+import { ColorScheme, ThemeMetadata } from "@/app/edit/color-scheme.types";
+import { flattenJSON } from "@/lib/flatten-json";
 import {
     createContext,
     PropsWithChildren,
@@ -10,7 +10,7 @@ import {
 } from "react";
 import { CHATTERINO_BLACK_THEME } from "@/resources";
 import { getThemeKey } from "@/lib/create-theme";
-import { ValueOrFactory } from "@/lib/react";
+import { ValueOrFactory } from "@/lib/react.types";
 
 // used for generating theme
 export interface ThemeData {
@@ -53,7 +53,7 @@ export const ThemeContextProvider = ({
     useEffect(() => {
         if (!data) return;
         // the convention used for generating
-        const cssVariables = flattenKV("--", data.colors, "-");
+        const cssVariables = flattenJSON("--", data.colors, "-");
         for (const [variable, val] of cssVariables) {
             document.body.style.setProperty(variable, val);
         }

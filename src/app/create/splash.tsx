@@ -5,7 +5,7 @@ import {
     CHATTERINO_LIGHT_THEME,
     CHATTERINO_WHITE_THEME,
 } from "@/resources";
-import { ThemeData } from "@/app/edit/color-context-provider";
+import { ThemeData } from "@/app/edit/ThemeContextProvider";
 import { qt2css } from "@/utils";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";

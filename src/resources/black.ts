@@ -1,4 +1,4 @@
-import { ThemeData } from "@/app/edit/color-context-provider";
+import { ThemeData } from "@/app/edit/ThemeContextProvider";
 
 export const CHATTERINO_BLACK_THEME: ThemeData = {
     metadata: {

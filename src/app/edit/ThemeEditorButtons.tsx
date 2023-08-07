@@ -1,4 +1,4 @@
-import { ThemeData, useConfigContext } from "@/app/edit/color-context-provider";
+import { ThemeData, useConfigContext } from "@/app/edit/ThemeContextProvider";
 import { Button, Checkbox, Modal } from "antd";
 import { css2qt, qt2css } from "@/utils";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -12,10 +12,10 @@ import {
 import { produce } from "immer";
 import { createAndSaveTheme, saveTheme } from "@/lib/create-theme";
 import { useRouter } from "next/navigation";
-import { useThemeCreatorState } from "@/app/edit/settings-context-provider";
+import { useEditorState } from "@/app/edit/EditorStateContextProvider";
 
 /** create theme modal */
-export function ThemeModal({
+function CreateThemeModal({
     isOpen,
     setOpen,
 }: {
@@ -153,12 +153,14 @@ export function ThemeModal({
     );
 }
 
-const listener: (e: BeforeUnloadEvent) => void = (e) => {
+const confirmBeforeLeaveListener: (e: BeforeUnloadEvent) => void = (e) => {
     e.preventDefault();
     e.returnValue = "";
 };
-export function ThemeButtons({ themeId }: { themeId: string }) {
-    const { state, setState } = useThemeCreatorState();
+
+/** buttons that control theme new/edit/export */
+export function ThemeEditorButton({ themeId }: { themeId: string }) {
+    const { state, setState } = useEditorState();
 
     const { data } = useConfigContext();
     const [isOpen, setOpen] = useState(false);
@@ -188,13 +190,21 @@ export function ThemeButtons({ themeId }: { themeId: string }) {
     // not sure if this is the best place to put
     useEffect(() => {
         if (state.hasChange && state.warnUnsavedChanges) {
-            window.addEventListener("beforeunload", listener, {
-                capture: true,
-            });
+            window.addEventListener(
+                "beforeunload",
+                confirmBeforeLeaveListener,
+                {
+                    capture: true,
+                },
+            );
         } else {
-            window.removeEventListener("beforeunload", listener, {
-                capture: true,
-            });
+            window.removeEventListener(
+                "beforeunload",
+                confirmBeforeLeaveListener,
+                {
+                    capture: true,
+                },
+            );
         }
     }, [state]);
 
@@ -242,7 +252,7 @@ export function ThemeButtons({ themeId }: { themeId: string }) {
                     {saved ? "Saved!" : "Save"}
                 </Button>
                 <ExportButton />
-                <ThemeModal isOpen={isOpen} setOpen={setOpen} />
+                <CreateThemeModal isOpen={isOpen} setOpen={setOpen} />
             </>
         )
     );

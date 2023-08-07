@@ -1,5 +1,5 @@
-import { useConfigContext } from "@/app/edit/color-context-provider";
-import { useTabContext } from "@/app/edit/tab-context-provider";
+import { useConfigContext } from "@/app/edit/ThemeContextProvider";
+import { useTabContext } from "@/app/edit/TabContextProvider";
 import { ColorPickerWrapper } from "@/app/settings/ColorPickerWrapper.component";
 import { JumpIcon } from "@/app/settings/JumpIcon.component";
 import clsx from "clsx";
@@ -7,7 +7,7 @@ import { produce } from "immer";
 import { useCallback } from "react";
 import s from "./settings.module.css";
 
-import { PreviewTab } from "@/app/edit/tab.types";
+import { PreviewTab } from "@/app/edit/editor-tab.types";
 
 export function OverviewSettings() {
     const { data, setData } = useConfigContext();

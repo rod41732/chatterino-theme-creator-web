@@ -1,9 +1,9 @@
 import { PREVIEW_TABS, TABS } from "@/app/edit/ColorApp.constants";
-import { useConfigContext } from "@/app/edit/color-context-provider";
-import { useTabContext } from "@/app/edit/tab-context-provider";
-import { PreviewTab, SettingsTab } from "@/app/edit/tab.types";
+import { useConfigContext } from "@/app/edit/ThemeContextProvider";
+import { useTabContext } from "@/app/edit/TabContextProvider";
+import { PreviewTab, SettingsTab } from "@/app/edit/editor-tab.types";
 import clsx from "clsx";
-import styles from "./dank.module.css";
+import styles from "./preview.module.css";
 
 export function ColorApp() {
     const { setPreviewTab, setSettingsTab, settingsTab, previewTab } =

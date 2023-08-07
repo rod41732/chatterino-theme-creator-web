@@ -1,5 +1,5 @@
-import { useConfigContext } from "@/app/edit/color-context-provider";
-import { FakeChatMessage } from "@/app/edit/data";
+import { useConfigContext } from "@/app/edit/ThemeContextProvider";
+import { FakeChatMessage } from "@/data/fake-chat";
 import styles from "@/app/fake-uis/chatlist.module.css";
 import { Message } from "@/app/fake-uis/message.component";
 import clsx from "clsx";
