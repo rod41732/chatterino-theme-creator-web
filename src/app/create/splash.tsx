@@ -7,7 +7,7 @@ import {
 } from "@/resources";
 import { ThemeData } from "@/app/edit/ThemeContextProvider";
 import { qt2css } from "@/utils";
-import { ElementRef, useEffect, useRef, useState } from "react";
+import { ElementRef, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { EditorFooter } from "@/app/create/EdtiorFooter";
 import { createAndSaveTheme } from "@/lib/create-theme";
@@ -257,35 +257,24 @@ function ThemePreview({
     onDelete: () => void;
 }) {
     const router = useRouter();
-    const ref = useRef<ElementRef<"div">>(null);
+
     const messageCol = theme.data.colors.messages;
     const scrollbarsCol = theme.data.colors.scrollbars;
-    useEffect(() => {
-        if (ref.current) {
-            ref.current?.style.setProperty(
-                "--scrollbars-background",
-                scrollbarsCol.background,
-            );
-            ref.current?.style.setProperty(
-                "--scrollbars-thumb",
-                scrollbarsCol.thumb,
-            );
-            ref.current?.style.setProperty(
-                "--scrollbars-thumbSelected",
-                scrollbarsCol.thumbSelected,
-            );
-            ref.current?.style.setProperty(
-                "--splits-background",
-                theme.data.colors.splits.background,
-            );
-            console.log("set color of theme", theme.id, "to div", ref.current);
-        } else {
-            console.log("cannot find ref");
-        }
-    }, [theme]);
-
+    const customVars = useMemo(
+        () =>
+            ({
+                "--scrollbars-background": scrollbarsCol.background,
+                "--scrollbars-thumb": scrollbarsCol.thumb,
+                "--scrollbars-thumbSelected": scrollbarsCol.thumbSelected,
+                "--splits-background": theme.data.colors.splits.background,
+            }) as any,
+        [theme],
+    );
     return (
-        <div className={"flex border border-gray-400 rounded-md m-2"} ref={ref}>
+        <div
+            className={"flex border border-gray-400 rounded-md m-2"}
+            style={customVars}
+        >
             <div className="block mr-2 flex-grow p-2">
                 <Link
                     href={"/edit/" + theme.id}
