@@ -7,13 +7,12 @@ import {
 } from "@/resources";
 import { ThemeData } from "@/app/edit/ThemeContextProvider";
 import { qt2css } from "@/utils";
-import { ElementRef, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { EditorFooter } from "@/app/create/EdtiorFooter";
 import { createAndSaveTheme } from "@/lib/create-theme";
 import Link from "next/link";
 import styles from "../fake-uis/chatlist.module.css";
-import { MdOutlineModeEditOutline } from "react-icons/md";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BiSolidDuplicate } from "react-icons/bi";
 
@@ -226,7 +225,6 @@ export function Splash() {
                         </h2>
                         <div className="overflow-auto  p-2 ">
                             {themes.map((theme) => {
-                                const messageCol = theme.data.colors.messages;
                                 return (
                                     <ThemePreview
                                         theme={theme}
@@ -258,18 +256,21 @@ function ThemePreview({
 }) {
     const router = useRouter();
 
-    const messageCol = theme.data.colors.messages;
-    const scrollbarsCol = theme.data.colors.scrollbars;
-    const customVars = useMemo(
-        () =>
-            ({
-                "--scrollbars-background": scrollbarsCol.background,
-                "--scrollbars-thumb": scrollbarsCol.thumb,
-                "--scrollbars-thumbSelected": scrollbarsCol.thumbSelected,
-                "--splits-background": theme.data.colors.splits.background,
-            }) as any,
-        [theme],
-    );
+    const customVars = useMemo(() => {
+        const messageCol = theme.data.colors.messages;
+        const scrollbarsCol = theme.data.colors.scrollbars;
+        return {
+            "--scrollbars-background": scrollbarsCol.background,
+            "--scrollbars-thumb": scrollbarsCol.thumb,
+            "--scrollbars-thumbSelected": scrollbarsCol.thumbSelected,
+            "--splits-background": theme.data.colors.splits.background,
+            "--messages-textColors-regular": messageCol.textColors.regular,
+            "--messages-textColors-system": messageCol.textColors.system,
+            "--messages-background-regular": messageCol.backgrounds.regular,
+            "--messages-backgrounds-alternate":
+                messageCol.backgrounds.alternate,
+        } as any;
+    }, [theme]);
     return (
         <div
             className={"flex border border-gray-400 rounded-md m-2"}
@@ -321,21 +322,15 @@ function ThemePreview({
                         .map((_, idx) => (
                             <div
                                 key={idx}
-                                style={{
-                                    background:
-                                        idx % 2 == 0
-                                            ? messageCol.backgrounds.regular
-                                            : messageCol.backgrounds.alternate,
-                                    color: messageCol.textColors.regular,
-                                }}
-                                className="relative"
+                                className={clsx(
+                                    idx % 2 == 0
+                                        ? styles.chatEven
+                                        : styles.chatOdd,
+                                    styles.normalText,
+                                )}
                             >
                                 <div>
-                                    <span
-                                        style={{
-                                            color: messageCol.textColors.system,
-                                        }}
-                                    >
+                                    <span className={styles.systemText}>
                                         {" "}
                                         13:37{" "}
                                     </span>
