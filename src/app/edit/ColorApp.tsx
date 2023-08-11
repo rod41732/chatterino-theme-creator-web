@@ -4,15 +4,28 @@ import { useTabContext } from "@/app/edit/TabContextProvider";
 import { PreviewTab, SettingsTab } from "@/app/edit/editor-tab.types";
 import clsx from "clsx";
 import styles from "./preview.module.css";
+import { PropsWithChildren } from "react";
+import { ColorProvider } from "@/lib/ColorProvider";
+
+function ColorProviderFromContext({
+    children,
+    className,
+}: PropsWithChildren<{ className?: string }>) {
+    const { data } = useConfigContext();
+    return (
+        <ColorProvider theme={data} className={className}>
+            {children}
+        </ColorProvider>
+    );
+}
 
 export function ColorApp() {
     const { setPreviewTab, setSettingsTab, settingsTab, previewTab } =
         useTabContext();
-    const { data } = useConfigContext();
 
     // modal
 
-    return data ? (
+    return (
         <div className={`h-full  flex`}>
             {/*left col*/}
             <div className="flex-1 flex-shrink overflow-hidden">
@@ -40,7 +53,7 @@ export function ColorApp() {
             </div>
 
             {/*right col*/}
-            <div
+            <ColorProviderFromContext
                 className={`flex-1 flex-shrink overflow-hidden flex flex-col ${styles.preview}`}
             >
                 {/*tab bar*/}
@@ -62,9 +75,7 @@ export function ColorApp() {
                 <div className="overflow-hidden relative flex-1">
                     {PREVIEW_TABS.find((it) => it.key == previewTab)?.children}
                 </div>
-            </div>
+            </ColorProviderFromContext>
         </div>
-    ) : (
-        <div> no data !</div>
     );
 }

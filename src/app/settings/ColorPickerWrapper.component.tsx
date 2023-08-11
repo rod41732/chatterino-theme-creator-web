@@ -28,25 +28,30 @@ export function ColorPickerWrapper({
         >
             <Popover
                 content={
-                    <ChromePicker
-                        className="!shadow-none select-none"
-                        color={getColor(data)}
-                        onChange={(color) => {
-                            const alphaValue =
-                                Math.ceil((color.rgb.a ?? 1) * 256) - 1;
-                            console.log("alpha", alphaValue);
+                    <div className="p-5 pb-0">
+                        <ChromePicker
+                            className="!shadow-none select-none"
+                            color={getColor(data)}
+                            onChange={(color) => {
+                                const alphaValue =
+                                    Math.ceil((color.rgb.a ?? 1) * 256) - 1;
+                                console.log("alpha", alphaValue);
 
-                            const alphaPart = alpha
-                                ? alphaValue.toString(16).padStart(2, "0")
-                                : "";
+                                const alphaPart = alpha
+                                    ? alphaValue.toString(16).padStart(2, "0")
+                                    : "";
 
-                            setData(
-                                produce(data, (draft) =>
-                                    mutateColor(draft, color.hex + alphaPart),
-                                ),
-                            );
-                        }}
-                    />
+                                setData(
+                                    produce(data, (draft) =>
+                                        mutateColor(
+                                            draft,
+                                            color.hex + alphaPart,
+                                        ),
+                                    ),
+                                );
+                            }}
+                        />
+                    </div>
                 }
                 overlayClassName={clsx("bg-red p-0")}
             >

@@ -160,6 +160,7 @@ const confirmBeforeLeaveListener: (e: BeforeUnloadEvent) => void = (e) => {
 
 /** buttons that control theme new/edit/export */
 export function ThemeEditorButton({ themeId }: { themeId: string }) {
+    const router = useRouter();
     const { state, setState } = useEditorState();
 
     const { data } = useConfigContext();
@@ -218,7 +219,15 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
                 <Button
                     type="primary"
                     className="border-gray-200 text-gray-800 font-bold"
-                    onClick={() => setOpen(true)}
+                    onClick={() => {
+                        const ok =
+                            state.warnUnsavedChanges && state.hasChange
+                                ? window.confirm("Leave with saving?")
+                                : true;
+                        if (ok) {
+                            router.push("/create");
+                        }
+                    }}
                 >
                     New
                 </Button>
