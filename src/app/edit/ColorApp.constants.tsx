@@ -62,6 +62,43 @@ export const TABS: Tab[] = [
     },
 ];
 
+export function ChatterinoAllPreviews() {
+    return (
+        <div
+            className="w-full h-full overflow-hidden gap-4"
+            style={{
+                display: "grid",
+                overflow: "hidden",
+                gridTemplateAreas: `
+                    "mai sec emo new"
+                    "mai sec usr usr" `,
+                gridTemplateColumns:
+                    "2fr 2fr minmax(1fr, 300px) minmax(1fr, 300px)",
+                gridTemplateRows: "1fr 1fr",
+            }}
+        >
+            <div style={{ gridArea: "mai", minWidth: 0 }}>
+                <ChatterinoSplitVertical chatMessages={fakeChatListLarge} />
+            </div>
+            <div style={{ gridArea: "sec", minWidth: 0 }}>
+                <ChatterinoSplitAdvanced chatMessages={fakeChatListVerySmall} />
+            </div>
+            {/*<div style={{ gridArea: "emp" }}>*/}
+            {/*    <ChatterinoEmptySplit />*/}
+            {/*</div>*/}
+            <div style={{ gridArea: "emo" }}>
+                <EmoteMenu />
+            </div>
+            <div style={{ gridArea: "new" }}>
+                <NewSplitMenu />
+            </div>
+            <div style={{ gridArea: "usr" }}>
+                <UserCard />
+            </div>
+        </div>
+    );
+}
+
 export const PREVIEW_TABS: Tab[] = [
     {
         label: "Chat",

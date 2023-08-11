@@ -13,6 +13,7 @@ import { produce } from "immer";
 import { createAndSaveTheme, saveTheme } from "@/lib/create-theme";
 import { useRouter } from "next/navigation";
 import { useEditorState } from "@/app/edit/EditorStateContextProvider";
+import { ChatterinoAllPreviews } from "@/app/edit/ColorApp.constants";
 
 /** create theme modal */
 function CreateThemeModal({
@@ -164,7 +165,6 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
     const { state, setState } = useEditorState();
 
     const { data } = useConfigContext();
-    const [isOpen, setOpen] = useState(false);
     const [saved, setSaved] = useState(false);
 
     const setWarnUnsavedChanges = useCallback(
@@ -209,61 +209,77 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
         }
     }, [state]);
 
+    const [previewOpen, setPreviewOpen] = useState(false);
+
     return (
-        data && (
-            <>
-                <div className="flex-grow"></div>
-                <p className="text-sm text-gray-500">
-                    {state.hasChange ? "Unsaved changes" : "No changes"}
-                </p>
-                <Button
-                    type="primary"
-                    className="border-gray-200 text-gray-800 font-bold"
-                    onClick={() => {
-                        const ok =
-                            state.warnUnsavedChanges && state.hasChange
-                                ? window.confirm("Leave with saving?")
-                                : true;
-                        if (ok) {
-                            router.push("/create");
-                        }
+        <>
+            <Modal
+                width="80%"
+                wrapClassName="p-4"
+                open={previewOpen}
+                onCancel={() => setPreviewOpen(false)}
+                footer={null}
+            >
+                <div
+                    style={{
+                        // antd built-in padding top of 107px
+                        height: "calc(100vh - 214px)",
                     }}
                 >
-                    New
-                </Button>
-                <label className="flex items-center space-x-2 text-sm text-gray-700">
-                    <Checkbox
-                        checked={state.warnUnsavedChanges}
-                        onChange={(e) =>
-                            setWarnUnsavedChanges(e.target.checked)
-                        }
-                    />
-                    <p> Confirm Before Leave </p>
-                </label>
-                <Button
-                    type="primary"
-                    className={clsx(
-                        "font-bold",
-                        "hover:border-gray-800 hover:bg-gray-800 hover:text-gray-200",
-                        saved
-                            ? "border-gray-800 bg-gray-800 text-gray-200"
-                            : "border-gray-200 text-gray-800 bg-white",
-                    )}
-                    onClick={() => {
-                        setSaved(true);
-                        setState((cur) => ({ ...cur, hasChange: false }));
-                        setTimeout(() => {
-                            setSaved(false);
-                        }, 500);
-                        saveTheme(themeId, data);
-                    }}
-                >
-                    {saved ? "Saved!" : "Save"}
-                </Button>
-                <ExportButton />
-                <CreateThemeModal isOpen={isOpen} setOpen={setOpen} />
-            </>
-        )
+                    <ChatterinoAllPreviews />
+                </div>
+            </Modal>
+            <div className="flex-grow"></div>
+            <Button type="primary" onClick={() => setPreviewOpen(true)}>
+                Preview all
+            </Button>
+            <p className="text-sm text-gray-500">
+                {state.hasChange ? "Unsaved changes" : "No changes"}
+            </p>
+            <Button
+                type="primary"
+                className="border-gray-200 text-gray-800 font-bold"
+                onClick={() => {
+                    const ok =
+                        state.warnUnsavedChanges && state.hasChange
+                            ? window.confirm("Leave with saving?")
+                            : true;
+                    if (ok) {
+                        router.push("/create");
+                    }
+                }}
+            >
+                New
+            </Button>
+            <label className="flex items-center space-x-2 text-sm text-gray-700">
+                <Checkbox
+                    checked={state.warnUnsavedChanges}
+                    onChange={(e) => setWarnUnsavedChanges(e.target.checked)}
+                />
+                <p> Confirm Before Leave </p>
+            </label>
+            <Button
+                type="primary"
+                className={clsx(
+                    "font-bold",
+                    "hover:border-gray-800 hover:bg-gray-800 hover:text-gray-200",
+                    saved
+                        ? "border-gray-800 bg-gray-800 text-gray-200"
+                        : "border-gray-200 text-gray-800 bg-white",
+                )}
+                onClick={() => {
+                    setSaved(true);
+                    setState((cur) => ({ ...cur, hasChange: false }));
+                    setTimeout(() => {
+                        setSaved(false);
+                    }, 500);
+                    saveTheme(themeId, data);
+                }}
+            >
+                {saved ? "Saved!" : "Save"}
+            </Button>
+            <ExportButton />
+        </>
     );
 }
 

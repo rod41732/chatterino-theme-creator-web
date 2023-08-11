@@ -8,6 +8,7 @@ export enum SettingsTab {
 }
 
 export enum PreviewTab {
+    ALL = "all",
     CHAT = "chat",
     SPILT_DROP_PREVIEW = "spilt_drop_preview",
     SPILT_DROP_TARGET = "spilt_drop_target",
