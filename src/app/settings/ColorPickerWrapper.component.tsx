@@ -4,27 +4,50 @@ import { Popover } from "antd";
 import clsx from "clsx";
 import { produce } from "immer";
 import { WritableDraft } from "immer/src/types/types-external";
-import { useMemo } from "react";
+import { useEffect, useId, useMemo } from "react";
 import { ChromePicker } from "react-color";
 import { EditableInput } from "react-color/lib/components/common";
 
-interface ColorPickerWrapperProps {
+export interface ColorPickerWrapperProps {
     mutateColor: (draft: WritableDraft<ThemeData>, color: string) => void;
     getColor: (data: ThemeData) => string;
     alpha?: boolean;
+    // handler
+    onSelect?: () => void;
+    selected?: boolean;
+    onColorChange?: (color: string) => void;
+}
+
+export interface ColorPickerRef {
+    currentColor: string;
+    id: string;
 }
 
 export function ColorPickerWrapper({
     mutateColor,
     getColor,
     alpha = false,
+    onColorChange,
+    onSelect,
+    selected = false,
 }: ColorPickerWrapperProps) {
+    const id = useId();
+
     const { data: _data, setData } = useConfigContext();
     const data = useMemo(() => _data!, [_data]);
+    useEffect(() => {
+        onColorChange?.(getColor(data));
+    }, [data, getColor]);
 
     return (
         <div
-            className={`flex flex-wrap items-center justify-center space-x-2 ${s.container} mb-2`}
+            className={clsx(
+                `flex flex-wrap items-center justify-center space-x-2 ${s.container} mb-2`,
+                selected ? "border border-blue-500" : "",
+                "hover:bg-gray-400",
+            )}
+            role="button"
+            onClick={onSelect}
         >
             <Popover
                 content={
