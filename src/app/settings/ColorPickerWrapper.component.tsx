@@ -17,7 +17,6 @@ import {
 } from "react";
 import { ChromePicker } from "react-color";
 import { EditableInput } from "react-color/lib/components/common";
-import { setConfig } from "next/config";
 
 export interface ColorPickerWrapperProps {
     mutateColor: (draft: WritableDraft<ThemeData>, color: string) => void;
