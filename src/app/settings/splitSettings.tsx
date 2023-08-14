@@ -86,6 +86,21 @@ export function SplitSettings() {
                     description: "To " + selectedPickerRef.current,
                     duration: 0.5, // seconds
                 });
+            } else if (e.key == "z") {
+                const handle = colorHandles.current[selectedPickerRef.current];
+                const undoColor = handle.undo();
+                api.success({
+                    placement: "top",
+                    message: undoColor ? (
+                        <div>
+                            Undo to <strong>{undoColor}</strong>
+                        </div>
+                    ) : (
+                        <div> no undo </div>
+                    ),
+                    description: "For " + selectedPickerRef.current,
+                    duration: 0.5, // seconds
+                });
             }
         };
         document.addEventListener("keydown", handler);
