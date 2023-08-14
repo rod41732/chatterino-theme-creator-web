@@ -8,6 +8,11 @@ import { useCallback } from "react";
 import s from "./settings.module.css";
 
 import { PreviewTab } from "@/app/edit/editor-tab.types";
+import { usePickerLogic } from "@/app/settings/picker.hook";
+
+enum PickerName {
+    accent_color = "accent_color",
+}
 
 export function OverviewSettings() {
     const { data, setData } = useConfigContext();
@@ -23,9 +28,10 @@ export function OverviewSettings() {
         [setData],
     );
     const { setPreviewTab } = useTabContext();
-
+    const [registerHandler, contextHolder] = usePickerLogic();
     return (
         <div className={s.container}>
+            {contextHolder}
             <div className={s.sectionTitle}>Icon theme</div>
             <div className="grid grid-cols-[auto,1fr] gap-y-2 gap-x-4 items-center">
                 <button
@@ -73,6 +79,7 @@ export function OverviewSettings() {
                         data.colors.accent = newColor;
                     }}
                     getColor={(data) => data.colors.accent}
+                    {...registerHandler(PickerName.accent_color)}
                 />
                 <p className="text-gray-500 ">
                     Used in Suggestion Menu Highlight{" "}

@@ -3,11 +3,19 @@ import { PreviewTab } from "@/app/edit/editor-tab.types";
 import { ColorPickerWrapper } from "@/app/settings/ColorPickerWrapper.component";
 import { JumpIcon } from "@/app/settings/JumpIcon.component";
 import s from "./settings.module.css";
+import { usePickerLogic } from "@/app/settings/picker.hook";
+
+enum PickerName {
+    bg = "bg",
+    text = "text",
+}
 
 export function WindowSettings() {
     const { setPreviewTab } = useTabContext();
+    const [register, contextHolder] = usePickerLogic();
     return (
         <div className={`grid grid-cols-2 gap-2 ${s.container}`}>
+            {contextHolder}
             <div className="text-lg font-bold col-span-2">Window</div>
             <p className="text-gray-500 col-span-2">
                 Window background/text are mostly used in &quot;Non-Chat&quot;
@@ -64,6 +72,7 @@ export function WindowSettings() {
                 }}
                 getColor={(data) => data.colors.window.background}
                 alpha={true}
+                {...register(PickerName.bg)}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
                 &quot;Track&quot; Color of scrollbar
@@ -75,6 +84,7 @@ export function WindowSettings() {
                     data.colors.window.text = newColor;
                 }}
                 getColor={(data) => data.colors.window.text}
+                {...register(PickerName.text)}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
                 Some part of UI

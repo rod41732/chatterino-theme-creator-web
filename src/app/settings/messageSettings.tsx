@@ -4,11 +4,30 @@ import { JumpIcon } from "@/app/settings/JumpIcon.component";
 import s from "./settings.module.css";
 
 import { PreviewTab } from "@/app/edit/editor-tab.types";
+import { resolveHandlerError } from "next/dist/server/future/route-modules/app-route/helpers/resolve-handler-error";
+import { usePickerLogic } from "@/app/settings/picker.hook";
+
+enum PickerName {
+    "bg_regular" = "bg_regular",
+    "bg_alternate" = "bg_alternate",
+    "bg_disabled" = "bg_disabled",
+    "hl_start" = "hl_start",
+    "hl_end" = "hl_end",
+    "selection" = "selection",
+
+    "text_regular" = "text_regular",
+    "text_caret" = "text_caret",
+    "text_chat_placeholder" = "text_chat_placeholder",
+    "text_link" = "text_link",
+    "text_system" = "text_system",
+}
 
 export function MessageSettings() {
     const { setPreviewTab } = useTabContext();
+    const [register, contextHolder] = usePickerLogic();
     return (
         <div className={`grid grid-cols-2 gap-2 ${s.container} `}>
+            {contextHolder}
             <div className="flex items-center col-span-2">
                 <h1 className="text-xl  font-bold">
                     Settings Related to chat messages
@@ -45,6 +64,7 @@ export function MessageSettings() {
                     data.colors.messages.backgrounds.regular = newColor;
                 }}
                 getColor={(data) => data.colors.messages.backgrounds.regular}
+                {...register(PickerName.bg_regular)}
             />
 
             <div> Alternate</div>
@@ -53,6 +73,7 @@ export function MessageSettings() {
                     data.colors.messages.backgrounds.alternate = newColor;
                 }}
                 getColor={(data) => data.colors.messages.backgrounds.alternate}
+                {...register(PickerName.bg_alternate)}
             />
 
             {/*sep */}
@@ -65,6 +86,7 @@ export function MessageSettings() {
                 }}
                 getColor={(data) => data.colors.messages.disabled}
                 alpha={true}
+                {...register(PickerName.bg_disabled)}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
                 Overlay color over historical or timed out messages
@@ -79,6 +101,7 @@ export function MessageSettings() {
                     data.colors.messages.highlightAnimationStart
                 }
                 alpha={true}
+                {...register(PickerName.hl_start)}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
                 Flashing color when [Go to message] is used
@@ -91,6 +114,7 @@ export function MessageSettings() {
                 }}
                 getColor={(data) => data.colors.messages.highlightAnimationEnd}
                 alpha={true}
+                {...register(PickerName.hl_end)}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
                 Color when [Go to message] end (usually transparent)
@@ -103,6 +127,7 @@ export function MessageSettings() {
                 }}
                 getColor={(data) => data.colors.messages.selection}
                 alpha={true}
+                {...register(PickerName.selection)}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
                 Color when selecting text
@@ -117,6 +142,7 @@ export function MessageSettings() {
                     data.colors.messages.textColors.regular = newColor;
                 }}
                 getColor={(data) => data.colors.messages.textColors.regular}
+                {...register(PickerName.text_regular)}
             />
 
             <div> Caret</div>
@@ -125,6 +151,7 @@ export function MessageSettings() {
                     data.colors.messages.textColors.caret = newColor;
                 }}
                 getColor={(data) => data.colors.messages.textColors.caret}
+                {...register(PickerName.text_caret)}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
                 Caret (blinking cursor) color. might not work on some platform.
@@ -138,6 +165,7 @@ export function MessageSettings() {
                 getColor={(data) =>
                     data.colors.messages.textColors.chatPlaceholder
                 }
+                {...register(PickerName.text_chat_placeholder)}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
                 Placeholder in chat field
@@ -149,6 +177,7 @@ export function MessageSettings() {
                     data.colors.messages.textColors.link = newColor;
                 }}
                 getColor={(data) => data.colors.messages.textColors.link}
+                {...register(PickerName.text_link)}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
                 Color when [Go to message] end (usually transparent)
@@ -160,6 +189,7 @@ export function MessageSettings() {
                     data.colors.messages.textColors.system = newColor;
                 }}
                 getColor={(data) => data.colors.messages.textColors.system}
+                {...register(PickerName.text_system)}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
                 System message, timestamp. etc.
