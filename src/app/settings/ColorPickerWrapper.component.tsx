@@ -4,7 +4,13 @@ import { Popover } from "antd";
 import clsx from "clsx";
 import { produce } from "immer";
 import { WritableDraft } from "immer/src/types/types-external";
-import { useEffect, useId, useMemo } from "react";
+import {
+    ForwardedRef,
+    forwardRef,
+    useEffect,
+    useImperativeHandle,
+    useMemo,
+} from "react";
 import { ChromePicker } from "react-color";
 import { EditableInput } from "react-color/lib/components/common";
 
@@ -18,36 +24,57 @@ export interface ColorPickerWrapperProps {
     onColorChange?: (color: string) => void;
 }
 
-export interface ColorPickerRef {
+export interface ColorPickerHandle {
     currentColor: string;
-    id: string;
+    setColor: (color: string) => void;
 }
 
-export function ColorPickerWrapper({
-    mutateColor,
-    getColor,
-    alpha = false,
-    onColorChange,
-    onSelect,
-    selected = false,
-}: ColorPickerWrapperProps) {
-    const id = useId();
+const COLOR_NON_ALPHA_LENGTH = 7; // #rrggbb
+const COLOR_WITH_ALPHA_LENGTH = 9; // #rrggbbaa
 
+export const ColorPickerWrapper = forwardRef(function ColorPickerWrapper(
+    {
+        mutateColor,
+        getColor,
+        alpha = false,
+        onColorChange,
+        onSelect,
+        selected = false,
+    }: ColorPickerWrapperProps,
+    ref: ForwardedRef<ColorPickerHandle>,
+) {
     const { data: _data, setData } = useConfigContext();
     const data = useMemo(() => _data!, [_data]);
     useEffect(() => {
         onColorChange?.(getColor(data));
     }, [data, getColor]);
 
+    useImperativeHandle(
+        ref,
+        () => {
+            return {
+                currentColor: getColor(data),
+                setColor: (c) => {
+                    if (alpha && c.length != COLOR_WITH_ALPHA_LENGTH) {
+                        c = c + "ff";
+                    } else if (!alpha && c.length != COLOR_NON_ALPHA_LENGTH) {
+                        c = c.substring(0, COLOR_NON_ALPHA_LENGTH);
+                    }
+                    setData(produce(data, (draft) => mutateColor(draft, c)));
+                },
+            };
+        },
+        [data, getColor, mutateColor, alpha],
+    );
+
     return (
         <div
             className={clsx(
-                `flex flex-wrap items-center justify-center space-x-2 ${s.container} mb-2`,
-                selected ? "border border-blue-500" : "",
-                "hover:bg-gray-400",
+                `flex flex-wrap items-center justify-center space-x-2 ${s.container} mb-2 p-2`,
+                selected ? "hover:bg-gray-300" : "",
             )}
             role="button"
-            onClick={onSelect}
+            onMouseEnter={onSelect}
         >
             <Popover
                 content={
@@ -131,4 +158,4 @@ export function ColorPickerWrapper({
             />
         </div>
     );
-}
+});

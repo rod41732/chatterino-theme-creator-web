@@ -5,14 +5,15 @@ import s from "./settings.module.css";
 
 import { useTabContext } from "@/app/edit/TabContextProvider";
 import {
-    ColorPickerRef,
+    ColorPickerHandle,
     ColorPickerWrapper,
     ColorPickerWrapperProps,
 } from "@/app/settings/ColorPickerWrapper.component";
 import { JumpIcon } from "@/app/settings/JumpIcon.component";
 
 import { PreviewTab } from "@/app/edit/editor-tab.types";
-import { useEffect, useRef, useState } from "react";
+import { ForwardedRef, useEffect, useRef, useState } from "react";
+import useNotification from "antd/es/notification/useNotification";
 
 enum PickerName {
     split_bg = "split_bg",
@@ -38,22 +39,53 @@ enum PickerName {
     resize_handle_bg = "resize_handle_bg",
 }
 
+type PropsWithRef<P, R> = P & { ref: ForwardedRef<R> };
+
 export function SplitSettings() {
     const { setPreviewTab } = useTabContext();
     const { data, setData } = useConfigContext();
 
     const [selectedPicker, setSelectedPicker] = useState("");
     const selectedPickerRef = useRef("");
-    const selectedColors = useRef<{ [id: string]: string }>({});
+    const colorHandles = useRef<{ [id: string]: ColorPickerHandle }>({});
+    const copiedColor = useRef("");
+
+    const [api, contextHolder] = useNotification();
 
     useEffect(() => {
         const handler = (e: KeyboardEvent) => {
+            // TODO: e.key doesn't work well with non-US keyboard
             if (e.key == "c") {
-                alert(
-                    `copy ${selectedPickerRef.current} ${
-                        selectedColors.current[selectedPickerRef.current]
-                    }`,
-                );
+                const color =
+                    colorHandles.current[selectedPickerRef.current]
+                        .currentColor;
+                copiedColor.current = color;
+
+                api.success({
+                    placement: "top",
+                    message: (
+                        <div>
+                            Copied <strong>{color}</strong>
+                        </div>
+                    ),
+                    description: "Copied " + selectedPickerRef.current,
+                    duration: 0.5, // seconds
+                });
+            } else if (e.key == "v") {
+                const color = copiedColor.current;
+                const handle = colorHandles.current[selectedPickerRef.current];
+                handle.setColor(color);
+
+                api.success({
+                    placement: "top",
+                    message: (
+                        <div>
+                            Pasted <strong>{color}</strong>
+                        </div>
+                    ),
+                    description: "To " + selectedPickerRef.current,
+                    duration: 0.5, // seconds
+                });
             }
         };
         document.addEventListener("keydown", handler);
@@ -62,7 +94,7 @@ export function SplitSettings() {
 
     const registerHandler = (
         name: string,
-    ): Partial<ColorPickerWrapperProps> => {
+    ): Partial<PropsWithRef<ColorPickerWrapperProps, ColorPickerHandle>> => {
         return {
             onSelect: () => {
                 setSelectedPicker(name);
@@ -70,7 +102,11 @@ export function SplitSettings() {
             },
             selected: selectedPicker == name,
             onColorChange: (color) => {
-                selectedColors.current[name] = color;
+                // selectedColors.current[name] = color;
+            },
+            ref: (r) => {
+                if (!r) return;
+                colorHandles.current[name] = r;
             },
         };
     };
@@ -79,7 +115,8 @@ export function SplitSettings() {
         <div
             className={`grid grid-cols-[1fr,auto,auto] gap-2 h-full overflow-auto ${s.container}`}
         >
-            <div> Background selected name sd {selectedPicker} </div>
+            {contextHolder}
+            <div> Background </div>
             <div className="col-span-2">
                 <ColorPickerWrapper
                     mutateColor={(data, newColor) => {
