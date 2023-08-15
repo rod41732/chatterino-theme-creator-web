@@ -210,6 +210,7 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
     }, [state]);
 
     const [previewOpen, setPreviewOpen] = useState(false);
+    const [shortcutOpen, setShortcutOpen] = useState(false);
 
     return (
         <>
@@ -229,8 +230,54 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
                     <ChatterinoAllPreviews />
                 </div>
             </Modal>
+            <Modal
+                title="Keyboard Shortcuts"
+                open={shortcutOpen}
+                onCancel={() => setShortcutOpen(false)}
+                footer={null}
+            >
+                <h2 className="font-semibold mb-2">
+                    {" "}
+                    While hovering over color picker:{" "}
+                </h2>
+                <div
+                    className="grid gap-y-2"
+                    style={{
+                        gridTemplateColumns: "auto 1fr",
+                    }}
+                >
+                    <kbd className="font-mono px-1 border-gray-300 border rounded-sm mr-2">
+                        {" "}
+                        c{" "}
+                    </kbd>
+                    <p> Copy picker&#39;s color to clipboard</p>
+
+                    <kbd className="font-mono px-1 border-gray-300 border rounded-sm mr-2">
+                        {" "}
+                        v{" "}
+                    </kbd>
+                    <p> Paste clipboard&#39;s color into picker</p>
+
+                    <kbd className="font-mono px-1 border-gray-300 border rounded-sm mr-2">
+                        {" "}
+                        z{" "}
+                    </kbd>
+                    <p> &quot;Undo&quot; picker&#39;s color change </p>
+                </div>
+            </Modal>
             <div className="flex-grow"></div>
-            <Button type="primary" onClick={() => setPreviewOpen(true)}>
+            <Button
+                type="primary"
+                className="border-gray-200 text-gray-800 bg"
+                onClick={() => setShortcutOpen(true)}
+            >
+                Keyboard Shortcuts
+            </Button>
+            <Button
+                type="primary"
+                className="border-gray-200 text-gray-800 bg"
+                onClick={() => setPreviewOpen(true)}
+            >
                 Preview all
             </Button>
             <p className="text-sm text-gray-500">
