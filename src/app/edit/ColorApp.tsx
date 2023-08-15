@@ -28,9 +28,9 @@ export function ColorApp() {
     return (
         <div className={`h-full  flex`}>
             {/*left col*/}
-            <div className="flex-1 flex-shrink overflow-hidden">
+            <div className="flex-1 flex-shrink overflow-hidden flex flex-col">
                 {/*tab bar*/}
-                <div className="flex items-center overflow-x-auto border-b border-gray-200 mb-4">
+                <div className="flex items-center overflow-x-auto border-b border-gray-200 mb-4 flex-shrink-0">
                     {TABS.map((it) => (
                         <button
                             className={clsx(
@@ -47,7 +47,7 @@ export function ColorApp() {
                         </button>
                     ))}
                 </div>
-                <div className="overflow-auto max-h-full">
+                <div className="overflow-auto">
                     {TABS.find((it) => it.key == settingsTab)?.children}
                 </div>
             </div>

@@ -4,7 +4,7 @@ import { EditorFooter } from "@/app/create/EdtiorFooter";
 import { CreateNewTheme } from "@/app/create/CreateNewTheme";
 import { UserThemeList } from "@/app/create/UserThemeList";
 import { GiSevenPointedStar } from "react-icons/gi";
-import { AiOutlineOrderedList, AiOutlineUnorderedList } from "react-icons/ai";
+import { AiOutlineUnorderedList } from "react-icons/ai";
 
 const TABS: { key: Tab; label: ReactNode; children: ReactNode }[] = [
     {

@@ -12,15 +12,15 @@ export default function HomePage() {
                 </h1>
                 <div className="space-y-4 mt-16">
                     <button
-                        className="px-4 py-2 text-lg rounded-md block border border-gray-500 w-full"
+                        className="px-4 py-2 text-lg rounded-md block border border-gray-500 w-full hover:bg-gray-500 hover:text-white"
                         onClick={async () => {
                             await router.push("/create");
                         }}
                     >
-                        Create theme
+                        Create your theme
                     </button>
-                    <button className="px-4 py-2 text-lg rounded-md block border border-gray-500 w-full">
-                        Browse shared themes <br /> (Coming soon
+                    <button className="px-4 py-2 text-lg rounded-md block border border-gray-500 w-full hover:bg-gray-500 hover:text-white">
+                        Browse shared themes (Coming soon
                         <img
                             src="/pajaCope.png"
                             className="w-6 h-6 mx-2 inline-block"

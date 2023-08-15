@@ -19,9 +19,9 @@ export function CreateNewTheme() {
     const fileInputRef = useRef<HTMLInputElement>();
 
     return (
-        <div className="pt-6 overflow-auto">
+        <div className="pt-2 overflow-auto">
             {/*<div className="flex items-center space-x-2">*/}
-            <h2 className="col-span-2 text-base font-semibold my-4">
+            <h2 className="col-span-2 text-base font-semibold my-2">
                 Use Chatterino Theme as template
             </h2>
             <div className="flex flex-wrap">
@@ -29,7 +29,8 @@ export function CreateNewTheme() {
                     <div key={it} className="w-1/4 p-2">
                         <button
                             className={clsx(
-                                "w-full py-2 rounded-md border font-mono",
+                                "w-full py-3 rounded-md border font-mono",
+                                "hover:bg-gray-400 hover:text-gray-100 hover:border-gray-100 hover",
                                 selectedPreset == it
                                     ? "bg-gray-700 text-gray-100 border-gray-100 "
                                     : "bg-gray-100 text-gray-700 border-gray-700 ",
@@ -41,13 +42,15 @@ export function CreateNewTheme() {
                     </div>
                 ))}
             </div>
-            <h2 className="col-span-2 text-base font-semibold my-4">
-                ... Or upload theme file to edit
+
+            <h2 className="col-span-2 text-base font-semibold mt-4 mb-2 flex-shrink-0">
+                Edit Existing Theme
             </h2>
-            <div className="space-y-2">
+            <div className="flex items-center space-x-4">
                 <button
                     className={clsx(
-                        "w-full py-2 rounded-md border font-mono",
+                        "w-full py-2 px-5 rounded-md border font-mono",
+                        "hover:bg-gray-400 hover:text-gray-100 hover:border-gray-100 hover",
                         selectedPreset == "custom"
                             ? "bg-gray-700 text-gray-100 border-gray-100 "
                             : "bg-gray-100 text-gray-700 border-gray-700 ",
@@ -60,13 +63,18 @@ export function CreateNewTheme() {
                     Choose file
                 </button>
                 {selectedPreset == "custom" && selectedFile == null && (
-                    <p className="my-1 text-red-500"> Please select a file </p>
+                    <p className="my-1 text-red-500 flex-shrink-0">
+                        {" "}
+                        Please select a file{" "}
+                    </p>
                 )}
                 {selectedPreset == "custom" && selectedFile && (
-                    <p>
+                    <p className="flex-shrink-0">
                         <strong>{selectedFile.name}</strong> selected
                     </p>
                 )}
+
+                {/*hidden input*/}
                 <input
                     type="file"
                     className="hidden"
@@ -84,10 +92,10 @@ export function CreateNewTheme() {
 
             <button
                 className={clsx(
-                    "w-full py-2 rounded-md border font-mono my-2",
+                    "w-full mt-12 py-3 rounded-md border font-mono",
                     "hover:bg-blue-500 hover:text-blue-100 hover:border-blue-100 ",
                     "bg-blue-700 text-blue-100 border-blue-100",
-                    "disabled:bg-blue-100 disabled:text-blue-700 disabled:border-blue-700",
+                    "disabled:bg-blue-100 disabled:text-blue-700 disabled:border-blue-700 disabled:opacity-25",
                 )}
                 disabled={
                     !selectedPreset ||
@@ -148,7 +156,7 @@ export function CreateNewTheme() {
                     }
                 }}
             >
-                Create new theme
+                Start creating theme!
             </button>
         </div>
     );

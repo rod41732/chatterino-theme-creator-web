@@ -7,6 +7,7 @@ import { createAndSaveTheme } from "@/lib/create-theme";
 import { BiSolidDuplicate } from "react-icons/bi";
 import clsx from "clsx";
 import styles from "@/app/fake-uis/chatlist.module.css";
+import { HiXMark } from "react-icons/hi2";
 function localStorageKeys(): string[] {
     return Array(localStorage.length)
         .fill(0)
@@ -61,6 +62,12 @@ export function UserThemeList() {
                         />
                     );
                 })}
+                {themes.length == 0 && (
+                    <div className="flex flex-col items-center justify-center my-4 text-gray-500 text-lg">
+                        <HiXMark className="text-2xl" />
+                        <p>No themes created yet, create one!</p>
+                    </div>
+                )}
             </div>
         </div>
     );
