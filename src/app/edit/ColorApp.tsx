@@ -1,11 +1,11 @@
 import { PREVIEW_TABS, TABS } from "@/app/edit/ColorApp.constants";
-import { useConfigContext } from "@/app/edit/ThemeContextProvider";
 import { useTabContext } from "@/app/edit/TabContextProvider";
+import { useConfigContext } from "@/app/edit/ThemeContextProvider";
 import { PreviewTab, SettingsTab } from "@/app/edit/editor-tab.types";
-import clsx from "clsx";
-import styles from "./preview.module.css";
-import { PropsWithChildren } from "react";
 import { ColorProvider } from "@/lib/ColorProvider";
+import clsx from "clsx";
+import { PropsWithChildren } from "react";
+import styles from "./preview.module.css";
 
 function ColorProviderFromContext({
     children,
@@ -54,7 +54,7 @@ export function ColorApp() {
 
             {/*right col*/}
             <ColorProviderFromContext
-                className={`flex-1 flex-shrink overflow-hidden flex flex-col ${styles.preview}`}
+                className={`flex-1 max-w-2xl flex-shrink overflow-hidden flex flex-col ${styles.preview}`}
             >
                 {/*tab bar*/}
                 <div className="flex items-center overflow-x-auto">
