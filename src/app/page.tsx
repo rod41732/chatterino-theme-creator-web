@@ -20,7 +20,12 @@ export default function HomePage() {
                         Create theme
                     </button>
                     <button className="px-4 py-2 text-lg rounded-md block border border-gray-500 w-full">
-                        Browse theme (Coming soon (TM))
+                        Browse shared themes <br /> (Coming soon
+                        <img
+                            src="/pajaCope.png"
+                            className="w-6 h-6 mx-2 inline-block"
+                        />
+                        )
                     </button>
                 </div>
             </div>
