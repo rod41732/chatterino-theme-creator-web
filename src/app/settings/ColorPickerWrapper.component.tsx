@@ -42,6 +42,11 @@ function useAutoRef<T>(v: T): MutableRefObject<T> {
     ref.current = v;
     return ref;
 }
+
+function insertWithoutDupe(list: string[], item: string): string[] {
+    return [item, ...list.filter((it) => it != item)];
+}
+
 export const ColorPickerWrapper = forwardRef(function ColorPickerWrapper(
     {
         mutateColor,
@@ -90,7 +95,7 @@ export const ColorPickerWrapper = forwardRef(function ColorPickerWrapper(
                         produce(data, (draft) => mutateColor(draft, newColor)),
                     );
                     setUndoStack((stack) => [...stack, newColor]);
-                    setHistory((hist) => [...hist, newColor]);
+                    setHistory((hist) => insertWithoutDupe(hist, newColor));
                 },
                 undo: () => {
                     const stack = undoStackRef.current;
@@ -143,6 +148,35 @@ export const ColorPickerWrapper = forwardRef(function ColorPickerWrapper(
                                 );
                             }}
                         />
+                        <div> Recently used: </div>
+                        <div className="flex flex-wrap gap-2">
+                            {history.map((newColor) => {
+                                return (
+                                    <button
+                                        key={newColor}
+                                        className="flex flex-col space-y-0.5 items-center"
+                                        onClick={() => {
+                                            setData(
+                                                produce(data, (draft) =>
+                                                    mutateColor(
+                                                        draft,
+                                                        newColor,
+                                                    ),
+                                                ),
+                                            );
+                                        }}
+                                    >
+                                        <div
+                                            className="w-4 h-4"
+                                            style={{ background: newColor }}
+                                        ></div>
+                                        <div className="text-xs">
+                                            {newColor}
+                                        </div>
+                                    </button>
+                                );
+                            })}
+                        </div>
                     </div>
                 }
                 overlayClassName={clsx("bg-red p-0")}
@@ -160,7 +194,9 @@ export const ColorPickerWrapper = forwardRef(function ColorPickerWrapper(
                             ),
                         );
                         setUndoStack((cur) => [...cur, draggedColor]);
-                        setHistory((cur) => [...cur, draggedColor]);
+                        setHistory((history) =>
+                            insertWithoutDupe(history, draggedColor),
+                        );
                     }, 100);
                 }}
             >
@@ -218,32 +254,12 @@ export const ColorPickerWrapper = forwardRef(function ColorPickerWrapper(
                             ),
                         );
                         setUndoStack((stack) => [...stack, colorString]);
-                        setHistory((hist) => [...hist, colorString]);
+                        setHistory((hist) =>
+                            insertWithoutDupe(hist, colorString),
+                        );
                     }}
                 />
             </div>
-
-            <select
-                id={id}
-                value=""
-                onChange={(e) => {
-                    console.log("select history", e.target.value);
-                    setData(
-                        produce(data, (draft) =>
-                            mutateColor(draft, e.target.value),
-                        ),
-                    );
-                }}
-            >
-                <option value="">his</option>
-                {history.map((it, idx) => (
-                    <option key={idx} value={it} style={{ background: it }}>
-                        {/*    className="p-2 border border-black rounded-md"*/}
-                        {/*></div>*/}
-                        {it}
-                    </option>
-                ))}
-            </select>
         </div>
     );
 });

@@ -192,40 +192,46 @@ export function ChatterinoSplit({
                     {showCompletion && (
                         // TODO: scrollbar is using accent color
                         <div
-                            className={`text-base w-[300px] h-[200px] absolute top-0 left-1/2 -translate-y-full -translate-x-1/2 p-2 ${styles.window}  ${styles.completionMenu} select-none overflow-auto`}
+                            className={`p-2 border-2 border-red-500 w-[300px] h-[200px] absolute top-0 left-1/2 -translate-y-full 
+                            -translate-x-1/2 ${styles.window} ${styles.completionMenu}`}
                         >
-                            {Array(10)
-                                .fill(0)
-                                .map((_, idx) => {
-                                    return (
-                                        <div key={idx} className="relative">
-                                            <div
-                                                className={clsx(
-                                                    styles.emoteSelect,
-                                                    "absolute inset-0",
-                                                )}
-                                            ></div>
-                                            <div className="flex items-center relative">
-                                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                <img
-                                                    alt="FeelsDankMan"
-                                                    src="https://cdn.frankerfacez.com/emote/536927/4"
-                                                    className="h-8 w-auto mx-2"
-                                                />
-                                                <p
+                            <div
+                                className={`text-base w-full h-full select-none overflow-auto ${styles.completionMenuInner}`}
+                            >
+                                {Array(10)
+                                    .fill(0)
+                                    .map((_, idx) => {
+                                        return (
+                                            <div key={idx} className="relative">
+                                                <div
                                                     className={clsx(
-                                                        styles.windowText,
-                                                        "text-xs",
+                                                        idx == 0 &&
+                                                            styles.emoteSelect,
+                                                        "absolute inset-0",
                                                     )}
-                                                >
-                                                    {" "}
-                                                    FeelsDankMan - Global
-                                                    FrankerFaceZ{" "}
-                                                </p>
+                                                ></div>
+                                                <div className="flex items-center relative">
+                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                    <img
+                                                        alt="FeelsDankMan"
+                                                        src="https://cdn.frankerfacez.com/emote/536927/4"
+                                                        className="h-8 w-auto mx-2"
+                                                    />
+                                                    <p
+                                                        className={clsx(
+                                                            styles.windowText,
+                                                            "text-xs",
+                                                        )}
+                                                    >
+                                                        {" "}
+                                                        FeelsDankMan - Global
+                                                        FrankerFaceZ{" "}
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    );
-                                })}
+                                        );
+                                    })}
+                            </div>
                         </div>
                     )}
                 </div>

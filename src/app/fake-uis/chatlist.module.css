@@ -356,6 +356,23 @@
     border: 1px solid #999999;
 }
 
+.completionMenuInner {
+    padding-right: 8px;
+}
+
+.completionMenuInner::-webkit-scrollbar {
+    width: 12px;
+}
+
+.completionMenuInner::-webkit-scrollbar-track {
+    background-color: var(--window-background);
+}
+
+.completionMenuInner::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--accent), var(--window-background));
+    border-radius: 10px;
+}
+
 .scrollToBottom {
     background-color: rgba(0, 0, 0, 0.66);
     color: white;
