@@ -7,7 +7,6 @@ import { GitHubUser } from "@/pages/api/github-auth";
 export default function Page() {
     const hasLogin = useRef(false);
     const params = useSearchParams();
-    const router = useRouter();
 
     const [user, setUser] = useState<GitHubUser | null>(null);
     const [error, setError] = useState<string | null>(null);
