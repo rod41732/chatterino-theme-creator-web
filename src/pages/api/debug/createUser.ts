@@ -3,6 +3,12 @@ import { createUser, InsertUserSchema, User } from "@/db/user";
 import { ApiResponse } from "@/lib/type";
 
 const handler: NextApiHandler = async (req, res) => {
+    if (process.env.NODE_ENV != "development") {
+        return res.status(403).send({
+            status: 403,
+            message: "this is available during development only",
+        });
+    }
     if (req.method != "POST") {
         return res.status(405).send({
             status: 405,
