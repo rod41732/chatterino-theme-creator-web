@@ -20,6 +20,7 @@
     "eslint": "8.43.0",
     "eslint-config-next": "13.4.7",
     "immer": "^10.0.2",
+    "iron-session": "^6.3.1",
     "next": "13.4.7",
     "pg": "^8.11.2",
     "postcss": "8.4.24",

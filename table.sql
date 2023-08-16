@@ -3,7 +3,7 @@ create table "Users" (
     "handle" text not null unique,
     "displayName" text not null,
     "createdAt" timestamp with time zone not null,
-    "githubUserId" int references "GithubUsers"(id)
+    "githubUserId" int references "GithubUsers"(id) unique
 );
 
 create table "GithubUsers" (

@@ -1,4 +1,7 @@
 import { NextApiHandler } from "next";
+import { withIronSession } from "@/iron-session.options";
+import { createGithubUser } from "@/db/github-user";
+import { createOrUpdateUser } from "@/db/user";
 
 interface CodeResponse {
     access_token: string; // ghu_xxxxxx
@@ -87,9 +90,9 @@ const handler: NextApiHandler = async (req, res) => {
         });
     }
 
-    let user: GitHubUser;
+    let githubUser: GitHubUser;
     try {
-        user = await getUser(token.access_token);
+        githubUser = await getUser(token.access_token);
     } catch (err: unknown) {
         return res.status(500).send({
             status: 500,
@@ -100,17 +103,28 @@ const handler: NextApiHandler = async (req, res) => {
         });
     }
 
-    const session = btoa(Math.random() + "").slice(5, 12);
-    // session ID
-    res.setHeader(
-        "Set-Cookie",
-        `sessionid=${session}; Path=/; Max-Age=42069; HttpOnly`,
-    );
-    res.status(200).send({
+    const createdGithubUser = await createGithubUser({
+        id: githubUser.id,
+        login: githubUser.login,
+        name: githubUser.name,
+    });
+
+    const user = await createOrUpdateUser({
+        createdAt: new Date(),
+        displayName: createdGithubUser.name,
+        githubUserId: createdGithubUser.id,
+        // TODO: handle potential user conflict
+        handle: createdGithubUser.login,
+    });
+
+    req.session.user = { id: user.id };
+    await req.session.save();
+    return res.status(200).send({
         status: 200,
         message: "successfully authorized",
-        data: { user: user, sid: session },
+        data: { user: user },
     });
 };
 
-export default handler;
+const realHandler = withIronSession(handler);
+export default realHandler;
