@@ -1,7 +1,7 @@
 import { NextApiHandler } from "next";
 import { withIronSession } from "@/iron-session.options";
-import { createGithubUser } from "@/db/github-user";
-import { createOrUpdateUser } from "@/db/user";
+import { createGithubUser } from "@/lib/db/github-user";
+import { createOrUpdateUser } from "@/lib/db/user";
 
 interface CodeResponse {
     access_token: string; // ghu_xxxxxx

@@ -1,6 +1,6 @@
 import { NextApiHandler } from "next";
 import { ApiResponse } from "@/lib/type";
-import { getUserById, User } from "@/db/user";
+import { getUserById, User } from "@/lib/db/user";
 import { withIronSession } from "@/iron-session.options";
 
 const handler: NextApiHandler = async (req, res) => {

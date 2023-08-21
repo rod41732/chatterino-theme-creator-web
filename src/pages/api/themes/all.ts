@@ -1,5 +1,5 @@
 import { NextApiHandler } from "next";
-import { listThemes, Theme } from "@/db/theme";
+import { listThemes, Theme } from "@/lib/db/theme";
 import { ApiResponse } from "@/lib/type";
 import { withIronSession } from "@/iron-session.options";
 

@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import { GlobalStateProvider, useGlobalState } from "@/app/GlobalContext";
 import { useEffect } from "react";
 import { ApiResponse } from "@/lib/type";
-import { User } from "@/db/user";
+import { User } from "@/lib/db/user";
 
 const inter = Inter({ subsets: ["latin"] });
 

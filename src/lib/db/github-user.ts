@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { client } from "@/db/db";
+import { client } from "@/lib/db/db";
 
 export const GithubUserSchema = z.object({
     id: z.number(),

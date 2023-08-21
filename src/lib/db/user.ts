@@ -1,4 +1,4 @@
-import { client } from "@/db/db";
+import { client } from "@/lib/db/db";
 import { z } from "zod";
 
 export const UserSchema = z.object({

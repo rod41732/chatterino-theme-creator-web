@@ -1,7 +1,7 @@
 import { NextApiHandler } from "next";
 import { withIronSession } from "@/iron-session.options";
 import { z } from "zod";
-import { getThemeByIds, Theme } from "@/db/theme";
+import { getThemeByIds, Theme } from "@/lib/db/theme";
 import { ApiResponse } from "@/lib/type";
 
 const ByIdSchema = z.object({

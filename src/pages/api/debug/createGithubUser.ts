@@ -1,5 +1,5 @@
 import { NextApiHandler } from "next";
-import { createGithubUser, InsertGithubUserSchema } from "@/db/github-user";
+import { createGithubUser, InsertGithubUserSchema } from "@/lib/db/github-user";
 import { ApiResponse } from "@/lib/type";
 import { GitHubUser } from "@/pages/api/github-auth";
 

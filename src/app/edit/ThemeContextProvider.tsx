@@ -5,7 +5,7 @@ import { ValueOrFactory } from "@/lib/react.types";
 import { CHATTERINO_BLACK_THEME } from "@/resources";
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { useAsyncEffect } from "@/lib/hooks/use-async-effect";
-import { Theme } from "@/db/theme";
+import { Theme } from "@/lib/db/theme";
 import { ApiResponse } from "@/lib/type";
 
 // used for generating theme

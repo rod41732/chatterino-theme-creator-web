@@ -1,4 +1,4 @@
-import { User } from "@/db/user";
+import { User } from "@/lib/db/user";
 import {
     createContext,
     Dispatch,

@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { UserSchema } from "@/db/user";
-import { client } from "@/db/db";
+import { UserSchema } from "@/lib/db/user";
+import { client } from "@/lib/db/db";
 import { ThemeData } from "@/app/edit/ThemeContextProvider";
 
 // theme schema, with optional joined fields

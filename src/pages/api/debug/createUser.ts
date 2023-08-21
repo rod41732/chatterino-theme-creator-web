@@ -1,5 +1,5 @@
 import { NextApiHandler } from "next";
-import { createOrUpdateUser, InsertUserSchema, User } from "@/db/user";
+import { createOrUpdateUser, InsertUserSchema, User } from "@/lib/db/user";
 import { ApiResponse } from "@/lib/type";
 
 const handler: NextApiHandler = async (req, res) => {

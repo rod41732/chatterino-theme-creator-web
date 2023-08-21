@@ -1,7 +1,7 @@
 import { ChatterinoAllPreviews } from "@/app/edit/ColorApp.constants";
 import { useEditorState } from "@/app/edit/EditorStateContextProvider";
 import { ThemeData, useConfigContext } from "@/app/edit/ThemeContextProvider";
-import { Theme } from "@/db/theme";
+import { Theme } from "@/lib/db/theme";
 import { getThemeKey, saveTheme } from "@/lib/create-theme";
 import { ApiResponse } from "@/lib/type";
 import { css2qt } from "@/utils";

@@ -1,7 +1,7 @@
 import { NextApiHandler } from "next";
 import { ApiResponse } from "@/lib/type";
 import { ThemeData } from "@/app/edit/ThemeContextProvider";
-import { createTheme, Theme } from "@/db/theme";
+import { createTheme, Theme } from "@/lib/db/theme";
 import { withIronSession } from "@/iron-session.options";
 
 const handler: NextApiHandler = async (req, res) => {
