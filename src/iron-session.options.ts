@@ -10,6 +10,7 @@ const ironSessionOptions: IronSessionOptions = {
     },
 };
 
+/** wrapper around original withIronSessionApiRoute that set common config */
 export const withIronSession = (handler: NextApiHandler) =>
     withIronSessionApiRoute(handler, ironSessionOptions);
 

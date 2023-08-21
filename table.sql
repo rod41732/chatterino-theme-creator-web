@@ -11,3 +11,15 @@ create table "GithubUsers" (
     "login" text not null,
     "name" text not null
 );
+
+
+create table "UserThemes" (
+    "id" int primary key ,
+    "ownerId" int references "Users"("id") not null,
+    "name"  text not null ,
+    "data" json not null,
+    "checkeredRow" boolean not null ,
+    "messageSeparator" boolean not null ,
+    "createdAt" timestamp with time zone not null ,
+    "modifiedAt" timestamp with time zone not null
+)
