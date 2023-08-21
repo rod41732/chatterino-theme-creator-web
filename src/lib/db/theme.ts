@@ -4,6 +4,7 @@ import { client } from "@/lib/db/db";
 import { ThemeData } from "@/app/edit/ThemeContextProvider";
 
 // theme schema, with optional joined fields
+// TODO: should cleary distinguish theme with or without joined fields
 export const ThemeSchema = z.object({
     id: z.number(),
     ownerId: z.number(),
@@ -150,4 +151,12 @@ export async function updateThemeData(
         .then((res) => ThemeSchema.parse(res.rows[0]));
 
     return updatedTheme;
+}
+
+export async function listUserTheme(userId: number): Promise<Theme[]> {
+    const res = await client.query(
+        `SELECT * FROM "UserThemes" WHERE "ownerId" = $1`,
+        [userId],
+    );
+    return res.rows.map((it) => ThemeSchema.parse(it));
 }

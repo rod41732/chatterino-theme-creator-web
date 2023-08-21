@@ -8,6 +8,8 @@ import { BiSolidDuplicate } from "react-icons/bi";
 import clsx from "clsx";
 import styles from "@/app/fake-uis/chatlist.module.css";
 import { HiXMark } from "react-icons/hi2";
+import { ApiResponse } from "@/lib/type";
+import { Theme } from "@/lib/db/theme";
 function localStorageKeys(): string[] {
     return Array(localStorage.length)
         .fill(0)
@@ -36,10 +38,37 @@ function listThemes() {
 }
 
 export function UserThemeList() {
-    const [themes, setThemes] = useState<ThemeEntry[]>([]);
+    const [localThemes, setLocalThemes] = useState<ThemeEntry[]>([]);
+    const [remoteThemes, setRemoteThemes] = useState<ThemeEntry[]>([]);
     useEffect(() => {
-        setThemes(listThemes());
+        setLocalThemes(listThemes());
     }, []);
+    useEffect(() => {
+        fetch("/api/themes/mine", {
+            // credentials: "include",
+        }).then(async (res) => {
+            const data = await res.json();
+            if (!res.ok) {
+                console.error(`Error getting owned themes`, res.status, data);
+                return;
+            }
+            const themes = (data as ApiResponse<Theme[]>).data.map(
+                (it): ThemeEntry => {
+                    return {
+                        id: "remote-" + it.id,
+                        data: it.data,
+                    };
+                },
+            );
+            console.log("Got", themes.length, "remote themes");
+            setRemoteThemes(themes);
+        });
+    }, []);
+    const allThemes = useMemo(
+        () => [...localThemes, ...remoteThemes],
+        [localThemes, remoteThemes],
+    );
+
     return (
         <div className="max-h-full overflow-hidden flex flex-col">
             <div className="text-lg font-semibold flex-shrink-0">
@@ -50,19 +79,19 @@ export function UserThemeList() {
                 them.
             </p>
             <div className="flex-1 overflow-auto">
-                {themes.map((theme) => {
+                {allThemes.map((theme) => {
                     return (
                         <ThemePreview
                             theme={theme}
                             key={theme.id}
                             onDelete={() => {
                                 localStorage.removeItem("theme-" + theme.id);
-                                setThemes(listThemes());
+                                setLocalThemes(listThemes());
                             }}
                         />
                     );
                 })}
-                {themes.length == 0 && (
+                {allThemes.length == 0 && (
                     <div className="flex flex-col items-center justify-center my-4 text-gray-500 text-lg">
                         <HiXMark className="text-2xl" />
                         <p>No themes created yet, create one!</p>
@@ -111,6 +140,7 @@ function ThemePreview({
                     {/*{theme.id}:*/}
                     {theme.data.ctcMeta.name}
                 </Link>
+                <p className="text-gray-500"> {theme.id}</p>
                 <div className="flex items-center space-x-2">
                     <button
                         className="p-2 hover:bg-gray-200 cursor-pointer rounded-full"
