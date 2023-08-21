@@ -2,7 +2,7 @@ import { ChatterinoAllPreviews } from "@/app/edit/ColorApp.constants";
 import { useEditorState } from "@/app/edit/EditorStateContextProvider";
 import { ThemeData, useConfigContext } from "@/app/edit/ThemeContextProvider";
 import { Theme } from "@/db/theme";
-import { saveTheme } from "@/lib/create-theme";
+import { getThemeKey, saveTheme } from "@/lib/create-theme";
 import { ApiResponse } from "@/lib/type";
 import { css2qt } from "@/utils";
 import { Button, Checkbox, Modal } from "antd";
@@ -205,6 +205,11 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
                 <Button
                     onClick={() => {
                         uploadTheme(data).then((createdTheme) => {
+                            localStorage.removeItem(getThemeKey(themeId));
+                            saveTheme(
+                                "remote-" + createdTheme.id,
+                                createdTheme.data,
+                            );
                             router.push(`/edit/remote-${createdTheme.id}`);
                         });
                     }}
