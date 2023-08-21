@@ -14,7 +14,7 @@ create table "GithubUsers" (
 
 
 create table "UserThemes" (
-    "id" int primary key ,
+    "id" serial primary key ,
     "ownerId" int references "Users"("id") not null,
     "name"  text not null ,
     "data" json not null,

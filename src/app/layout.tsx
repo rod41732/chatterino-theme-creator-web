@@ -32,11 +32,7 @@ function UserLoader() {
             }
         })();
     }, [state]);
-    return (
-        <div className="fixed top-0 right-0 bg-red-500">
-            {JSON.stringify(state.auth)}
-        </div>
-    );
+    return <></>;
 }
 
 export default function RootLayout({

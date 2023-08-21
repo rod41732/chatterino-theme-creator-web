@@ -13,6 +13,7 @@ const handler: NextApiHandler = async (req, res) => {
             data: null,
         } satisfies ApiResponse<null>);
     }
+    console.log("req body", req.body);
     const theme = req.body as ThemeData;
     const createdTheme = await createTheme(theme, user.id);
     return res.status(200).send({

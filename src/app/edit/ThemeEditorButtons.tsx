@@ -1,158 +1,15 @@
-import { ThemeData, useConfigContext } from "@/app/edit/ThemeContextProvider";
-import { Button, Checkbox, Modal } from "antd";
-import { css2qt, qt2css } from "@/utils";
-import { useCallback, useEffect, useRef, useState } from "react";
-import clsx from "clsx";
-import {
-    CHATTERINO_BLACK_THEME,
-    CHATTERINO_DARK_THEME,
-    CHATTERINO_LIGHT_THEME,
-    CHATTERINO_WHITE_THEME,
-} from "@/resources";
-import { produce } from "immer";
-import { createAndSaveTheme, saveTheme } from "@/lib/create-theme";
-import { useRouter } from "next/navigation";
-import { useEditorState } from "@/app/edit/EditorStateContextProvider";
 import { ChatterinoAllPreviews } from "@/app/edit/ColorApp.constants";
-
-/** create theme modal */
-function CreateThemeModal({
-    isOpen,
-    setOpen,
-}: {
-    isOpen: boolean;
-    setOpen: (v: boolean) => void;
-}) {
-    const router = useRouter();
-    const [selectedPreset, setSelectedPreset] = useState("dark");
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const fileInputRef = useRef<HTMLInputElement>();
-    return (
-        <Modal
-            open={isOpen}
-            afterOpenChange={(v) => setOpen(v)}
-            okButtonProps={{
-                type: "default",
-            }}
-            onOk={() => {
-                switch (selectedPreset) {
-                    case "light": {
-                        const themeId = createAndSaveTheme(
-                            CHATTERINO_LIGHT_THEME,
-                        );
-                        router.push("/edit/" + themeId);
-                        break;
-                    }
-                    case "dark": {
-                        const themeId = createAndSaveTheme(
-                            CHATTERINO_DARK_THEME,
-                        );
-                        router.push("/edit/" + themeId);
-                        break;
-                    }
-                    case "white": {
-                        const themeId = createAndSaveTheme(
-                            CHATTERINO_WHITE_THEME,
-                        );
-                        router.push("/edit/" + themeId);
-                        break;
-                    }
-                    case "black": {
-                        const themeId = createAndSaveTheme(
-                            CHATTERINO_BLACK_THEME,
-                        );
-                        router.push("/edit/" + themeId);
-                        break;
-                    }
-                    case "custom":
-                        if (!selectedFile) {
-                            alert("No file selected!");
-                            return;
-                        }
-                        selectedFile
-                            .text()
-                            .then((res) => {
-                                // TODO: extra no validation
-                                const theme = JSON.parse(res) as ThemeData;
-                                const convertedTheme = qt2css(theme);
-                                const themeId =
-                                    createAndSaveTheme(convertedTheme);
-                                router.push("/edit/" + themeId);
-                            })
-                            .catch((err) => {
-                                console.error("Error reading file", err);
-                                alert("Error reading file: " + err.message);
-                            });
-                }
-                setOpen(false);
-            }}
-            onCancel={() => setOpen(false)}
-        >
-            <h1 className="col-span-2 text-xl font-bold"> New Theme </h1>
-            <hr className="my-4" />
-            {/*<div className="flex items-center space-x-2">*/}
-            <h2 className="col-span-2 text-base font-semibold my-4">
-                Based on Chatterino Theme ...
-            </h2>
-            <div className="space-y-2">
-                {["light", "dark", "white", "black"].map((it) => (
-                    <button
-                        key={it}
-                        className={clsx(
-                            "w-full py-4 rounded-md border font-mono",
-                            selectedPreset == it
-                                ? "bg-gray-700 text-gray-100 border-gray-100 "
-                                : "bg-gray-100 text-gray-700 border-gray-700 ",
-                        )}
-                        onClick={() => setSelectedPreset(it)}
-                    >
-                        {it.toUpperCase()}
-                    </button>
-                ))}
-            </div>
-            <h2 className="col-span-2 text-base font-semibold my-4">
-                Import from your existing theme
-            </h2>
-            <div className="space-y-2">
-                <button
-                    className={clsx(
-                        "w-full py-4 rounded-md border font-mono",
-                        selectedPreset == "custom"
-                            ? "bg-gray-700 text-gray-100 border-gray-100 "
-                            : "bg-gray-100 text-gray-700 border-gray-700 ",
-                    )}
-                    onClick={() => {
-                        setSelectedPreset("custom");
-                        fileInputRef.current?.click();
-                    }}
-                >
-                    Choose file
-                </button>
-                {selectedPreset == "custom" && selectedFile == null && (
-                    <p className="my-1 text-red-500"> Please select a file </p>
-                )}
-                {selectedPreset == "custom" && selectedFile && (
-                    <p>
-                        <strong>{selectedFile.name}</strong> selected
-                    </p>
-                )}
-                <input
-                    type="file"
-                    className="hidden"
-                    ref={(it) => (fileInputRef.current = it!)}
-                    onChange={(e) => {
-                        const file = e.target?.files?.[0];
-                        if (!file) {
-                            setSelectedFile(null);
-                        } else {
-                            setSelectedFile(file);
-                        }
-                    }}
-                />
-            </div>
-        </Modal>
-    );
-}
+import { useEditorState } from "@/app/edit/EditorStateContextProvider";
+import { ThemeData, useConfigContext } from "@/app/edit/ThemeContextProvider";
+import { Theme } from "@/db/theme";
+import { saveTheme } from "@/lib/create-theme";
+import { ApiResponse } from "@/lib/type";
+import { css2qt } from "@/utils";
+import { Button, Checkbox, Modal } from "antd";
+import clsx from "clsx";
+import { produce } from "immer";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const confirmBeforeLeaveListener: (e: BeforeUnloadEvent) => void = (e) => {
     e.preventDefault();
@@ -321,13 +178,62 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
                         setSaved(false);
                     }, 500);
                     saveTheme(themeId, data);
+                    if (themeId.startsWith("remote-")) {
+                        const id = +themeId.slice("remote-".length);
+                        fetch("/api/themes/update-by-id", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ id: id, data: data }),
+                            credentials: "include",
+                        })
+                            .then(() => {
+                                console.log("saved ");
+                                alert("Saved API");
+                            })
+                            .catch((err) => {
+                                console.error(`Error update theme ${id}`, err);
+                                alert("Error!");
+                            });
+                    }
                 }}
             >
                 {saved ? "Saved!" : "Save"}
             </Button>
+            {themeId.startsWith("local-") && (
+                <Button
+                    onClick={() => {
+                        uploadTheme(data).then((createdTheme) => {
+                            router.push(`/edit/remote-${createdTheme.id}`);
+                        });
+                    }}
+                >
+                    Upload
+                </Button>
+            )}
             <ExportButton />
         </>
     );
+}
+
+async function uploadTheme(theme: ThemeData): Promise<Theme> {
+    console.log("xd", JSON.stringify(theme));
+    const res = await fetch("/api/themes/create", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(theme),
+    }).then(async (res) => {
+        const data = await res.json();
+        if (!res.ok) {
+            console.error("Failed to upload theme", res.status, data);
+            throw new Error(`Failed to upload theme (${res.status})`);
+        }
+        return data as ApiResponse<Theme>;
+    });
+    return res.data;
 }
 
 function downloadFile(text: string, fileName: string) {

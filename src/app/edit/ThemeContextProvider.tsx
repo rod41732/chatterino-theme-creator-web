@@ -3,13 +3,10 @@ import { ColorScheme, ThemeMetadata } from "@/app/edit/color-scheme.types";
 import { getThemeKey } from "@/lib/create-theme";
 import { ValueOrFactory } from "@/lib/react.types";
 import { CHATTERINO_BLACK_THEME } from "@/resources";
-import {
-    PropsWithChildren,
-    createContext,
-    useContext,
-    useEffect,
-    useState,
-} from "react";
+import { createContext, PropsWithChildren, useContext, useState } from "react";
+import { useAsyncEffect } from "@/lib/hooks/use-async-effect";
+import { Theme } from "@/db/theme";
+import { ApiResponse } from "@/lib/type";
 
 // used for generating theme
 export interface ThemeData {
@@ -32,20 +29,57 @@ export const ThemeContextProvider = ({
     themeId,
 }: PropsWithChildren<ThemeContextProps>) => {
     const [data, setData] = useState<ThemeData>(CHATTERINO_BLACK_THEME);
+    const [error, setError] = useState("");
     // load theme from storage
-    useEffect(() => {
+    useAsyncEffect(async () => {
+        setError("");
+        // common caching logic
         const storedData = localStorage.getItem(getThemeKey(themeId));
         if (!storedData) {
-            console.log("no data in storage");
-            return;
+            if (themeId.startsWith("local-")) {
+                setError("theme is local and no data in storage");
+                console.log("no data in storage");
+            }
+        } else {
+            try {
+                setData(JSON.parse(storedData));
+                console.log("loaded data from storage");
+            } catch (err) {
+                setError(`Failed to parse JSON for local data: ${err}`);
+                console.error("Error loading data", err, "data was", {
+                    storedData,
+                });
+            }
         }
-        try {
-            setData(JSON.parse(storedData));
-            console.log("loaded data from storage");
-        } catch (err) {
-            console.error("Error loading data", err, "data was", {
-                storedData,
-            });
+        // load remote
+        if (themeId.startsWith("remote-")) {
+            const remoteId = +themeId.slice("remote-".length);
+            if (isNaN(remoteId)) {
+                setError(`Invalid remote ID: "${remoteId}"`);
+            } else {
+                const theme = await fetch("/api/themes/by-id", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ id: remoteId }),
+                    credentials: "include",
+                }).then(async (res) => {
+                    const data = await res.json();
+                    if (!res.ok) {
+                        console.error(
+                            "Error getting theme by ID",
+                            res.status,
+                            data,
+                        );
+                        setError(`Failed to get theme by ID ${res.status}`);
+                        throw new Error(
+                            `Failed to get theme by ID ${res.status}`,
+                        );
+                    }
+                    const themeModel = (data as ApiResponse<Theme>).data;
+                    const themeData = themeModel.data as ThemeData;
+                    setData(themeData);
+                });
+            }
         }
     }, [themeId]);
 
