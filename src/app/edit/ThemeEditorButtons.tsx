@@ -5,11 +5,29 @@ import { Theme } from "@/lib/db/theme";
 import { getThemeKey, saveTheme } from "@/lib/create-theme";
 import { ApiResponse } from "@/lib/type";
 import { css2qt } from "@/utils";
-import { Button, Checkbox, Modal } from "antd";
+import { Button, Checkbox, Dropdown, MenuProps, Modal, Tooltip } from "antd";
 import clsx from "clsx";
 import { produce } from "immer";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+    PropsWithChildren,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
+import {
+    MdAddCircle,
+    MdAddCircleOutline,
+    MdCheck,
+    MdCloudUpload,
+    MdDownload,
+    MdKeyboard,
+    MdMoreVert,
+    MdSave,
+    MdVisibility,
+} from "react-icons/md";
+import { IoRadioButtonOff } from "react-icons/io5";
 
 const confirmBeforeLeaveListener: (e: BeforeUnloadEvent) => void = (e) => {
     e.preventDefault();
@@ -123,26 +141,16 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
                 </div>
             </Modal>
             <div className="flex-grow"></div>
-            <Button
-                type="primary"
-                className="border-gray-200 text-gray-800 bg"
+            <IconButton
                 onClick={() => setShortcutOpen(true)}
+                tooltip="Keyboard Shortcuts"
             >
-                Keyboard Shortcuts
-            </Button>
-            <Button
-                type="primary"
-                className="border-gray-200 text-gray-800 bg"
-                onClick={() => setPreviewOpen(true)}
-            >
-                Preview all
-            </Button>
-            <p className="text-sm text-gray-500">
-                {state.hasChange ? "Unsaved changes" : "No changes"}
-            </p>
-            <Button
-                type="primary"
-                className="border-gray-200 text-gray-800 font-bold"
+                <MdKeyboard />
+            </IconButton>
+            <IconButton onClick={() => setPreviewOpen(true)} tooltip="Preview">
+                <MdVisibility />
+            </IconButton>
+            <IconButton
                 onClick={() => {
                     const ok =
                         state.warnUnsavedChanges && state.hasChange
@@ -152,25 +160,43 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
                         router.push("/create");
                     }
                 }}
+                tooltip="Create new theme"
             >
-                New
-            </Button>
-            <label className="flex items-center space-x-2 text-sm text-gray-700">
-                <Checkbox
-                    checked={state.warnUnsavedChanges}
-                    onChange={(e) => setWarnUnsavedChanges(e.target.checked)}
-                />
-                <p> Confirm Before Leave </p>
-            </label>
-            <Button
-                type="primary"
-                className={clsx(
-                    "font-bold",
-                    "hover:border-gray-800 hover:bg-gray-800 hover:text-gray-200",
-                    saved
-                        ? "border-gray-800 bg-gray-800 text-gray-200"
-                        : "border-gray-200 text-gray-800 bg-white",
-                )}
+                <MdAddCircleOutline />
+            </IconButton>
+            <Dropdown
+                menu={{
+                    items: [
+                        {
+                            key: "save",
+                            label: (
+                                <label className="flex items-center space-x-2 text-sm text-gray-700">
+                                    <Checkbox
+                                        checked={state.warnUnsavedChanges}
+                                        onChange={(e) =>
+                                            setWarnUnsavedChanges(
+                                                e.target.checked,
+                                            )
+                                        }
+                                    />
+                                    <p> Confirm Before Leave </p>
+                                </label>
+                            ),
+                        },
+                    ] satisfies MenuProps["items"],
+                }}
+            >
+                {/*<IconButton>*/}
+                <div
+                    className={
+                        "border-gray-200 text-gray-800 bg hover:bg-gray-500/20 transition-colors p-2 rounded-full text-xl cursor-pointer"
+                    }
+                >
+                    <MdMoreVert />
+                </div>
+            </Dropdown>
+            <IconButton
+                tooltip="Save changes"
                 onClick={() => {
                     setSaved(true);
                     setState((cur) => ({ ...cur, hasChange: false }));
@@ -198,11 +224,12 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
                             });
                     }
                 }}
+                disabled={!state.hasChange}
             >
-                {saved ? "Saved!" : "Save"}
-            </Button>
+                {saved ? <MdCheck className="text-green-500" /> : <MdSave />}
+            </IconButton>
             {themeId.startsWith("local-") && (
-                <Button
+                <IconButton
                     onClick={() => {
                         uploadTheme(data).then((createdTheme) => {
                             localStorage.removeItem(getThemeKey(themeId));
@@ -213,9 +240,10 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
                             router.push(`/edit/remote-${createdTheme.id}`);
                         });
                     }}
+                    tooltip="Upload theme to theme library"
                 >
-                    Upload
-                </Button>
+                    <MdCloudUpload />
+                </IconButton>
             )}
             <ExportButton />
         </>
@@ -252,11 +280,48 @@ function downloadFile(text: string, fileName: string) {
     document.body.removeChild(a);
 }
 
+function IconButton({
+    children,
+    onClick,
+    tooltip,
+    disabled = false,
+}: PropsWithChildren<{
+    onClick?: () => void;
+    tooltip?: string;
+    disabled?: boolean;
+}>) {
+    return tooltip && !disabled ? (
+        <Tooltip title={tooltip}>
+            <button
+                className={clsx(
+                    "border-gray-200 text-gray-800 bg hover:bg-gray-500/20 transition-colors p-2 rounded-full text-xl",
+                    disabled && "opacity-25 pointer-events-none",
+                )}
+                onClick={onClick}
+                disabled={disabled}
+            >
+                {children}
+            </button>
+        </Tooltip>
+    ) : (
+        <button
+            className={clsx(
+                "border-gray-200 text-gray-800 bg hover:bg-gray-500/20 transition-colors p-2 rounded-full text-xl",
+                disabled && "opacity-25 pointer-events-none",
+            )}
+            onClick={onClick}
+            disabled={disabled}
+        >
+            {children}
+        </button>
+    );
+}
+
 function ExportButton() {
     const { data } = useConfigContext();
     return (
-        <Button
-            className="border-gray-200 text-gray-800 bg"
+        <IconButton
+            tooltip="Download Theme"
             onClick={() => {
                 if (!data) {
                     alert("No theme data!");
@@ -265,8 +330,7 @@ function ExportButton() {
                 downloadFile(JSON.stringify(css2qt(data)), "theme.json");
             }}
         >
-            {" "}
-            Export{" "}
-        </Button>
+            <MdDownload />
+        </IconButton>
     );
 }
