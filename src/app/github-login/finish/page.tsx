@@ -2,13 +2,17 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ApiResponse } from "@/lib/type";
-import { GitHubUser } from "@/pages/api/github-auth";
+import { User } from "@/lib/db/user";
+import { useAsyncEffect } from "@/lib/hooks/use-async-effect";
+import { useGlobalState } from "@/app/GlobalContext";
+import { getMe } from "@/lib/api/get-me";
 
 export default function Page() {
+    const router = useRouter();
     const hasLogin = useRef(false);
     const params = useSearchParams();
 
-    const [user, setUser] = useState<GitHubUser | null>(null);
+    const [user, setUser] = useState<User | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -36,9 +40,35 @@ export default function Page() {
                     setError(res.message);
                     return;
                 }
-                setUser((res.data as any).user as GitHubUser);
+                setUser((res.data as any).user as User);
             });
     }, [params]);
+
+    const { state, setState } = useGlobalState();
+
+    useAsyncEffect(async () => {
+        if (!user) return;
+
+        if (user) {
+            let redirectTarget = "/create";
+            const storedPath = localStorage.getItem("redirect-url");
+            if (storedPath) {
+                localStorage.removeItem("redirect-url");
+                redirectTarget = storedPath;
+            }
+            // todo: copied code from app/layout.tsx
+
+            try {
+                const me = await getMe();
+                setState({ auth: { authorized: true, user: me } });
+            } catch (err) {
+                setState({ auth: { authorized: false } });
+            }
+
+            await router.push(redirectTarget);
+        }
+    }, [user]);
+
     return (
         <div className="w-full h-full flex items-center justify-center">
             {params && params.get("code") ? (
@@ -47,7 +77,8 @@ export default function Page() {
                         {error && <p className="text-red-500">{error}</p>}
                         {user && (
                             <p className="text-green-500">
-                                Authorized as: {user.login}
+                                {/*{JSON.stringify(user)}*/}
+                                Authorized as: {user.handle}
                             </p>
                         )}
                     </>

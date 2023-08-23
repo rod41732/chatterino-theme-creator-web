@@ -24,10 +24,13 @@ import {
     MdDownload,
     MdKeyboard,
     MdMoreVert,
+    MdPerson,
     MdSave,
     MdVisibility,
 } from "react-icons/md";
 import { IoRadioButtonOff } from "react-icons/io5";
+import { useGlobalState } from "@/app/GlobalContext";
+import Link from "next/link";
 
 const confirmBeforeLeaveListener: (e: BeforeUnloadEvent) => void = (e) => {
     e.preventDefault();
@@ -86,6 +89,10 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
 
     const [previewOpen, setPreviewOpen] = useState(false);
     const [shortcutOpen, setShortcutOpen] = useState(false);
+
+    const {
+        state: { auth },
+    } = useGlobalState();
 
     return (
         <>
@@ -240,12 +247,71 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
                             router.push(`/edit/remote-${createdTheme.id}`);
                         });
                     }}
-                    tooltip="Upload theme to theme library"
+                    tooltip={
+                        auth?.authorized
+                            ? "Upload to Theme Library."
+                            : "Login to Upload to Theme Library."
+                    }
+                    disabled={!auth?.authorized}
                 >
                     <MdCloudUpload />
                 </IconButton>
             )}
             <ExportButton />
+            {auth?.authorized ? (
+                <Dropdown
+                    menu={{
+                        items: [{ key: "forsen", label: "test" }],
+                    }}
+                >
+                    <div className="flex items-center gap-x-2">
+                        <div className="flex items-center justify-center w-9 h-9 bg-blue-500 rounded-full text-xl text-white">
+                            {auth.user.handle.charAt(0).toUpperCase()}
+                        </div>
+                        <div className="font-bold text-gray-800">
+                            @{auth.user.handle}
+                        </div>
+                    </div>
+                </Dropdown>
+            ) : (
+                <Dropdown
+                    menu={{
+                        items: [
+                            {
+                                key: "hint",
+                                label: (
+                                    <p>
+                                        Login to Share your theme with others.
+                                    </p>
+                                ),
+                                disabled: true,
+                            },
+                            {
+                                type: "divider",
+                            },
+                            {
+                                key: "login",
+                                label: "Login with GitHub",
+                                onClick: async () => {
+                                    const fullUrl = location.href;
+                                    const origin = new URL(fullUrl).origin;
+                                    const path = fullUrl.slice(origin.length);
+
+                                    localStorage.setItem("redirect-url", path);
+                                    await router.push("/github-login/init");
+                                },
+                            },
+                        ],
+                    }}
+                >
+                    <div className="flex items-center gap-x-2 rounded-md hover:bg-gray-500/25 py-2 px-2 cursor-pointer">
+                        <div className="flex items-center justify-center w-8 h-8 bg-gray-500 rounded-full text-xl text-white">
+                            <MdPerson />
+                        </div>
+                        <div className="text-gray-800">Not Logged in</div>
+                    </div>
+                </Dropdown>
+            )}
         </>
     );
 }
@@ -290,8 +356,23 @@ function IconButton({
     tooltip?: string;
     disabled?: boolean;
 }>) {
-    return tooltip && !disabled ? (
+    return tooltip ? (
         <Tooltip title={tooltip}>
+            <div>
+                <button
+                    className={clsx(
+                        "border-gray-200 text-gray-800 bg hover:bg-gray-500/20 transition-colors p-2 rounded-full text-xl",
+                        disabled && "opacity-25 pointer-events-none",
+                    )}
+                    onClick={onClick}
+                    disabled={disabled}
+                >
+                    {children}
+                </button>
+            </div>
+        </Tooltip>
+    ) : (
+        <div>
             <button
                 className={clsx(
                     "border-gray-200 text-gray-800 bg hover:bg-gray-500/20 transition-colors p-2 rounded-full text-xl",
@@ -302,18 +383,7 @@ function IconButton({
             >
                 {children}
             </button>
-        </Tooltip>
-    ) : (
-        <button
-            className={clsx(
-                "border-gray-200 text-gray-800 bg hover:bg-gray-500/20 transition-colors p-2 rounded-full text-xl",
-                disabled && "opacity-25 pointer-events-none",
-            )}
-            onClick={onClick}
-            disabled={disabled}
-        >
-            {children}
-        </button>
+        </div>
     );
 }
 
