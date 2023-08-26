@@ -44,7 +44,7 @@ export default function Page() {
             });
     }, [params]);
 
-    const { state, setState } = useGlobalState();
+    const { setState } = useGlobalState();
 
     useAsyncEffect(async () => {
         if (!user) return;

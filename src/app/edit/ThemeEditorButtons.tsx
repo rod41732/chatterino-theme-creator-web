@@ -5,7 +5,7 @@ import { Theme } from "@/lib/db/theme";
 import { getThemeKey, saveTheme } from "@/lib/create-theme";
 import { ApiResponse } from "@/lib/type";
 import { css2qt } from "@/utils";
-import { Button, Checkbox, Dropdown, MenuProps, Modal, Tooltip } from "antd";
+import { Checkbox, Dropdown, MenuProps, Modal, Tooltip } from "antd";
 import clsx from "clsx";
 import { produce } from "immer";
 import { useRouter } from "next/navigation";
@@ -17,20 +17,17 @@ import {
     useState,
 } from "react";
 import {
-    MdAddCircle,
     MdAddCircleOutline,
     MdCheck,
     MdCloudUpload,
     MdDownload,
     MdKeyboard,
     MdMoreVert,
-    MdPerson,
     MdSave,
     MdVisibility,
 } from "react-icons/md";
-import { IoRadioButtonOff } from "react-icons/io5";
+import { UserBadge } from "@/app/components/UserBadge";
 import { useGlobalState } from "@/app/GlobalContext";
-import Link from "next/link";
 
 const confirmBeforeLeaveListener: (e: BeforeUnloadEvent) => void = (e) => {
     e.preventDefault();
@@ -258,60 +255,7 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
                 </IconButton>
             )}
             <ExportButton />
-            {auth?.authorized ? (
-                <Dropdown
-                    menu={{
-                        items: [{ key: "forsen", label: "test" }],
-                    }}
-                >
-                    <div className="flex items-center gap-x-2">
-                        <div className="flex items-center justify-center w-9 h-9 bg-blue-500 rounded-full text-xl text-white">
-                            {auth.user.handle.charAt(0).toUpperCase()}
-                        </div>
-                        <div className="font-bold text-gray-800">
-                            @{auth.user.handle}
-                        </div>
-                    </div>
-                </Dropdown>
-            ) : (
-                <Dropdown
-                    menu={{
-                        items: [
-                            {
-                                key: "hint",
-                                label: (
-                                    <p>
-                                        Login to Share your theme with others.
-                                    </p>
-                                ),
-                                disabled: true,
-                            },
-                            {
-                                type: "divider",
-                            },
-                            {
-                                key: "login",
-                                label: "Login with GitHub",
-                                onClick: async () => {
-                                    const fullUrl = location.href;
-                                    const origin = new URL(fullUrl).origin;
-                                    const path = fullUrl.slice(origin.length);
-
-                                    localStorage.setItem("redirect-url", path);
-                                    await router.push("/github-login/init");
-                                },
-                            },
-                        ],
-                    }}
-                >
-                    <div className="flex items-center gap-x-2 rounded-md hover:bg-gray-500/25 py-2 px-2 cursor-pointer">
-                        <div className="flex items-center justify-center w-8 h-8 bg-gray-500 rounded-full text-xl text-white">
-                            <MdPerson />
-                        </div>
-                        <div className="text-gray-800">Not Logged in</div>
-                    </div>
-                </Dropdown>
-            )}
+            <UserBadge />
         </>
     );
 }
