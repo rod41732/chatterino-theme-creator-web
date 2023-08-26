@@ -167,12 +167,14 @@ export function ThemePreview({
                             >
                                 <AiFillDelete />
                             </IconButton>
-                            <IconButton
-                                className="text-white"
-                                onClick={onUpload}
-                            >
-                                <MdCloudUpload />
-                            </IconButton>
+                            {!theme.id.startsWith("remote-") && (
+                                <IconButton
+                                    className="text-white"
+                                    onClick={onUpload}
+                                >
+                                    <MdCloudUpload />
+                                </IconButton>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -210,6 +212,39 @@ export function ThemePreview({
                         <MdEdit className="text-gray-400 hidden group-hover:block" />
                     </div>
                 )}
+                <div className="flex items-center gap-x-2 flex-wrap">
+                    {
+                        // dark theme has light icons and vice-versa, hence the "inverted" logic
+                        theme.data.metadata.iconTheme == "light" ? (
+                            <p className="px-2 py-1 rounded-md bg-gray-900 text-white border border-white leading-none">
+                                Dark
+                            </p>
+                        ) : (
+                            <p className="px-2 py-1 rounded-md bg-white text-gray-900 border border-gray-900 leading-none">
+                                Light
+                            </p>
+                        )
+                    }
+                    {theme.data.ctcMeta.messageSeparator && (
+                        <p className="px-2 py-1 rounded-md bg-white text-blue-500 border border-blue-500 leading-none">
+                            Separator
+                        </p>
+                    )}
+                    {theme.data.ctcMeta.checkeredRow && (
+                        <p className="px-2 py-1 rounded-md bg-blue-500 text-white border border-white leading-none">
+                            Checkered
+                        </p>
+                    )}
+                </div>
+
+                <p className="text-gray-500">
+                    {" "}
+                    Updated: {theme.data.ctcMeta.modifiedAt}
+                </p>
+                <p className="text-gray-500">
+                    {" "}
+                    Created: {theme.data.ctcMeta.createdAt}
+                </p>
                 <p className="text-gray-500"> {theme.id}</p>
             </div>
         </div>

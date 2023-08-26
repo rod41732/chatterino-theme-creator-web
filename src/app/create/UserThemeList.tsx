@@ -30,6 +30,18 @@ function listThemes() {
         .filter((it): it is ThemeEntry => it != null);
 }
 
+function uniqueBy<T>(items: T[], keyFunc: (v: T) => string): T[] {
+    const keys = new Set<string>();
+    const uniqueArray: T[] = [];
+    items.forEach((it) => {
+        const key = keyFunc(it);
+        if (keys.has(key)) return;
+        keys.add(key);
+        uniqueArray.push(it);
+    });
+    return uniqueArray;
+}
+
 export function UserThemeList() {
     const [localThemes, setLocalThemes] = useState<ThemeEntry[]>([]);
     const [remoteThemes, setRemoteThemes] = useState<ThemeEntry[]>([]);
@@ -64,7 +76,7 @@ export function UserThemeList() {
         });
     }, [remoteTrigger]);
     const allThemes = useMemo(
-        () => [...localThemes, ...remoteThemes],
+        () => uniqueBy([...localThemes, ...remoteThemes], (it) => it.id),
         [localThemes, remoteThemes],
     );
 
