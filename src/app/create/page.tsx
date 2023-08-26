@@ -2,6 +2,7 @@
 import { CreateNewTheme } from "@/app/create/CreateNewTheme";
 import { EditorFooter } from "@/app/create/EdtiorFooter";
 import { UserBadge } from "@/app/components/UserBadge";
+import Link from "next/link";
 
 export default function Home() {
     return (
@@ -17,6 +18,12 @@ export default function Home() {
             <div className="flex-1 overflow-hidden flex items-center justify-center">
                 <div className="flex-shrink overflow-hidden w-full max-h-full max-w-xl mx-8 flex flex-col">
                     <CreateNewTheme />
+                    <Link
+                        href="/my-themes"
+                        className="w-full text-center mt-2 text-blue-500"
+                    >
+                        View my themes
+                    </Link>
                 </div>
             </div>
             <EditorFooter />

@@ -1,21 +1,12 @@
 import { ChatterinoAllPreviews } from "@/app/edit/ColorApp.constants";
 import { useEditorState } from "@/app/edit/EditorStateContextProvider";
 import { ThemeData, useConfigContext } from "@/app/edit/ThemeContextProvider";
-import { Theme } from "@/lib/db/theme";
 import { getThemeKey, saveTheme } from "@/lib/create-theme";
-import { ApiResponse } from "@/lib/type";
 import { css2qt } from "@/utils";
-import { Checkbox, Dropdown, MenuProps, Modal, Tooltip } from "antd";
-import clsx from "clsx";
+import { Checkbox, Dropdown, MenuProps, Modal } from "antd";
 import { produce } from "immer";
 import { useRouter } from "next/navigation";
-import {
-    PropsWithChildren,
-    useCallback,
-    useEffect,
-    useRef,
-    useState,
-} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
     MdAddCircleOutline,
     MdCheck,
@@ -28,6 +19,8 @@ import {
 } from "react-icons/md";
 import { UserBadge } from "@/app/components/UserBadge";
 import { useGlobalState } from "@/app/GlobalContext";
+import { IconButton } from "@/app/components/IconButton";
+import { uploadTheme } from "@/lib/api/upload-theme";
 
 const confirmBeforeLeaveListener: (e: BeforeUnloadEvent) => void = (e) => {
     e.preventDefault();
@@ -220,7 +213,6 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
                         })
                             .then(() => {
                                 console.log("saved ");
-                                alert("Saved API");
                             })
                             .catch((err) => {
                                 console.error(`Error update theme ${id}`, err);
@@ -260,25 +252,6 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
     );
 }
 
-async function uploadTheme(theme: ThemeData): Promise<Theme> {
-    console.log("xd", JSON.stringify(theme));
-    const res = await fetch("/api/themes/create", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(theme),
-    }).then(async (res) => {
-        const data = await res.json();
-        if (!res.ok) {
-            console.error("Failed to upload theme", res.status, data);
-            throw new Error(`Failed to upload theme (${res.status})`);
-        }
-        return data as ApiResponse<Theme>;
-    });
-    return res.data;
-}
-
 function downloadFile(text: string, fileName: string) {
     const a = document.createElement("a");
     a.href = "data:text/plan;charset=utf-8," + encodeURIComponent(text);
@@ -288,47 +261,6 @@ function downloadFile(text: string, fileName: string) {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-}
-
-function IconButton({
-    children,
-    onClick,
-    tooltip,
-    disabled = false,
-}: PropsWithChildren<{
-    onClick?: () => void;
-    tooltip?: string;
-    disabled?: boolean;
-}>) {
-    return tooltip ? (
-        <Tooltip title={tooltip}>
-            <div>
-                <button
-                    className={clsx(
-                        "border-gray-200 text-gray-800 bg hover:bg-gray-500/20 transition-colors p-2 rounded-full text-xl",
-                        disabled && "opacity-25 pointer-events-none",
-                    )}
-                    onClick={onClick}
-                    disabled={disabled}
-                >
-                    {children}
-                </button>
-            </div>
-        </Tooltip>
-    ) : (
-        <div>
-            <button
-                className={clsx(
-                    "border-gray-200 text-gray-800 bg hover:bg-gray-500/20 transition-colors p-2 rounded-full text-xl",
-                    disabled && "opacity-25 pointer-events-none",
-                )}
-                onClick={onClick}
-                disabled={disabled}
-            >
-                {children}
-            </button>
-        </div>
-    );
 }
 
 function ExportButton() {

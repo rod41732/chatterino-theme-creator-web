@@ -14,7 +14,7 @@ export default function MyThemesPage() {
                 <div className="flex-1"> </div>
                 <UserBadge />
             </div>
-            <div className="flex-1 overflow-hidden bg-red-200 h-full">
+            <div className="flex-1 overflow-hidden h-full">
                 <UserThemeList />
             </div>
             <EditorFooter />
