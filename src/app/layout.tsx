@@ -33,7 +33,10 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={`${inter.className}`}>
+            <body
+                // need overflow-hidden to make antd tooltip re-position properly
+                className={`${inter.className} overflow-hidden`}
+            >
                 <GlobalStateProvider>
                     <UserLoader />
                     <div className="w-screen h-screen">{children}</div>

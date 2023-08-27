@@ -11,7 +11,15 @@ export function UserBadge() {
     return auth?.authorized ? (
         <Dropdown
             menu={{
-                items: [{ key: "forsen", label: "test" }],
+                items: [
+                    {
+                        key: "forsen",
+                        label: "My Themes",
+                        onClick: async () => {
+                            await router.push("/my-themes");
+                        },
+                    },
+                ],
             }}
         >
             <div className="flex items-center gap-x-2">

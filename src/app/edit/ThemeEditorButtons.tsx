@@ -5,7 +5,7 @@ import { getThemeKey, saveTheme } from "@/lib/create-theme";
 import { css2qt } from "@/utils";
 import { Checkbox, Dropdown, MenuProps, Modal } from "antd";
 import { produce } from "immer";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
     MdAddCircleOutline,
@@ -29,6 +29,7 @@ const confirmBeforeLeaveListener: (e: BeforeUnloadEvent) => void = (e) => {
 
 /** buttons that control theme new/edit/export */
 export function ThemeEditorButton({ themeId }: { themeId: string }) {
+    const pathName = usePathname();
     const router = useRouter();
     const { state, setState } = useEditorState();
 
@@ -77,7 +78,6 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
         }
     }, [state]);
 
-    const [previewOpen, setPreviewOpen] = useState(false);
     const [shortcutOpen, setShortcutOpen] = useState(false);
 
     const {
@@ -86,22 +86,6 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
 
     return (
         <>
-            <Modal
-                width="80%"
-                wrapClassName="p-4"
-                open={previewOpen}
-                onCancel={() => setPreviewOpen(false)}
-                footer={null}
-            >
-                <div
-                    style={{
-                        // antd built-in padding top of 107px
-                        height: "calc(100vh - 214px)",
-                    }}
-                >
-                    <ChatterinoAllPreviews />
-                </div>
-            </Modal>
             <Modal
                 title="Keyboard Shortcuts"
                 open={shortcutOpen}
@@ -143,9 +127,6 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
                 tooltip="Keyboard Shortcuts"
             >
                 <MdKeyboard />
-            </IconButton>
-            <IconButton onClick={() => setPreviewOpen(true)} tooltip="Preview">
-                <MdVisibility />
             </IconButton>
             <IconButton
                 onClick={() => {
@@ -247,6 +228,15 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
                 </IconButton>
             )}
             <ExportButton />
+
+            <IconButton
+                onClick={() => {
+                    router.push(pathName + "?preview");
+                }}
+                tooltip="Preview"
+            >
+                <MdVisibility />
+            </IconButton>
             <UserBadge />
         </>
     );
