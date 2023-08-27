@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import { MouseEventHandler, PropsWithChildren } from "react";
 import { Tooltip } from "antd";
 import clsx from "clsx";
 
@@ -10,7 +10,7 @@ export function IconButton({
     disabled = false,
     className,
 }: PropsWithChildren<{
-    onClick?: () => void;
+    onClick?: MouseEventHandler<HTMLButtonElement>;
     tooltip?: string;
     disabled?: boolean;
     className?: string;

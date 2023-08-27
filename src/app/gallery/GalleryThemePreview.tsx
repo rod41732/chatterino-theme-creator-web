@@ -14,16 +14,8 @@ import { ReadonlyThemeContextProvider } from "@/app/edit/ThemeContextProvider";
 import { ColorProvider } from "@/lib/ColorProvider";
 
 /** entry of theme, with small preview */
-export function GalleryThemePreview({
-    theme, // onDelete,
-    // onUpload,
-} // onDuplicate,
-: {
-    theme: ThemeEntryWithOwner;
-    // onDelete: () => void;
-    // onUpload: () => void;
-    // onDuplicate: () => void;
-}) {
+export function GalleryThemePreview({ theme }: { theme: ThemeEntryWithOwner }) {
+    const router = useRouter();
     const [notification, contextHolder] = useNotification();
     const idWithoutPrefix = theme.id.split("-")[1];
     const [showPreview, setShowPreview] = useState(false);
@@ -56,7 +48,13 @@ export function GalleryThemePreview({
                     </ReadonlyThemeContextProvider>
                 </div>
             </Modal>
-            <div className="block mr-2 flex-grow p-2 group">
+            <div
+                className="block mr-2 flex-grow p-2 group"
+                role="button"
+                onClick={() => {
+                    router.push("/gallery/" + theme.id);
+                }}
+            >
                 {/*mini chat & overlay */}
                 <div className="relative">
                     <div className={clsx(styles.split)}>
@@ -132,7 +130,8 @@ export function GalleryThemePreview({
                     <div className="flex-1"></div>
                     <IconButton
                         tooltip="Download theme"
-                        onClick={() => {
+                        onClick={(e) => {
+                            e.stopPropagation();
                             downloadFile(
                                 JSON.stringify(css2qt(theme.data), null, 2),
                                 idWithoutPrefix +
@@ -146,7 +145,8 @@ export function GalleryThemePreview({
                     </IconButton>
                     <IconButton
                         tooltip="Copy theme to clipboard"
-                        onClick={async () => {
+                        onClick={async (e) => {
+                            e.stopPropagation();
                             const themeJSON = JSON.stringify(
                                 theme.data,
                                 null,
