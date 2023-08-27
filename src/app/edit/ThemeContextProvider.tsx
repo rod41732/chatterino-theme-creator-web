@@ -3,7 +3,13 @@ import { ColorScheme, ThemeMetadata } from "@/app/edit/color-scheme.types";
 import { getThemeKey } from "@/lib/create-theme";
 import { ValueOrFactory } from "@/lib/react.types";
 import { CHATTERINO_BLACK_THEME } from "@/resources";
-import { createContext, PropsWithChildren, useContext, useState } from "react";
+import {
+    createContext,
+    PropsWithChildren,
+    useCallback,
+    useContext,
+    useState,
+} from "react";
 import { useAsyncEffect } from "@/lib/hooks/use-async-effect";
 import { Theme } from "@/lib/db/theme";
 import { ApiResponse } from "@/lib/type";
@@ -89,6 +95,18 @@ export const ThemeContextProvider = ({
         </ThemeContext.Provider>
     );
 };
+
+export function ReadonlyThemeContextProvider({
+    theme,
+    children,
+}: PropsWithChildren<{ theme: ThemeData }>) {
+    const noop = useCallback(() => {}, []);
+    return (
+        <ThemeContext.Provider value={{ data: theme, setData: noop }}>
+            {children}
+        </ThemeContext.Provider>
+    );
+}
 
 export const useConfigContext = () => {
     const v = useContext(ThemeContext);

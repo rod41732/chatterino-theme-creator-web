@@ -5,7 +5,6 @@ import styles from "@/app/fake-uis/chatlist.module.css";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { getThemeKey } from "@/lib/create-theme";
 import { BiSolidDuplicate } from "react-icons/bi";
-import { ThemeData } from "@/app/edit/ThemeContextProvider";
 import { IconButton } from "@/app/components/IconButton";
 import {
     MdCloudUpload,
@@ -17,14 +16,10 @@ import { produce } from "immer";
 import { copyToClipboard, downloadFile } from "@/lib/export-theme";
 import { css2qt } from "@/utils";
 import useNotification from "antd/es/notification/useNotification";
-
-export interface ThemeEntry {
-    id: string;
-    data: ThemeData;
-}
+import { ThemeEntry } from "@/lib/type";
 
 /** entry of theme, with small preview */
-export function ThemePreview({
+export function UserThemePreview({
     theme,
     onDelete,
     onUpload,
