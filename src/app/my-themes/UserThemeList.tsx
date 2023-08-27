@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { HiXMark } from "react-icons/hi2";
 import { ApiResponse } from "@/lib/type";
 import { Theme } from "@/lib/db/theme";
-import { ThemeEntry, ThemePreview } from "@/app/create/ThemePreview";
+import { ThemeEntry, ThemePreview } from "@/app/my-themes/ThemePreview";
 import { produce } from "immer";
 import { createAndSaveTheme, getThemeKey } from "@/lib/create-theme";
 import { uploadTheme } from "@/lib/api/upload-theme";

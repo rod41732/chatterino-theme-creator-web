@@ -7,8 +7,16 @@ import { getThemeKey } from "@/lib/create-theme";
 import { BiSolidDuplicate } from "react-icons/bi";
 import { ThemeData } from "@/app/edit/ThemeContextProvider";
 import { IconButton } from "@/app/components/IconButton";
-import { MdCloudUpload, MdEdit } from "react-icons/md";
+import {
+    MdCloudUpload,
+    MdContentCopy,
+    MdDownload,
+    MdEdit,
+} from "react-icons/md";
 import { produce } from "immer";
+import { copyToClipboard, downloadFile } from "@/lib/export-theme";
+import { css2qt } from "@/utils";
+import useNotification from "antd/es/notification/useNotification";
 
 export interface ThemeEntry {
     id: string;
@@ -96,11 +104,15 @@ export function ThemePreview({
         [theme],
     );
 
+    const [notification, contextHolder] = useNotification();
+    const idWithoutPrefix = theme.id.split("-")[1];
+
     return (
         <div
             className={"border border-gray-400 rounded-md m-2"}
             style={customVars}
         >
+            {contextHolder}
             <div className="block mr-2 flex-grow p-2 group">
                 {/*mini chat & overlay */}
                 <div className="relative">
@@ -167,6 +179,7 @@ export function ThemePreview({
                             >
                                 <AiFillDelete />
                             </IconButton>
+
                             {!theme.id.startsWith("remote-") && (
                                 <IconButton
                                     className="text-white"
@@ -210,6 +223,37 @@ export function ThemePreview({
                     >
                         <p>{localName}</p>
                         <MdEdit className="text-gray-400 hidden group-hover:block" />
+                        <div className="flex-1"></div>
+                        <IconButton
+                            tooltip="Download theme"
+                            onClick={() => {
+                                downloadFile(
+                                    JSON.stringify(css2qt(theme.data), null, 2),
+                                    idWithoutPrefix +
+                                        "-" +
+                                        theme.data.ctcMeta.name +
+                                        ".json",
+                                );
+                            }}
+                        >
+                            <MdDownload />
+                        </IconButton>
+                        <IconButton
+                            tooltip="Copy theme to clipboard"
+                            onClick={async () => {
+                                const themeJSON = JSON.stringify(
+                                    theme.data,
+                                    null,
+                                    2,
+                                );
+                                await copyToClipboard(themeJSON);
+                                notification.success({
+                                    message: "Copied theme to clipboard",
+                                });
+                            }}
+                        >
+                            <MdContentCopy />
+                        </IconButton>
                     </div>
                 )}
                 <div className="flex items-center gap-x-2 flex-wrap">

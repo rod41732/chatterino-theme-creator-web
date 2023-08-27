@@ -1,6 +1,6 @@
 "use client";
 import { EditorFooter } from "@/app/create/EdtiorFooter";
-import { UserThemeList } from "@/app/create/UserThemeList";
+import { UserThemeList } from "@/app/my-themes/UserThemeList";
 import { UserBadge } from "@/app/components/UserBadge";
 
 export default function MyThemesPage() {
