@@ -14,10 +14,13 @@ import { ChatterinoAllPreviews } from "@/app/edit/ColorApp.constants";
 import { IconButton } from "@/app/components/IconButton";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BiSolidDuplicate } from "react-icons/bi";
-import { MdCloudUpload } from "react-icons/md";
+import { MdCloudUpload, MdContentCopy, MdDownload } from "react-icons/md";
 import { uploadTheme } from "@/lib/api/upload-theme";
 import { createAndSaveTheme, getThemeKey } from "@/lib/create-theme";
 import { produce } from "immer";
+import { copyToClipboard, downloadFile } from "@/lib/export-theme";
+import { css2qt } from "@/utils";
+import useNotification from "antd/es/notification/useNotification";
 
 interface RouteParams {
     params: {
@@ -86,10 +89,13 @@ export default function EditThemePage({ params: { id } }: RouteParams) {
 function ThemeDetails({ themeId }: { themeId: string }) {
     const { data } = useConfigContext();
     const router = useRouter();
-    // CV paste from UserThemeList, might need [refactor]
+    const idWithoutPrefix = themeId.split("-")[1];
+
+    const [notification, contentHolder] = useNotification();
 
     return (
         <div>
+            {contentHolder}
             <div className="flex overflow-hidden">
                 <div>
                     <span className="text-2xl font-bold">
@@ -99,6 +105,32 @@ function ThemeDetails({ themeId }: { themeId: string }) {
                 </div>
                 <div className="flex-1"></div>
                 <div className={"flex items-center gap-x-2"}>
+                    <IconButton
+                        tooltip="Download theme"
+                        onClick={() => {
+                            downloadFile(
+                                JSON.stringify(css2qt(data), null, 2),
+                                idWithoutPrefix +
+                                    "-" +
+                                    data.ctcMeta.name +
+                                    ".json",
+                            );
+                        }}
+                    >
+                        <MdDownload />
+                    </IconButton>
+                    <IconButton
+                        tooltip="Copy theme to clipboard"
+                        onClick={async () => {
+                            const themeJSON = JSON.stringify(data, null, 2);
+                            await copyToClipboard(themeJSON);
+                            notification.success({
+                                message: "Copied theme to clipboard",
+                            });
+                        }}
+                    >
+                        <MdContentCopy />
+                    </IconButton>
                     <IconButton
                         tooltip="Forsen aaaaaaaaaaaaaaaa "
                         onClick={async () => {

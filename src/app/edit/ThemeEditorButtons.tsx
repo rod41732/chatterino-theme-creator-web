@@ -1,4 +1,3 @@
-import { ChatterinoAllPreviews } from "@/app/edit/ColorApp.constants";
 import { useEditorState } from "@/app/edit/EditorStateContextProvider";
 import { ThemeData, useConfigContext } from "@/app/edit/ThemeContextProvider";
 import { getThemeKey, saveTheme } from "@/lib/create-theme";
@@ -21,6 +20,7 @@ import { UserBadge } from "@/app/components/UserBadge";
 import { useGlobalState } from "@/app/GlobalContext";
 import { IconButton } from "@/app/components/IconButton";
 import { uploadTheme } from "@/lib/api/upload-theme";
+import { downloadFile } from "@/lib/export-theme";
 
 const confirmBeforeLeaveListener: (e: BeforeUnloadEvent) => void = (e) => {
     e.preventDefault();
@@ -227,7 +227,7 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
                     <MdCloudUpload />
                 </IconButton>
             )}
-            <ExportButton />
+            <ExportButton themeId={themeId} />
 
             <IconButton
                 onClick={() => {
@@ -242,28 +242,18 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
     );
 }
 
-function downloadFile(text: string, fileName: string) {
-    const a = document.createElement("a");
-    a.href = "data:text/plan;charset=utf-8," + encodeURIComponent(text);
-    a.download = fileName;
-    a.style.display = "none";
-
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-}
-
-function ExportButton() {
+function ExportButton({ themeId }: { themeId: string }) {
     const { data } = useConfigContext();
+    const idWithoutPrefix = themeId.split("-")[1];
+
     return (
         <IconButton
             tooltip="Download Theme"
             onClick={() => {
-                if (!data) {
-                    alert("No theme data!");
-                    return;
-                }
-                downloadFile(JSON.stringify(css2qt(data)), "theme.json");
+                downloadFile(
+                    JSON.stringify(css2qt(data), null, 2),
+                    idWithoutPrefix + "-" + data.ctcMeta.name + ".json",
+                );
             }}
         >
             <MdDownload />
