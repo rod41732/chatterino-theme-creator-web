@@ -5,14 +5,8 @@ import { Theme } from "@/lib/db/theme";
 import { GalleryThemePreview } from "@/app/gallery/GalleryThemePreview";
 import { ThemeEntryWithOwner } from "@/app/gallery/types";
 
-function localStorageKeys(): string[] {
-    return Array(localStorage.length)
-        .fill(0)
-        .map((_, idx) => localStorage.key(idx)!);
-}
-
 export function ThemeGalleryList() {
-    const [themes, setThemes] = useState<ThemeEntryWithOwner[]>([]);
+    const [themes, setThemes] = useState<ThemeEntryWithOwner[] | null>(null);
 
     useEffect(() => {
         fetch("/api/themes/all", {
@@ -38,7 +32,7 @@ export function ThemeGalleryList() {
     }, []);
 
     return (
-        <div className="max-h-full overflow-hidden flex flex-col">
+        <div className="h-full overflow-hidden flex flex-col px-4 py-2">
             <div className="text-lg font-semibold flex-shrink-0">
                 Your themes
             </div>
@@ -46,20 +40,26 @@ export function ThemeGalleryList() {
                 This list your created themes, you can edit, duplicate or delete
                 them.
             </p>
-            <div className="flex-1 overflow-auto">
-                <div
-                    className="grid w-full"
-                    style={{
-                        gridTemplateColumns:
-                            "repeat(auto-fill, minmax(300px, 1fr))",
-                    }}
-                >
-                    {themes.map((theme) => {
-                        return (
-                            <GalleryThemePreview theme={theme} key={theme.id} />
-                        );
-                    })}
-                    {themes.length == 0 && (
+            {themes ? (
+                <div className="flex-1 overflow-auto">
+                    {themes.length > 0 ? (
+                        <div
+                            className="grid w-full"
+                            style={{
+                                gridTemplateColumns:
+                                    "repeat(auto-fill, minmax(300px, 1fr))",
+                            }}
+                        >
+                            {themes.map((theme) => {
+                                return (
+                                    <GalleryThemePreview
+                                        theme={theme}
+                                        key={theme.id}
+                                    />
+                                );
+                            })}
+                        </div>
+                    ) : (
                         <div className="flex flex-col items-center justify-center my-4 text-gray-500 text-lg">
                             <HiXMark className="text-2xl" />
                             <p>
@@ -68,7 +68,12 @@ export function ThemeGalleryList() {
                         </div>
                     )}
                 </div>
-            </div>
+            ) : (
+                <div className="flex-1 overflow-hidden flex flex-col items-center justify-center">
+                    <img src="/dankCircle.webp" width="64" height="64" />
+                    <p> Loading ... </p>
+                </div>
+            )}
         </div>
     );
 }

@@ -43,8 +43,8 @@ function uniqueBy<T>(items: T[], keyFunc: (v: T) => string): T[] {
 }
 
 export function UserThemeList() {
-    const [localThemes, setLocalThemes] = useState<ThemeEntry[]>([]);
-    const [remoteThemes, setRemoteThemes] = useState<ThemeEntry[]>([]);
+    const [localThemes, setLocalThemes] = useState<ThemeEntry[] | null>(null);
+    const [remoteThemes, setRemoteThemes] = useState<ThemeEntry[] | null>(null);
 
     // trigger to load theme
     const [remoteTrigger, setRemoteTrigger] = useState(0);
@@ -75,13 +75,16 @@ export function UserThemeList() {
             setRemoteThemes(themes);
         });
     }, [remoteTrigger]);
-    const allThemes = useMemo(
-        () => uniqueBy([...localThemes, ...remoteThemes], (it) => it.id),
+    const allThemes: ThemeEntry[] | null = useMemo(
+        () =>
+            localThemes && remoteThemes
+                ? uniqueBy([...localThemes, ...remoteThemes], (it) => it.id)
+                : null,
         [localThemes, remoteThemes],
     );
 
     return (
-        <div className="max-h-full overflow-hidden flex flex-col">
+        <div className="h-full overflow-hidden flex flex-col px-4 py-2">
             <div className="text-lg font-semibold flex-shrink-0">
                 Your themes
             </div>
@@ -89,60 +92,71 @@ export function UserThemeList() {
                 This list your created themes, you can edit, duplicate or delete
                 them.
             </p>
-            <div className="flex-1 overflow-auto">
-                <div
-                    className="grid w-full"
-                    style={{
-                        gridTemplateColumns:
-                            "repeat(auto-fill, minmax(300px, 1fr))",
-                    }}
-                >
-                    {allThemes.map((theme) => {
-                        return (
-                            <UserThemePreview
-                                theme={theme}
-                                key={theme.id}
-                                onDelete={() => {
-                                    const confirm =
-                                        window.confirm("Delete this theme?");
-                                    if (confirm) {
-                                        localStorage.removeItem(
-                                            "theme-" + theme.id,
-                                        );
-                                        setLocalThemes(listThemes());
-                                    }
-                                }}
-                                onUpload={async () => {
-                                    await uploadTheme(theme.data);
-                                    // remove local version once theme is uploaded
-                                    localStorage.removeItem(
-                                        getThemeKey(theme.id),
-                                    );
+            {allThemes ? (
+                <div className="flex-1 overflow-auto">
+                    {allThemes.length > 0 ? (
+                        <div
+                            className="grid w-full"
+                            style={{
+                                gridTemplateColumns:
+                                    "repeat(auto-fill, minmax(300px, 1fr))",
+                            }}
+                        >
+                            {allThemes.map((theme) => {
+                                return (
+                                    <UserThemePreview
+                                        theme={theme}
+                                        key={theme.id}
+                                        onDelete={() => {
+                                            const confirm =
+                                                window.confirm(
+                                                    "Delete this theme?",
+                                                );
+                                            if (confirm) {
+                                                localStorage.removeItem(
+                                                    "theme-" + theme.id,
+                                                );
+                                                setLocalThemes(listThemes());
+                                            }
+                                        }}
+                                        onUpload={async () => {
+                                            await uploadTheme(theme.data);
+                                            // remove local version once theme is uploaded
+                                            localStorage.removeItem(
+                                                getThemeKey(theme.id),
+                                            );
 
-                                    setLocalTrigger(Math.random());
-                                    setRemoteTrigger(Math.random());
-                                }}
-                                onDuplicate={() => {
-                                    const dataCopy = produce(
-                                        theme.data,
-                                        (draft) => {
-                                            draft.ctcMeta.name += " Copy";
-                                        },
-                                    );
-                                    createAndSaveTheme(dataCopy);
-                                    setLocalTrigger(Math.random());
-                                }}
-                            />
-                        );
-                    })}
-                    {allThemes.length == 0 && (
+                                            setLocalTrigger(Math.random());
+                                            setRemoteTrigger(Math.random());
+                                        }}
+                                        onDuplicate={() => {
+                                            const dataCopy = produce(
+                                                theme.data,
+                                                (draft) => {
+                                                    draft.ctcMeta.name +=
+                                                        " Copy";
+                                                },
+                                            );
+                                            createAndSaveTheme(dataCopy);
+                                            setLocalTrigger(Math.random());
+                                        }}
+                                    />
+                                );
+                            })}
+                        </div>
+                    ) : (
                         <div className="flex flex-col items-center justify-center my-4 text-gray-500 text-lg">
                             <HiXMark className="text-2xl" />
                             <p>No themes created yet, create one!</p>
                         </div>
                     )}
                 </div>
-            </div>
+            ) : (
+                <div className="flex-1 overflow-hidden flex flex-col items-center justify-center">
+                    <img src="/dankCircle.webp" width="64" height="64" />
+                    <p> Loading ... </p>
+                </div>
+            )}
         </div>
     );
 }
