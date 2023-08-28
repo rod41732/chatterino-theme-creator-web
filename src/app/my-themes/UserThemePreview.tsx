@@ -17,6 +17,8 @@ import { copyToClipboard, downloadFile } from "@/lib/export-theme";
 import { css2qt } from "@/utils";
 import useNotification from "antd/es/notification/useNotification";
 import { ThemeEntry } from "@/lib/type";
+import { EditableText } from "@/app/components/EditableText";
+import { GrUserFemale } from "react-icons/gr";
 
 /** entry of theme, with small preview */
 export function UserThemePreview({
@@ -48,21 +50,13 @@ export function UserThemePreview({
         } as any;
     }, [theme]);
 
-    const [editMode, setEditMode] = useState(false);
     const [localName, setLocalName] = useState("");
     useEffect(() => {
         setLocalName(theme.data.ctcMeta.name);
-    }, [theme]);
-
-    const [newName, setNewName] = useState("");
-    useEffect(() => {
-        if (editMode) {
-            setNewName(localName);
-        }
-    }, [editMode]);
+    }, [theme.data]);
 
     const renameTheme = useCallback(
-        (newName: string) => {
+        async (newName: string) => {
             const updatedTheme = produce(theme.data, (draft) => {
                 draft.ctcMeta.name = newName;
             });
@@ -73,7 +67,7 @@ export function UserThemePreview({
             if (theme.id.startsWith("remote-")) {
                 const remoteThemeId = theme.id.substring("remote-".length);
 
-                fetch("/api/themes/update-by-id", {
+                await fetch("/api/themes/update-by-id", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -95,6 +89,7 @@ export function UserThemePreview({
                         alert("Error!");
                     });
             }
+            setLocalName(newName);
         },
         [theme],
     );
@@ -187,70 +182,46 @@ export function UserThemePreview({
                     </div>
                 </div>
 
-                {/*nav*/}
-                {editMode ? (
-                    <input
-                        className="my-1 border border-gray-400 rounded-md outline-none"
-                        value={newName}
-                        onChange={(e) => setNewName(e.target.value)}
-                        autoFocus
-                        onBlur={() => {
-                            setLocalName(newName);
-                            renameTheme(newName);
-                            setEditMode(false);
-                        }}
-                        onKeyDown={(e) => {
-                            if (e.key == "Escape") {
-                                setEditMode(false);
-                            }
-                            if (e.key == "Enter") {
-                                setLocalName(newName);
-                                renameTheme(newName);
-                                setEditMode(false);
-                            }
+                {/*title*/}
+                <div className="text-lg font-semibold group flex items-center">
+                    <EditableText
+                        value={localName}
+                        onChangeCommited={async (newName) => {
+                            await renameTheme(newName);
                         }}
                     />
-                ) : (
-                    <div
-                        // href={"/edit/" + theme.id}
-                        className="text-lg font-semibold group flex items-center"
-                        onClick={() => setEditMode(true)}
+                    <div className="flex-1"></div>
+                    <IconButton
+                        tooltip="Download theme"
+                        onClick={() => {
+                            downloadFile(
+                                JSON.stringify(css2qt(theme.data), null, 2),
+                                idWithoutPrefix +
+                                    "-" +
+                                    theme.data.ctcMeta.name +
+                                    ".json",
+                            );
+                        }}
                     >
-                        <p>{localName}</p>
-                        <MdEdit className="text-gray-400 hidden group-hover:block" />
-                        <div className="flex-1"></div>
-                        <IconButton
-                            tooltip="Download theme"
-                            onClick={() => {
-                                downloadFile(
-                                    JSON.stringify(css2qt(theme.data), null, 2),
-                                    idWithoutPrefix +
-                                        "-" +
-                                        theme.data.ctcMeta.name +
-                                        ".json",
-                                );
-                            }}
-                        >
-                            <MdDownload />
-                        </IconButton>
-                        <IconButton
-                            tooltip="Copy theme to clipboard"
-                            onClick={async () => {
-                                const themeJSON = JSON.stringify(
-                                    theme.data,
-                                    null,
-                                    2,
-                                );
-                                await copyToClipboard(themeJSON);
-                                notification.success({
-                                    message: "Copied theme to clipboard",
-                                });
-                            }}
-                        >
-                            <MdContentCopy />
-                        </IconButton>
-                    </div>
-                )}
+                        <MdDownload />
+                    </IconButton>
+                    <IconButton
+                        tooltip="Copy theme to clipboard"
+                        onClick={async () => {
+                            const themeJSON = JSON.stringify(
+                                theme.data,
+                                null,
+                                2,
+                            );
+                            await copyToClipboard(themeJSON);
+                            notification.success({
+                                message: "Copied theme to clipboard",
+                            });
+                        }}
+                    >
+                        <MdContentCopy />
+                    </IconButton>
+                </div>
                 <div className="flex items-center gap-x-2 flex-wrap">
                     {
                         // dark theme has light icons and vice-versa, hence the "inverted" logic
