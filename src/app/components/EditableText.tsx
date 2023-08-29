@@ -1,4 +1,3 @@
-import { MdEdit } from "react-icons/md";
 import { useEffect, useState } from "react";
 
 export function EditableText({
@@ -20,7 +19,7 @@ export function EditableText({
 
     return editMode ? (
         <input
-            className="my-1 border border-gray-400 rounded-md outline-none w-full"
+            className="my-1 border border-gray-400 rounded-md outline-none"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
             autoFocus
@@ -41,12 +40,13 @@ export function EditableText({
     ) : (
         <div
             // href={"/edit/" + theme.id}
-            className="text-lg font-semibold group/edit flex items-center cursor-pointer w-full"
+            className="text-lg font-semibold flex items-center cursor-pointer w-full flex-shrink"
             onClick={() => setEditMode(true)}
             role="button"
         >
-            <p>{value}</p>
-            <MdEdit className="text-gray-400 hidden group-hover/edit:block" />
+            <p className="hover:border hover:border-gray-400 hover:rounded-md">
+                {value}
+            </p>
         </div>
     );
 }

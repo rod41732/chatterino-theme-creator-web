@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
-import { HiXMark } from "react-icons/hi2";
 import { ApiResponse, ThemeEntry } from "@/lib/type";
 import { Theme } from "@/lib/db/theme";
 import { UserThemePreview } from "@/app/my-themes/UserThemePreview";
 import { produce } from "immer";
 import { createAndSaveTheme, getThemeKey } from "@/lib/create-theme";
 import { uploadTheme } from "@/lib/api/upload-theme";
+import { Button } from "antd";
+import { useRouter } from "next/navigation";
 
 function localStorageKeys(): string[] {
     return Array(localStorage.length)
@@ -43,6 +44,8 @@ function uniqueBy<T>(items: T[], keyFunc: (v: T) => string): T[] {
 }
 
 export function UserThemeList() {
+    const router = useRouter();
+
     const [localThemes, setLocalThemes] = useState<ThemeEntry[] | null>(null);
     const [remoteThemes, setRemoteThemes] = useState<ThemeEntry[] | null>(null);
 
@@ -56,11 +59,12 @@ export function UserThemeList() {
 
     useEffect(() => {
         fetch("/api/themes/mine", {
-            // credentials: "include",
+            credentials: "include",
         }).then(async (res) => {
             const data = await res.json();
             if (!res.ok) {
                 console.error(`Error getting owned themes`, res.status, data);
+                setRemoteThemes([]);
                 return;
             }
             const themes = (data as ApiResponse<Theme[]>).data.map(
@@ -85,9 +89,6 @@ export function UserThemeList() {
 
     return (
         <div className="h-full overflow-hidden flex flex-col px-4 py-2">
-            <div className="text-lg font-semibold flex-shrink-0">
-                Your themes
-            </div>
             <p>
                 This list your created themes, you can edit, duplicate or delete
                 them.
@@ -145,9 +146,16 @@ export function UserThemeList() {
                             })}
                         </div>
                     ) : (
-                        <div className="flex flex-col items-center justify-center my-4 text-gray-500 text-lg">
-                            <HiXMark className="text-2xl" />
-                            <p>No themes created yet, create one!</p>
+                        <div className="flex flex-col h-full items-center justify-center text-gray-500 text-lg">
+                            <p className="mb-4">No themes created yet. </p>
+                            <Button
+                                onClick={async () => {
+                                    await router.push("/create");
+                                }}
+                            >
+                                {" "}
+                                Create Theme{" "}
+                            </Button>
                         </div>
                     )}
                 </div>

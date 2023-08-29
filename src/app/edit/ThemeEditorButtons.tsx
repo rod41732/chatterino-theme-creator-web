@@ -1,40 +1,20 @@
 import { useEditorState } from "@/app/edit/EditorStateContextProvider";
 import { ThemeData, useConfigContext } from "@/app/edit/ThemeContextProvider";
-import { getThemeKey, saveTheme } from "@/lib/create-theme";
-import { css2qt } from "@/utils";
 import { Checkbox, Dropdown, MenuProps, Modal } from "antd";
 import { produce } from "immer";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import {
-    MdAddCircleOutline,
-    MdCheck,
-    MdCloudUpload,
-    MdDownload,
-    MdKeyboard,
-    MdMoreVert,
-    MdSave,
-    MdVisibility,
-} from "react-icons/md";
+import { MdKeyboard, MdMoreVert, MdVisibility } from "react-icons/md";
 import { UserBadge } from "@/app/components/UserBadge";
-import { useGlobalState } from "@/app/GlobalContext";
 import { IconButton } from "@/app/components/IconButton";
-import { uploadTheme } from "@/lib/api/upload-theme";
-import { downloadFile } from "@/lib/export-theme";
-
-const confirmBeforeLeaveListener: (e: BeforeUnloadEvent) => void = (e) => {
-    e.preventDefault();
-    e.returnValue = "";
-};
 
 /** buttons that control theme new/edit/export */
-export function ThemeEditorButton({ themeId }: { themeId: string }) {
+export function ThemeEditorButton() {
     const pathName = usePathname();
     const router = useRouter();
     const { state, setState } = useEditorState();
 
     const { data } = useConfigContext();
-    const [saved, setSaved] = useState(false);
 
     const setWarnUnsavedChanges = useCallback(
         (newValue: boolean) => {
@@ -57,32 +37,7 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
         }
     }, [data, setState]);
 
-    // not sure if this is the best place to put
-    useEffect(() => {
-        if (state.hasChange && state.warnUnsavedChanges) {
-            window.addEventListener(
-                "beforeunload",
-                confirmBeforeLeaveListener,
-                {
-                    capture: true,
-                },
-            );
-        } else {
-            window.removeEventListener(
-                "beforeunload",
-                confirmBeforeLeaveListener,
-                {
-                    capture: true,
-                },
-            );
-        }
-    }, [state]);
-
     const [shortcutOpen, setShortcutOpen] = useState(false);
-
-    const {
-        state: { auth },
-    } = useGlobalState();
 
     return (
         <>
@@ -122,25 +77,20 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
                 </div>
             </Modal>
             <div className="flex-grow"></div>
+
+            <IconButton
+                onClick={() => {
+                    router.push(pathName + "?preview");
+                }}
+                tooltip="Preview"
+            >
+                <MdVisibility />
+            </IconButton>
             <IconButton
                 onClick={() => setShortcutOpen(true)}
                 tooltip="Keyboard Shortcuts"
             >
                 <MdKeyboard />
-            </IconButton>
-            <IconButton
-                onClick={() => {
-                    const ok =
-                        state.warnUnsavedChanges && state.hasChange
-                            ? window.confirm("Leave with saving?")
-                            : true;
-                    if (ok) {
-                        router.push("/create");
-                    }
-                }}
-                tooltip="Create new theme"
-            >
-                <MdAddCircleOutline />
             </IconButton>
             <Dropdown
                 menu={{
@@ -173,90 +123,7 @@ export function ThemeEditorButton({ themeId }: { themeId: string }) {
                     <MdMoreVert />
                 </div>
             </Dropdown>
-            <IconButton
-                tooltip="Save changes"
-                onClick={() => {
-                    setSaved(true);
-                    setState((cur) => ({ ...cur, hasChange: false }));
-                    setTimeout(() => {
-                        setSaved(false);
-                    }, 500);
-                    saveTheme(themeId, data);
-                    if (themeId.startsWith("remote-")) {
-                        const id = +themeId.slice("remote-".length);
-                        fetch("/api/themes/update-by-id", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({ id: id, data: data }),
-                            credentials: "include",
-                        })
-                            .then(() => {
-                                console.log("saved ");
-                            })
-                            .catch((err) => {
-                                console.error(`Error update theme ${id}`, err);
-                                alert("Error!");
-                            });
-                    }
-                }}
-                disabled={!state.hasChange}
-            >
-                {saved ? <MdCheck className="text-green-500" /> : <MdSave />}
-            </IconButton>
-            {themeId.startsWith("local-") && (
-                <IconButton
-                    onClick={() => {
-                        uploadTheme(data).then((createdTheme) => {
-                            localStorage.removeItem(getThemeKey(themeId));
-                            saveTheme(
-                                "remote-" + createdTheme.id,
-                                createdTheme.data,
-                            );
-                            router.push(`/edit/remote-${createdTheme.id}`);
-                        });
-                    }}
-                    tooltip={
-                        auth?.authorized
-                            ? "Upload to Theme Library."
-                            : "Login to Upload to Theme Library."
-                    }
-                    disabled={!auth?.authorized}
-                >
-                    <MdCloudUpload />
-                </IconButton>
-            )}
-            <ExportButton themeId={themeId} />
-
-            <IconButton
-                onClick={() => {
-                    router.push(pathName + "?preview");
-                }}
-                tooltip="Preview"
-            >
-                <MdVisibility />
-            </IconButton>
             <UserBadge />
         </>
-    );
-}
-
-function ExportButton({ themeId }: { themeId: string }) {
-    const { data } = useConfigContext();
-    const idWithoutPrefix = themeId.split("-")[1];
-
-    return (
-        <IconButton
-            tooltip="Download Theme"
-            onClick={() => {
-                downloadFile(
-                    JSON.stringify(css2qt(data), null, 2),
-                    idWithoutPrefix + "-" + data.ctcMeta.name + ".json",
-                );
-            }}
-        >
-            <MdDownload />
-        </IconButton>
     );
 }

@@ -37,6 +37,16 @@ export function UserBadge() {
                 menu={{
                     items: [
                         {
+                            key: "forsen",
+                            label: "My Themes",
+                            onClick: async () => {
+                                await router.push("/my-themes");
+                            },
+                        },
+                        {
+                            type: "divider",
+                        },
+                        {
                             key: "hint",
                             label: (
                                 <p>Login to Share your theme with others.</p>
