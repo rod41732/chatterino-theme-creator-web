@@ -29,6 +29,7 @@ import { downloadFile } from "@/lib/export-theme";
 import { css2qt } from "@/utils";
 import { uploadTheme } from "@/lib/api/upload-theme";
 import { useGlobalState } from "@/app/GlobalContext";
+import { getLocalStorage } from "@/lib/local-storage";
 
 interface RouteParams {
     params: {
@@ -118,7 +119,7 @@ function ThemeName({ themeId }: { themeId: string }) {
             const updatedTheme = produce(data, (draft) => {
                 draft.ctcMeta.name = newName;
             });
-            localStorage.setItem(
+            getLocalStorage().setItem(
                 getThemeKey(themeId),
                 JSON.stringify(updatedTheme),
             );
@@ -230,7 +231,7 @@ function LeftButtons({ themeId }: { themeId: string }) {
                 <IconButton
                     onClick={() => {
                         uploadTheme(data).then((createdTheme) => {
-                            localStorage.removeItem(getThemeKey(themeId));
+                            getLocalStorage().removeItem(getThemeKey(themeId));
                             saveTheme(
                                 "remote-" + createdTheme.id,
                                 createdTheme.data,

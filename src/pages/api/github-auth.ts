@@ -1,6 +1,6 @@
 import { NextApiHandler } from "next";
 import { withIronSession } from "@/iron-session.options";
-import { createGithubUser } from "@/lib/db/github-user";
+import { createGithubUser, GithubUser } from "@/lib/db/github-user";
 import { createOrUpdateUser } from "@/lib/db/user";
 
 interface CodeResponse {
@@ -40,14 +40,7 @@ async function exchangeCode(code: string): Promise<CodeResponse> {
         });
 }
 
-export interface GitHubUser {
-    // all don't care fields stripped
-    login: string;
-    id: number; // rest ID
-    avatar_url: string;
-    name: string; // display name
-}
-async function getUser(oauthToken: string): Promise<GitHubUser> {
+async function getUser(oauthToken: string): Promise<GithubUser> {
     return fetch("https://api.github.com/user", {
         method: "GET",
         headers: {
@@ -65,7 +58,7 @@ async function getUser(oauthToken: string): Promise<GitHubUser> {
             return res.json();
         })
         .then((res) => {
-            return res as GitHubUser;
+            return res as GithubUser;
         });
 }
 
@@ -90,7 +83,7 @@ const handler: NextApiHandler = async (req, res) => {
         });
     }
 
-    let githubUser: GitHubUser;
+    let githubUser: GithubUser;
     try {
         githubUser = await getUser(token.access_token);
     } catch (err: unknown) {

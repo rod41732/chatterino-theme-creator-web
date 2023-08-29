@@ -3,25 +3,15 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { GlobalStateProvider, useGlobalState } from "@/app/GlobalContext";
 import { useEffect } from "react";
-import { ApiResponse } from "@/lib/type";
-import { User } from "@/lib/db/user";
-import { getMe } from "@/lib/api/get-me";
 
 const inter = Inter({ subsets: ["latin"] });
 
 function UserLoader() {
-    const { state, setState } = useGlobalState();
+    const { state, dispatch } = useGlobalState();
     useEffect(() => {
-        (async () => {
-            if (state.auth == null) {
-                try {
-                    const me = await getMe();
-                    setState({ auth: { authorized: true, user: me } });
-                } catch (err) {
-                    setState({ auth: { authorized: false } });
-                }
-            }
-        })();
+        if (state.auth == null) {
+            dispatch({ type: "refresh" });
+        }
     }, [state]);
     return <></>;
 }

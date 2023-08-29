@@ -2,21 +2,44 @@ import { useRouter } from "next/navigation";
 import { useGlobalState } from "@/app/GlobalContext";
 import { Dropdown } from "antd";
 import { MdPerson } from "react-icons/md";
+import { ApiResponse } from "@/lib/type";
+import { getLocalStorage } from "@/lib/local-storage";
 
 export function UserBadge() {
     const router = useRouter();
     const {
         state: { auth },
+        dispatch,
     } = useGlobalState();
     return auth?.authorized ? (
         <Dropdown
             menu={{
                 items: [
                     {
-                        key: "forsen",
+                        key: "my-themes",
                         label: "My Themes",
                         onClick: async () => {
                             await router.push("/my-themes");
+                        },
+                    },
+                    {
+                        key: "logout",
+                        label: "Logout",
+                        onClick: async () => {
+                            await fetch("/api/logout", {
+                                method: "POST",
+                                credentials: "include",
+                            })
+                                .then((res) => res.json())
+                                .then(async (res: ApiResponse<null>) => {
+                                    if (res.status != 200) {
+                                        console.error("Error logging out", res);
+                                        alert("Error logging out");
+                                    } else {
+                                        console.log("Logged out");
+                                    }
+                                    await dispatch({ type: "refresh" });
+                                });
                         },
                     },
                 ],
@@ -64,7 +87,7 @@ export function UserBadge() {
                                 const origin = new URL(fullUrl).origin;
                                 const path = fullUrl.slice(origin.length);
 
-                                localStorage.setItem("redirect-url", path);
+                                getLocalStorage().setItem("redirect-url", path);
                                 await router.push("/github-login/init");
                             },
                         },

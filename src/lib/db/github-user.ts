@@ -9,7 +9,7 @@ export const GithubUserSchema = z.object({
 
 export const InsertGithubUserSchema = GithubUserSchema.extend({});
 
-type GithubUser = z.infer<typeof GithubUserSchema>;
+export type GithubUser = z.infer<typeof GithubUserSchema>;
 type InsertGithubUser = z.infer<typeof InsertGithubUserSchema>;
 
 export async function createGithubUser(

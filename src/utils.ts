@@ -1,5 +1,6 @@
 import { produce } from "immer";
 import { ThemeData } from "@/app/edit/ThemeContextProvider";
+import { JSONData } from "@/lib/flatten-json";
 
 function qt2cssString(argb: string): string {
     return argb.replace(/#([0-9a-f]{2})([0-9a-f]{6})/, "#$2$1");
@@ -9,16 +10,16 @@ function css2qtString(argb: string): string {
     return argb.replace(/#([0-9a-f]{6})([0-9a-f]{2})/, "#$2$1");
 }
 
-type ThemeLikeObject = {
-    [key: string]: ThemeLikeObject | string;
-};
+// type ThemeLikeObject = {
+//     [key: string]: ThemeLikeObject | string;
+// };
 
 /** recursively apply function to string value */
-function walk(t: ThemeLikeObject, apply: (v: string) => string) {
+function walk(t: JSONData, apply: (v: string) => string) {
     for (const [k, v] of Object.entries(t)) {
         if (typeof v == "string") {
             t[k] = apply(v);
-        } else {
+        } else if (typeof v == "object" && !Array.isArray(v)) {
             walk(v, apply);
         }
     }

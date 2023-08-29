@@ -13,6 +13,7 @@ import {
 import { useAsyncEffect } from "@/lib/hooks/use-async-effect";
 import { Theme } from "@/lib/db/theme";
 import { ApiResponse } from "@/lib/type";
+import { getLocalStorage } from "@/lib/local-storage";
 
 // used for generating theme
 export interface ThemeData {
@@ -40,7 +41,7 @@ export const ThemeContextProvider = ({
     useAsyncEffect(async () => {
         setError("");
         // common caching logic
-        const storedData = localStorage.getItem(getThemeKey(themeId));
+        const storedData = getLocalStorage().getItem(getThemeKey(themeId));
         if (!storedData) {
             if (themeId.startsWith("local-")) {
                 setError("theme is local and no data in storage");

@@ -7,11 +7,12 @@ import { createAndSaveTheme, getThemeKey } from "@/lib/create-theme";
 import { uploadTheme } from "@/lib/api/upload-theme";
 import { Button } from "antd";
 import { useRouter } from "next/navigation";
+import { getLocalStorage } from "@/lib/local-storage";
 
 function localStorageKeys(): string[] {
-    return Array(localStorage.length)
+    return Array(getLocalStorage().length)
         .fill(0)
-        .map((_, idx) => localStorage.key(idx)!);
+        .map((_, idx) => getLocalStorage().key(idx)!);
 }
 
 function listThemes() {
@@ -21,7 +22,7 @@ function listThemes() {
             try {
                 return {
                     id: it.slice("theme-".length),
-                    data: JSON.parse(localStorage.getItem(it)!),
+                    data: JSON.parse(getLocalStorage().getItem(it)!),
                 };
             } catch (err) {
                 console.warn("Error parsing theme from key", it, err);
@@ -114,7 +115,7 @@ export function UserThemeList() {
                                                     "Delete this theme?",
                                                 );
                                             if (confirm) {
-                                                localStorage.removeItem(
+                                                getLocalStorage().removeItem(
                                                     "theme-" + theme.id,
                                                 );
                                                 setLocalThemes(listThemes());
@@ -123,7 +124,7 @@ export function UserThemeList() {
                                         onUpload={async () => {
                                             await uploadTheme(theme.data);
                                             // remove local version once theme is uploaded
-                                            localStorage.removeItem(
+                                            getLocalStorage().removeItem(
                                                 getThemeKey(theme.id),
                                             );
 

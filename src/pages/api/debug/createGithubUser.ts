@@ -1,7 +1,10 @@
 import { NextApiHandler } from "next";
-import { createGithubUser, InsertGithubUserSchema } from "@/lib/db/github-user";
+import {
+    createGithubUser,
+    GithubUser,
+    InsertGithubUserSchema,
+} from "@/lib/db/github-user";
 import { ApiResponse } from "@/lib/type";
-import { GitHubUser } from "@/pages/api/github-auth";
 
 const handler: NextApiHandler = async (req, res) => {
     if (process.env.NODE_ENV != "development") {
@@ -21,7 +24,7 @@ const handler: NextApiHandler = async (req, res) => {
         status: 200,
         message: "test complete KKona",
         data: user,
-    } satisfies ApiResponse<GitHubUser>);
+    } satisfies ApiResponse<GithubUser>);
 };
 export default handler;
 

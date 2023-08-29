@@ -5,7 +5,7 @@ import { ApiResponse } from "@/lib/type";
 import { User } from "@/lib/db/user";
 import { useAsyncEffect } from "@/lib/hooks/use-async-effect";
 import { useGlobalState } from "@/app/GlobalContext";
-import { getMe } from "@/lib/api/get-me";
+import { getLocalStorage } from "@/lib/local-storage";
 
 export default function Page() {
     const router = useRouter();
@@ -44,29 +44,19 @@ export default function Page() {
             });
     }, [params]);
 
-    const { setState } = useGlobalState();
+    const { dispatch } = useGlobalState();
 
     useAsyncEffect(async () => {
         if (!user) return;
+        await dispatch({ type: "refresh" });
 
-        if (user) {
-            let redirectTarget = "/create";
-            const storedPath = localStorage.getItem("redirect-url");
-            if (storedPath) {
-                localStorage.removeItem("redirect-url");
-                redirectTarget = storedPath;
-            }
-            // todo: copied code from app/layout.tsx
-
-            try {
-                const me = await getMe();
-                setState({ auth: { authorized: true, user: me } });
-            } catch (err) {
-                setState({ auth: { authorized: false } });
-            }
-
-            await router.push(redirectTarget);
+        let redirectTarget = "/create";
+        const storedPath = getLocalStorage().getItem("redirect-url");
+        if (storedPath) {
+            getLocalStorage().removeItem("redirect-url");
+            redirectTarget = storedPath;
         }
+        await router.push(redirectTarget);
     }, [user]);
 
     return (

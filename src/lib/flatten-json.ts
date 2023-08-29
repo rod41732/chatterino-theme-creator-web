@@ -1,4 +1,4 @@
-interface JSONData {
+export interface JSONData {
     // NOT 100 accurate, I'm lazy
     [key: string]: any;
 }

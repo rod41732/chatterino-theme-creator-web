@@ -1,4 +1,5 @@
 import { ThemeData } from "@/app/edit/ThemeContextProvider";
+import { getLocalStorage } from "@/lib/local-storage";
 export function getThemeKey(themeId: string): string {
     return "theme-" + themeId;
 }
@@ -10,5 +11,5 @@ export function createAndSaveTheme(theme: ThemeData): string {
 }
 
 export function saveTheme(themeId: string, theme: ThemeData) {
-    localStorage.setItem(getThemeKey(themeId), JSON.stringify(theme));
+    getLocalStorage().setItem(getThemeKey(themeId), JSON.stringify(theme));
 }

@@ -1,4 +1,6 @@
+"use client";
 import { useEffect, useState } from "react";
+import { getLocalStorage } from "@/lib/local-storage";
 
 export function usePersistedState<T>(
     key: string,
@@ -7,10 +9,10 @@ export function usePersistedState<T>(
     deserialize: (s: string | null, def: T) => T = defaultDeserialize,
 ) {
     const [state, setState] = useState<T>(() => {
-        return deserialize(localStorage.getItem(key), defaultValue);
+        return deserialize(getLocalStorage().getItem(key), defaultValue);
     });
     useEffect(() => {
-        localStorage.setItem(key, serialize(state));
+        getLocalStorage().setItem(key, serialize(state));
     }, [state, key, serialize]);
 
     return [state, setState] as const;

@@ -19,6 +19,7 @@ import useNotification from "antd/es/notification/useNotification";
 import { ThemeEntry } from "@/lib/type";
 import { EditableText } from "@/app/components/EditableText";
 import { GrUserFemale } from "react-icons/gr";
+import { getLocalStorage } from "@/lib/local-storage";
 
 /** entry of theme, with small preview */
 export function UserThemePreview({
@@ -60,7 +61,7 @@ export function UserThemePreview({
             const updatedTheme = produce(theme.data, (draft) => {
                 draft.ctcMeta.name = newName;
             });
-            localStorage.setItem(
+            getLocalStorage().setItem(
                 getThemeKey(theme.id),
                 JSON.stringify(updatedTheme),
             );
