@@ -6,7 +6,8 @@ declare namespace NodeJS {
         GITHUB_CLIENT_ID: string;
         GITHUB_CLIENT_SECRET: string;
         POSTGRES_URL: string;
-        IRON_SESSION_PASSWORD;
+        IRON_SESSION_PASSWORD: string;
+        SSL_REQUIRED: string;
     }
 }
 
