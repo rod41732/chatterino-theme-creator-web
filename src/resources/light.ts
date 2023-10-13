@@ -1,4 +1,4 @@
-import { ThemeData } from "@/app/edit/ThemeContextProvider";
+import { ThemeData } from "@/app/edit/color-scheme.types";
 
 export const CHATTERINO_LIGHT_THEME: ThemeData = {
     metadata: {
@@ -114,6 +114,7 @@ export const CHATTERINO_LIGHT_THEME: ThemeData = {
         checkeredRow: true,
         createdAt: "1970-01-01T00:00:00Z",
         messageSeparator: false,
+        simpleTabSettings: false,
         modifiedAt: "1970-01-01T00:00:00Z",
         name: "Light",
     },

@@ -4,6 +4,9 @@ import styles from "@/app/fake-uis/chatlist.module.css";
 import { Message } from "@/app/fake-uis/message.component";
 import clsx from "clsx";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { ChatterinoSplitHeader } from "@/app/fake-uis/ChatterinoSplitHeader.component";
+import { usePreviewOptionContext } from "@/lib/api/PreviewOptionContext";
+import { useInsEditContextNullable } from "@/app/components/InsEdit";
 
 export function ChatterinoSplit({
     name,
@@ -35,6 +38,8 @@ export function ChatterinoSplit({
         return data!.metadata.iconTheme;
     }, [data]);
     const chatContainerRef = useRef<HTMLDivElement>();
+    const { editable } = usePreviewOptionContext();
+    const setState = useInsEditContextNullable()?.setState;
 
     useEffect(() => {
         let interval = setInterval(() => {
@@ -52,6 +57,41 @@ export function ChatterinoSplit({
         }
     }, [chatMessages]);
 
+    const splitDropPreviewProps = useMemo(() => {
+        return {
+            role: editable ? "button" : undefined,
+            onClick: () => {
+                if (!editable) return;
+                if (!setState)
+                    throw new Error("Missing InsEditContextProvider");
+                setState({
+                    widgets: [
+                        {
+                            type: "title",
+                            title: "Split Drop Preview",
+                            subtitle:
+                                "Preview that shows when you are dragging split around. These are show as rectangular area over chat split.",
+                        },
+                        {
+                            type: "colorPicker",
+                            path: "splits.dropPreview",
+                            name: "Background color",
+                            alpha: true,
+                            description: "",
+                        },
+                        {
+                            type: "colorPicker",
+                            path: "splits.dropPreviewBorder",
+                            name: "Border color",
+                            description:
+                                "Draw as thin border in drop target area.",
+                        },
+                    ],
+                });
+            },
+        };
+    }, [setState, editable]);
+
     return (
         // make it so that split take space evenly
         <div
@@ -60,56 +100,7 @@ export function ChatterinoSplit({
             } flex-1 flex flex-col relative overflow-hidden`}
         >
             {/*header*/}
-            {!hideTab && (
-                <div
-                    className={clsx(
-                        active ? styles.splitHeaderFocused : styles.splitHeader,
-                        styles.splitHeaderBase,
-                    )}
-                >
-                    <div className="flex-grow text-center py-1">{name}</div>
-                    <div className={styles.splitHeaderChatRoomStatus}>
-                        {" "}
-                        follow (10,080m){" "}
-                    </div>
-                    <button className="self-stretch flex items-center -m-px mx-2 opacity-50">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                            alt="viewers list"
-                            src={
-                                iconTheme == "dark"
-                                    ? "/chatterino-icons/viewersDark.png"
-                                    : "/chatterino-icons/viewersLight.png"
-                            }
-                            className="h-5 w-5 object-contain"
-                        />
-                    </button>
-                    <button className="self-stretch flex items-center -m-px mx-2 opacity-50">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                            alt="split menu"
-                            src={
-                                iconTheme == "dark"
-                                    ? "/chatterino-icons/menuDark.png"
-                                    : "/chatterino-icons/menuLight.png"
-                            }
-                            className="h-5 w-5 object-contain"
-                        />
-                    </button>
-                    <button className="self-stretch flex items-center -m-px opacity-50">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                            alt="add split"
-                            src={
-                                iconTheme == "dark"
-                                    ? "/chatterino-icons/addSplitDark.png"
-                                    : "/chatterino-icons/addSplit.png"
-                            }
-                            className="h-8 w-auto"
-                        />
-                    </button>
-                </div>
-            )}
+            {!hideTab && <ChatterinoSplitHeader active={active} name={name} />}
 
             {/*list */}
             <div className="relative flex-grow flex-shrink overflow-hidden">
@@ -242,6 +233,7 @@ export function ChatterinoSplit({
                         styles.dropPreviewRect,
                         "absolute top-0 bottom-0 left-2/3 right-0",
                     )}
+                    {...splitDropPreviewProps}
                 ></div>
             )}
             {/*// split hover*/}
@@ -253,6 +245,7 @@ export function ChatterinoSplit({
                         styles.droppable,
                         // 'bg-red-500/10'
                     )}
+                    {...splitDropPreviewProps}
                 ></div>
             )}
             {/*bottom*/}
@@ -263,6 +256,7 @@ export function ChatterinoSplit({
                         styles.droppable,
                         // 'bg-red-500/10'
                     )}
+                    {...splitDropPreviewProps}
                 ></div>
             )}
             {/*left */}
@@ -273,6 +267,7 @@ export function ChatterinoSplit({
                         styles.droppable,
                         // 'bg-red-500/10'
                     )}
+                    {...splitDropPreviewProps}
                 ></div>
             )}
             {/*right */}
@@ -283,6 +278,7 @@ export function ChatterinoSplit({
                         styles.droppable,
                         // 'bg-red-500/10'
                     )}
+                    {...splitDropPreviewProps}
                 ></div>
             )}
         </div>

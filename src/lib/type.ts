@@ -1,4 +1,4 @@
-import { ThemeData } from "@/app/edit/ThemeContextProvider";
+import { ThemeData } from "@/app/edit/color-scheme.types";
 
 export interface ApiResponse<T> {
     status: number;

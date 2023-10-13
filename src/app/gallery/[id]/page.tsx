@@ -1,20 +1,25 @@
 "use client";
-import { TabContextProvider } from "@/app/edit/TabContextProvider";
 import { useConfigContext } from "@/app/edit/ThemeContextProvider";
 import { EditorFooter } from "@/app/create/EdtiorFooter";
 import { EditorStateContextProvider } from "@/app/edit/EditorStateContextProvider";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { UserBadge } from "@/app/components/UserBadge";
-import { ChatterinoAllPreviews } from "@/app/edit/ColorApp.constants";
 import { IconButton } from "@/app/components/IconButton";
 import { BiSolidDuplicate } from "react-icons/bi";
-import { MdContentCopy, MdDownload } from "react-icons/md";
+import { MdContentCopy, MdDownload, MdEdit } from "react-icons/md";
 import { createAndSaveTheme } from "@/lib/create-theme";
 import { produce } from "immer";
 import { copyToClipboard, downloadFile } from "@/lib/export-theme";
 import { css2qt } from "@/utils";
 import useNotification from "antd/es/notification/useNotification";
 import { ColorProvider } from "@/lib/ColorProvider";
+import clsx from "clsx";
+import {
+    GALLERY_TABS,
+    GalleryPreviewTab,
+} from "@/app/gallery/gallery.constants";
+import { useState } from "react";
+import { Topbar } from "@/app/components/Topbar";
 
 interface RouteParams {
     params: {
@@ -23,32 +28,56 @@ interface RouteParams {
 }
 export default function ViewThemePage({ params: { id } }: RouteParams) {
     const { data } = useConfigContext();
+    const [previewTab, setPreviewTab] = useState(GalleryPreviewTab.ALL);
 
     return id ? (
         <EditorStateContextProvider>
-            <TabContextProvider>
-                <div className="h-full flex flex-col">
-                    <div className="px-4 border-b border-b-gray-200 flex-shrink-0 flex items-center space-x-2">
-                        <div className="text-2xl font-bold py-2">
-                            Chatterino Theme Creator
+            <div className="h-full flex flex-col">
+                <Topbar
+                    title="View Theme"
+                    leftComponents={
+                        <div className="px-2"> {data.ctcMeta.name}</div>
+                    }
+                    rightComponents={<UserBadge />}
+                />
+                <div className="flex-1 overflow-hidden">
+                    <ColorProvider
+                        className="h-full w-full flex flex-col overflow-hidden"
+                        theme={data}
+                    >
+                        {/*tab bar*/}
+                        <div className="flex items-center overflow-x-auto">
+                            {GALLERY_TABS.map((it) => (
+                                <button
+                                    className={clsx(
+                                        "mx-3 py-3   min-w-[80px]",
+                                        "hover:text-sky-500",
+                                        it.key == previewTab && "text-sky-500",
+                                    )}
+                                    key={it.key}
+                                    onClick={() =>
+                                        setPreviewTab(
+                                            it.key as GalleryPreviewTab,
+                                        )
+                                    }
+                                >
+                                    {it.label}
+                                </button>
+                            ))}
                         </div>
-                        <div className="flex-1"></div>
-                        <UserBadge />
-                    </div>
-                    <div className="flex-1 overflow-hidden">
-                        <ColorProvider
-                            className="h-full w-full flex flex-col overflow-hidden"
-                            theme={data}
-                        >
-                            <ChatterinoAllPreviews />
-                            <div className="flex-shrink-0 p-2">
-                                <ThemeDetails themeId={id} />
-                            </div>
-                        </ColorProvider>
-                    </div>
-                    <EditorFooter />
+                        <div className="overflow-hidden relative flex-1">
+                            {
+                                GALLERY_TABS.find((it) => it.key == previewTab)
+                                    ?.children
+                            }
+                        </div>
+                        <div className="flex-shrink-0 p-2">
+                            <ThemeDetails themeId={id} />
+                        </div>
+                    </ColorProvider>
                 </div>
-            </TabContextProvider>
+                <EditorFooter />
+            </div>
         </EditorStateContextProvider>
     ) : (
         <div> no theme id</div>
@@ -56,7 +85,7 @@ export default function ViewThemePage({ params: { id } }: RouteParams) {
 }
 
 function ThemeDetails({ themeId }: { themeId: string }) {
-    const { data } = useConfigContext();
+    const { data, extras } = useConfigContext();
     const router = useRouter();
     const idWithoutPrefix = themeId.split("-")[1];
 
@@ -70,7 +99,10 @@ function ThemeDetails({ themeId }: { themeId: string }) {
                     <span className="text-2xl font-bold">
                         {data.ctcMeta.name}
                     </span>
-                    <span className="text-gray-500"> By @forsen</span>
+                    <span className="text-gray-500">
+                        {" "}
+                        By @{extras?.owner?.handle ?? "unknown"}
+                    </span>
                 </div>
                 <div className="flex-1"></div>
                 <div className={"flex items-center gap-x-2"}>
@@ -99,6 +131,14 @@ function ThemeDetails({ themeId }: { themeId: string }) {
                         }}
                     >
                         <MdContentCopy />
+                    </IconButton>
+                    <IconButton
+                        tooltip="Edit your own theme"
+                        onClick={async () => {
+                            await router.push(`/edit/${themeId}`);
+                        }}
+                    >
+                        <MdEdit />
                     </IconButton>
                     <IconButton
                         tooltip="Create your copy of theme"

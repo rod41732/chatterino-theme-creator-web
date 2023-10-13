@@ -1,4 +1,4 @@
-import { ThemeData } from "@/app/edit/ThemeContextProvider";
+import { ThemeData } from "@/app/edit/color-scheme.types";
 
 export const CHATTERINO_WHITE_THEME: ThemeData = {
     metadata: {
@@ -115,6 +115,7 @@ export const CHATTERINO_WHITE_THEME: ThemeData = {
         createdAt: "1970-01-01T00:00:00Z",
         messageSeparator: false,
         modifiedAt: "1970-01-01T00:00:00Z",
+        simpleTabSettings: false,
         name: "White",
     },
 };

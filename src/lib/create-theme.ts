@@ -1,5 +1,5 @@
-import { ThemeData } from "@/app/edit/ThemeContextProvider";
 import { getLocalStorage } from "@/lib/local-storage";
+import { ThemeData } from "@/app/edit/color-scheme.types";
 export function getThemeKey(themeId: string): string {
     return "theme-" + themeId;
 }

@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import clsx from "clsx";
 import styles from "@/app/fake-uis/chatlist.module.css";
 import { IconButton } from "@/app/components/IconButton";
@@ -9,9 +9,9 @@ import { css2qt } from "@/utils";
 import useNotification from "antd/es/notification/useNotification";
 import { ThemeEntryWithOwner } from "@/app/gallery/types";
 import { Modal } from "antd";
-import { ChatterinoAllPreviews } from "@/app/edit/ColorApp.constants";
 import { ReadonlyThemeContextProvider } from "@/app/edit/ThemeContextProvider";
 import { ColorProvider } from "@/lib/ColorProvider";
+import { ComponentsOverview } from "@/app/fake-uis/ComponentsOverview";
 
 /** entry of theme, with small preview */
 export function GalleryThemePreview({ theme }: { theme: ThemeEntryWithOwner }) {
@@ -28,6 +28,7 @@ export function GalleryThemePreview({ theme }: { theme: ThemeEntryWithOwner }) {
             {contextHolder}
             <Modal
                 open={showPreview}
+                title={<div className="text-2xl font-bold">Theme Preview</div>}
                 onCancel={() => setShowPreview(false)}
                 width="80%"
                 wrapClassName="p-4"
@@ -36,14 +37,14 @@ export function GalleryThemePreview({ theme }: { theme: ThemeEntryWithOwner }) {
                 <div
                     style={{
                         // antd built-in padding top of 107px
-                        height: "calc(100vh - 214px)",
+                        height: "calc(100vh - 314px)",
                     }}
                 >
                     {/*due to some depedency of preview component, context is required*/}
                     <ReadonlyThemeContextProvider theme={theme.data}>
                         {/*this actually provides styles*/}
-                        <ColorProvider theme={theme.data}>
-                            <ChatterinoAllPreviews />
+                        <ColorProvider theme={theme.data} className="h-full">
+                            <ComponentsOverview />
                         </ColorProvider>
                     </ReadonlyThemeContextProvider>
                 </div>
@@ -71,8 +72,8 @@ export function GalleryThemePreview({ theme }: { theme: ThemeEntryWithOwner }) {
                                         key={idx}
                                         className={clsx(
                                             idx % 2 == 0
-                                                ? styles.chatEven
-                                                : styles.chatOdd,
+                                                ? styles.chatBackgroundRegular
+                                                : styles.chatBackgroundAlternate,
                                             styles.normalText,
                                         )}
                                     >
@@ -87,9 +88,6 @@ export function GalleryThemePreview({ theme }: { theme: ThemeEntryWithOwner }) {
                                             </span>
                                             <span>This is message</span>
                                         </div>
-                                        {/*<div className="absolute r-0 t-0 w-4 h-4 bg-red-500">*/}
-                                        {/*    forsen*/}
-                                        {/*</div>*/}
                                     </div>
                                 ))}
                         </div>
@@ -98,11 +96,13 @@ export function GalleryThemePreview({ theme }: { theme: ThemeEntryWithOwner }) {
                         className={
                             "absolute inset-0 right-5 bg-gray-950/50 group-hover:flex hidden items-center justify-center"
                         }
+                        onClick={(e) => e.stopPropagation()}
                     >
                         <div className={"flex items-center gap-x-2"}>
                             <IconButton
                                 className="text-white"
-                                onClick={() => {
+                                onClick={(e) => {
+                                    e.stopPropagation();
                                     setShowPreview(true);
                                 }}
                             >

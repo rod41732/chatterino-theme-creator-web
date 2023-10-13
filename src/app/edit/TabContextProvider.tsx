@@ -20,8 +20,8 @@ export const useTabContext = () => {
 };
 
 export function TabContextProvider({ children }: PropsWithChildren<{}>) {
-    const [settingsTab, setSettingsTab] = useState(SettingsTab.OVERVIEW);
-    const [previewTab, setPreviewTab] = useState(PreviewTab.CHAT);
+    const [settingsTab, setSettingsTab] = useState(SettingsTab.INSEPCTOR);
+    const [previewTab, setPreviewTab] = useState(PreviewTab.EDITOR);
     return (
         <TabContext.Provider
             value={{

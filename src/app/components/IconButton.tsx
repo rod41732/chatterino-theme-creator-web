@@ -9,15 +9,17 @@ export function IconButton({
     tooltip,
     disabled = false,
     className,
+    outerClass,
 }: PropsWithChildren<{
     onClick?: MouseEventHandler<HTMLButtonElement>;
     tooltip?: string;
     disabled?: boolean;
     className?: string;
+    outerClass?: string;
 }>) {
     return tooltip ? (
         <Tooltip title={tooltip}>
-            <div>
+            <div className={outerClass}>
                 <button
                     className={clsx(
                         "border-gray-200 text-gray-800 bg hover:bg-gray-500/20 transition-colors p-2 rounded-full text-xl",
@@ -32,7 +34,7 @@ export function IconButton({
             </div>
         </Tooltip>
     ) : (
-        <div>
+        <div className={outerClass}>
             <button
                 className={clsx(
                     "border-gray-200 text-gray-800 bg hover:bg-gray-500/20 transition-colors p-2 rounded-full text-xl",

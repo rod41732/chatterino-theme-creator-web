@@ -10,7 +10,7 @@ import { JumpIcon } from "@/app/settings/JumpIcon.component";
 import { PreviewTab } from "@/app/edit/editor-tab.types";
 import { usePickerLogic } from "@/app/settings/picker.hook";
 
-enum PickerName {
+enum SplitPickerName {
     split_bg = "split_bg",
     header_focused_bg = "header_focused_bg",
     header_bg = "header_bg",
@@ -52,7 +52,7 @@ export function SplitSettings() {
                         data.colors.splits.background = newColor;
                     }}
                     getColor={(data) => data.colors.splits.background}
-                    {...registerHandler(PickerName.split_bg)}
+                    {...registerHandler(SplitPickerName.split_bg)}
                 />
             </div>
             <p className="text-gray-500 col-span-3 -mt-3 mb-1">
@@ -97,14 +97,14 @@ export function SplitSettings() {
                     data.colors.splits.header.focusedBackground = newColor;
                 }}
                 getColor={(data) => data.colors.splits.header.focusedBackground}
-                {...registerHandler(PickerName.header_focused_bg)}
+                {...registerHandler(SplitPickerName.header_focused_bg)}
             />
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
                     data.colors.splits.header.background = newColor;
                 }}
                 getColor={(data) => data.colors.splits.header.background}
-                {...registerHandler(PickerName.header_bg)}
+                {...registerHandler(SplitPickerName.header_bg)}
             />
             <div> Text </div>
             <ColorPickerWrapper
@@ -112,14 +112,14 @@ export function SplitSettings() {
                     data.colors.splits.header.focusedText = newColor;
                 }}
                 getColor={(data) => data.colors.splits.header.focusedText}
-                {...registerHandler(PickerName.header_focused_text)}
+                {...registerHandler(SplitPickerName.header_focused_text)}
             />
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
                     data.colors.splits.header.text = newColor;
                 }}
                 getColor={(data) => data.colors.splits.header.text}
-                {...registerHandler(PickerName.header_text)}
+                {...registerHandler(SplitPickerName.header_text)}
             />
             <p className="col-span-3">
                 Unfocused text color is also used for empty split text
@@ -130,14 +130,14 @@ export function SplitSettings() {
                     data.colors.splits.header.focusedBorder = newColor;
                 }}
                 getColor={(data) => data.colors.splits.header.focusedBorder}
-                {...registerHandler(PickerName.header_focused_border)}
+                {...registerHandler(SplitPickerName.header_focused_border)}
             />
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
                     data.colors.splits.header.border = newColor;
                 }}
                 getColor={(data) => data.colors.splits.header.border}
-                {...registerHandler(PickerName.header_border)}
+                {...registerHandler(SplitPickerName.header_border)}
             />
             <hr className="col-span-3 my-2" />
             <div>
@@ -161,7 +161,7 @@ export function SplitSettings() {
                     data.colors.splits.dropPreviewBorder = newColor;
                 }}
                 getColor={(data) => data.colors.splits.dropPreviewBorder}
-                {...registerHandler(PickerName.drop_preview_border)}
+                {...registerHandler(SplitPickerName.drop_preview_border)}
             />
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
@@ -169,7 +169,7 @@ export function SplitSettings() {
                 }}
                 getColor={(data) => data.colors.splits.dropPreview}
                 alpha={true}
-                {...registerHandler(PickerName.drop_preview)}
+                {...registerHandler(SplitPickerName.drop_preview)}
             />
             <div>
                 <h2 className={s.sectionTitle}>
@@ -193,7 +193,7 @@ export function SplitSettings() {
                 }}
                 getColor={(data) => data.colors.splits.dropTargetRectBorder}
                 alpha={true}
-                {...registerHandler(PickerName.drop_target_rect_border)}
+                {...registerHandler(SplitPickerName.drop_target_rect_border)}
             />
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
@@ -201,7 +201,7 @@ export function SplitSettings() {
                 }}
                 getColor={(data) => data.colors.splits.dropTargetRect}
                 alpha={true}
-                {...registerHandler(PickerName.drop_target_rect)}
+                {...registerHandler(SplitPickerName.drop_target_rect)}
             />
             <hr className="col-span-3 my-2" />
             <h2 className="text-lg font-bold col-span-3">
@@ -219,7 +219,7 @@ export function SplitSettings() {
                     }}
                     getColor={(data) => data.colors.splits.input.text}
                     alpha={true}
-                    {...registerHandler(PickerName.input_text)}
+                    {...registerHandler(SplitPickerName.input_text)}
                 />
             </div>
             <div> Background color </div>
@@ -230,7 +230,7 @@ export function SplitSettings() {
                     }}
                     getColor={(data) => data.colors.splits.input.background}
                     alpha={true}
-                    {...registerHandler(PickerName.input_bg)}
+                    {...registerHandler(SplitPickerName.input_bg)}
                 />
             </div>
             <hr className="col-span-3 my-2" />
@@ -260,7 +260,7 @@ export function SplitSettings() {
                             getColor={(data) =>
                                 data.colors.splits.messageSeperator
                             }
-                            {...registerHandler(PickerName.message_sep)}
+                            {...registerHandler(SplitPickerName.message_sep)}
                         />
                     </div>
                     <p className="text-gray-500 col-span-3 -mt-3 mb-1">
@@ -291,7 +291,7 @@ export function SplitSettings() {
                     data.colors.splits.resizeHandle = newColor;
                 }}
                 getColor={(data) => data.colors.splits.resizeHandle}
-                {...registerHandler(PickerName.resize_handle)}
+                {...registerHandler(SplitPickerName.resize_handle)}
             />
             <ColorPickerWrapper
                 mutateColor={(data, newColor) => {
@@ -299,7 +299,7 @@ export function SplitSettings() {
                 }}
                 getColor={(data) => data.colors.splits.resizeHandleBackground}
                 alpha={true}
-                {...registerHandler(PickerName.resize_handle_bg)}
+                {...registerHandler(SplitPickerName.resize_handle_bg)}
             />
         </div>
     );

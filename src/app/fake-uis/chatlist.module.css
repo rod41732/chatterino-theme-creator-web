@@ -1,8 +1,8 @@
-.chatEven {
+.chatBackgroundRegular {
     background-color: var(--messages-backgrounds-regular);
 }
 
-.chatOdd {
+.chatBackgroundAlternate {
     background-color: var(--messages-backgrounds-alternate);
 }
 
@@ -91,7 +91,7 @@
     padding-top: 2px;
 }
 
-.tabRegular {
+.tabRegular, .tabRegularNoHover {
     background-color: var(--tabs-regular-backgrounds-regular);
     color: var(--tabs-regular-text);
     border-top: 2px solid var(--tabs-regular-line-regular);
@@ -110,7 +110,7 @@
 }
 
 /* selected tab (current tab)*/
-.tabSelected {
+.tabSelected, .tabSelectedNoHover {
     background-color: var(--tabs-selected-backgrounds-regular);
     color: var(--tabs-selected-text);
     border-top: 4px solid var(--tabs-selected-line-regular);
@@ -129,7 +129,7 @@
 }
 
 /* highlighted tab (ping)*/
-.tabHighlighted {
+.tabHighlighted,  .tabHighlightedNoHover {
     background-color: var(--tabs-highlighted-backgrounds-regular);
     color: var(--tabs-highlighted-text);
     border-top: 2px solid var(--tabs-highlighted-line-regular);
@@ -149,7 +149,7 @@
 
 
 /* highlighted tab (ping)*/
-.tabNewMessage {
+.tabNewMessage, .tabNewMessageNoHover {
     background-color: var(--tabs-newMessage-backgrounds-regular);
     color: var(--tabs-newMessage-text);
     border-top: 2px solid var(--tabs-newMessage-line-regular);
@@ -169,6 +169,7 @@
 
 .tabContainer {
     border-bottom: 2px solid var(--tabs-dividerLine);
+    background-color: var(--window-background);
 }
 
 /*splits */
@@ -390,4 +391,16 @@
 
 .divider    {
     background-color: #99999999;
+}
+
+.fakeScrollbar  {
+    background: var(--scrollbars-background);
+}
+
+.fakeScrollbarThumb  {
+    background: var(--scrollbars-thumb);
+}
+
+.fakeScrollbarThumb:hover  {
+    background: var(--scrollbars-thumbSelected);
 }

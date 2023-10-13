@@ -1,14 +1,14 @@
 import { NextApiHandler } from "next";
 import { ApiResponse } from "@/lib/type";
-import { ThemeData } from "@/app/edit/ThemeContextProvider";
 import { createTheme, Theme } from "@/lib/db/theme";
 import { withIronSession } from "@/iron-session.options";
+import { ThemeData } from "@/app/edit/color-scheme.types";
 
 const handler: NextApiHandler = async (req, res) => {
     const user = req.session.user;
     if (!user) {
-        return res.status(400).send({
-            status: 400,
+        return res.status(401).send({
+            status: 401,
             message: "Not logged in",
             data: null,
         } satisfies ApiResponse<null>);

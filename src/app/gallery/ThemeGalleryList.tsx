@@ -34,12 +34,9 @@ export function ThemeGalleryList() {
     return (
         <div className="h-full overflow-hidden flex flex-col px-4 py-2">
             <div className="text-lg font-semibold flex-shrink-0">
-                Your themes
+                Theme Gallery
             </div>
-            <p>
-                This list your created themes, you can edit, duplicate or delete
-                them.
-            </p>
+            <p>This list themes created by users.</p>
             {themes ? (
                 <div className="flex-1 overflow-auto">
                     {themes.length > 0 ? (

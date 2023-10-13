@@ -1,5 +1,5 @@
 "use client";
-import { ColorScheme, ThemeMetadata } from "@/app/edit/color-scheme.types";
+import { ThemeData } from "@/app/edit/color-scheme.types";
 import { getThemeKey } from "@/lib/create-theme";
 import { ValueOrFactory } from "@/lib/react.types";
 import { CHATTERINO_BLACK_THEME } from "@/resources";
@@ -15,16 +15,12 @@ import { Theme } from "@/lib/db/theme";
 import { ApiResponse } from "@/lib/type";
 import { getLocalStorage } from "@/lib/local-storage";
 
-// used for generating theme
-export interface ThemeData {
-    colors: ColorScheme;
-    metadata: ThemeMetadata;
-    ctcMeta: ChatterinoThemeCreatorMetadata;
-}
-
 interface ThemeContextData {
     data: ThemeData;
     setData: (newValue: ValueOrFactory<ThemeData>) => void;
+    extras: {
+        owner?: Theme["owner"];
+    };
 }
 const ThemeContext = createContext<ThemeContextData>(null as any);
 
@@ -37,9 +33,11 @@ export const ThemeContextProvider = ({
 }: PropsWithChildren<ThemeContextProps>) => {
     const [data, setData] = useState<ThemeData>(CHATTERINO_BLACK_THEME);
     const [error, setError] = useState("");
+    const [extras, setExtras] = useState<ThemeContextData["extras"]>({});
     // load theme from storage
     useAsyncEffect(async () => {
         setError("");
+        setExtras({});
         // common caching logic
         const storedData = getLocalStorage().getItem(getThemeKey(themeId));
         if (!storedData) {
@@ -84,6 +82,8 @@ export const ThemeContextProvider = ({
                     }
                     const themeModel = (data as ApiResponse<Theme>).data;
                     const themeData = themeModel.data as ThemeData;
+
+                    setExtras({ owner: themeModel.owner });
                     setData(themeData);
                 });
             }
@@ -91,7 +91,7 @@ export const ThemeContextProvider = ({
     }, [themeId]);
 
     return (
-        <ThemeContext.Provider value={{ data, setData }}>
+        <ThemeContext.Provider value={{ data, setData, extras }}>
             {children}
         </ThemeContext.Provider>
     );
@@ -103,7 +103,9 @@ export function ReadonlyThemeContextProvider({
 }: PropsWithChildren<{ theme: ThemeData }>) {
     const noop = useCallback(() => {}, []);
     return (
-        <ThemeContext.Provider value={{ data: theme, setData: noop }}>
+        <ThemeContext.Provider
+            value={{ data: theme, setData: noop, extras: {} }}
+        >
             {children}
         </ThemeContext.Provider>
     );
@@ -114,11 +116,3 @@ export const useConfigContext = () => {
     if (v == null) throw new Error("Missing context provider");
     return v;
 };
-interface ChatterinoThemeCreatorMetadata {
-    name: string;
-    createdAt: string;
-    modifiedAt: string;
-
-    checkeredRow: boolean;
-    messageSeparator: boolean;
-}

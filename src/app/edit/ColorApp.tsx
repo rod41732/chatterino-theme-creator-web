@@ -1,7 +1,7 @@
-import { PREVIEW_TABS, TABS } from "@/app/edit/ColorApp.constants";
+import { PREVIEW_TABS } from "@/app/edit/ColorApp.constants";
 import { useTabContext } from "@/app/edit/TabContextProvider";
 import { useConfigContext } from "@/app/edit/ThemeContextProvider";
-import { PreviewTab, SettingsTab } from "@/app/edit/editor-tab.types";
+import { PreviewTab } from "@/app/edit/editor-tab.types";
 import { ColorProvider } from "@/lib/ColorProvider";
 import clsx from "clsx";
 import { PropsWithChildren } from "react";
@@ -20,41 +20,40 @@ function ColorProviderFromContext({
 }
 
 export function ColorApp() {
-    const { setPreviewTab, setSettingsTab, settingsTab, previewTab } =
-        useTabContext();
+    const { setPreviewTab, previewTab } = useTabContext();
 
     // modal
 
     return (
-        <div className={`h-full  flex`}>
+        <div className={`h-full`}>
             {/*left col*/}
-            <div className="flex-1 flex-shrink overflow-hidden flex flex-col">
-                {/*tab bar*/}
-                <div className="flex items-center overflow-x-auto border-b border-gray-200 mb-4 flex-shrink-0">
-                    {TABS.map((it) => (
-                        <button
-                            className={clsx(
-                                "mx-3 py-3   min-w-[80px]",
-                                "hover:text-sky-500",
-                                it.key == settingsTab && "text-sky-500",
-                            )}
-                            key={it.key}
-                            onClick={() =>
-                                setSettingsTab(it.key as SettingsTab)
-                            }
-                        >
-                            {it.label}
-                        </button>
-                    ))}
-                </div>
-                <div className="overflow-auto">
-                    {TABS.find((it) => it.key == settingsTab)?.children}
-                </div>
-            </div>
+            {/*<div className="flex-1 max-w-md flex-shrink overflow-hidden flex flex-col">*/}
+            {/*    tab bar*/}
+            {/*    <div className="flex items-center overflow-x-auto border-b border-gray-200 mb-4 flex-shrink-0">*/}
+            {/*        {TABS.map((it) => (*/}
+            {/*            <button*/}
+            {/*                className={clsx(*/}
+            {/*                    "mx-3 py-3   min-w-[80px]",*/}
+            {/*                    "hover:text-sky-500",*/}
+            {/*                    it.key == settingsTab && "text-sky-500",*/}
+            {/*                )}*/}
+            {/*                key={it.key}*/}
+            {/*                onClick={() =>*/}
+            {/*                    setSettingsTab(it.key as SettingsTab)*/}
+            {/*                }*/}
+            {/*            >*/}
+            {/*                {it.label}*/}
+            {/*            </button>*/}
+            {/*        ))}*/}
+            {/*    </div>*/}
+            {/*    <div className="overflow-auto">*/}
+            {/*        {TABS.find((it) => it.key == settingsTab)?.children}*/}
+            {/*    </div>*/}
+            {/*</div>*/}
 
             {/*right col*/}
             <ColorProviderFromContext
-                className={`flex-1 max-w-2xl flex-shrink overflow-hidden flex flex-col ${styles.preview}`}
+                className={`flex-shrink h-full overflow-hidden flex flex-col ${styles.preview}`}
             >
                 {/*tab bar*/}
                 <div className="flex items-center overflow-x-auto">

@@ -1,6 +1,6 @@
 import { produce } from "immer";
-import { ThemeData } from "@/app/edit/ThemeContextProvider";
 import { JSONData } from "@/lib/flatten-json";
+import { ThemeData } from "@/app/edit/color-scheme.types";
 
 function qt2cssString(argb: string): string {
     return argb.replace(/#([0-9a-f]{2})([0-9a-f]{6})/, "#$2$1");

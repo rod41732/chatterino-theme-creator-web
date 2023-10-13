@@ -107,7 +107,7 @@ export function EmoteMenu() {
             >
                 <div
                     className={clsx(
-                        styles.chatOdd,
+                        styles.chatBackgroundAlternate,
                         styles.normalText,
                         "px-2 py-1 relative text-center",
                     )}
@@ -116,7 +116,7 @@ export function EmoteMenu() {
                 </div>
                 <div
                     className={clsx(
-                        styles.chatEven,
+                        styles.chatBackgroundRegular,
                         styles.normalText,
                         "px-2 py-1 relative flex items-center flex-wrap justify-center",
                     )}
@@ -135,7 +135,7 @@ export function EmoteMenu() {
                 </div>
                 <div
                     className={clsx(
-                        styles.chatOdd,
+                        styles.chatBackgroundAlternate,
                         styles.normalText,
                         "px-2 py-1 relative flex items-center flex-wrap justify-center",
                     )}
@@ -154,7 +154,7 @@ export function EmoteMenu() {
                 </div>
                 <div
                     className={clsx(
-                        styles.chatEven,
+                        styles.chatBackgroundRegular,
                         styles.normalText,
                         "px-2 py-1 relative text-center",
                     )}
@@ -163,7 +163,7 @@ export function EmoteMenu() {
                 </div>
                 <div
                     className={clsx(
-                        styles.chatOdd,
+                        styles.chatBackgroundAlternate,
                         styles.normalText,
                         "px-2 py-1 relative flex items-center flex-wrap justify-center",
                     )}

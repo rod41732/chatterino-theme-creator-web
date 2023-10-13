@@ -1,4 +1,4 @@
-import { ThemeData, useConfigContext } from "@/app/edit/ThemeContextProvider";
+import { useConfigContext } from "@/app/edit/ThemeContextProvider";
 import s from "@/app/settings/settings.module.css";
 import { Popover } from "antd";
 import clsx from "clsx";
@@ -17,6 +17,7 @@ import {
 } from "react";
 import { ChromePicker } from "react-color";
 import { EditableInput } from "react-color/lib/components/common";
+import { ThemeData } from "@/app/edit/color-scheme.types";
 
 export interface ColorPickerWrapperProps {
     mutateColor: (draft: WritableDraft<ThemeData>, color: string) => void;
@@ -58,7 +59,6 @@ export const ColorPickerWrapper = forwardRef(function ColorPickerWrapper(
     }: ColorPickerWrapperProps,
     ref: ForwardedRef<ColorPickerHandle>,
 ) {
-    const id = useId();
     const { data: _data, setData } = useConfigContext();
     const data = useMemo(() => _data!, [_data]);
     useEffect(() => {
@@ -117,7 +117,7 @@ export const ColorPickerWrapper = forwardRef(function ColorPickerWrapper(
     return (
         <div
             className={clsx(
-                `flex flex-wrap items-center justify-center space-x-2 ${s.container} mb-2 p-2`,
+                `flex flex-wrap items-center justify-center space-x-2 ${s.container}`,
                 selected ? "hover:bg-gray-300" : "",
             )}
             role="button"
@@ -218,6 +218,7 @@ export const ColorPickerWrapper = forwardRef(function ColorPickerWrapper(
                             width: "80px",
                             fontSize: "14px",
                             border: "1px solid rgb(209, 213, 219)",
+                            color: "black",
                         },
                     }}
                     onChange={(e) => {

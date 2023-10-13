@@ -10,7 +10,7 @@ import s from "./settings.module.css";
 import { PreviewTab } from "@/app/edit/editor-tab.types";
 import { usePickerLogic } from "@/app/settings/picker.hook";
 
-enum PickerName {
+enum OverviewPickerName {
     accent_color = "accent_color",
 }
 
@@ -79,7 +79,7 @@ export function OverviewSettings() {
                         data.colors.accent = newColor;
                     }}
                     getColor={(data) => data.colors.accent}
-                    {...registerHandler(PickerName.accent_color)}
+                    {...registerHandler(OverviewPickerName.accent_color)}
                 />
                 <p className="text-gray-500 ">
                     Used in Suggestion Menu Highlight{" "}

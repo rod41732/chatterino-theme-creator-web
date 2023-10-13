@@ -5,7 +5,7 @@ import { JumpIcon } from "@/app/settings/JumpIcon.component";
 import s from "./settings.module.css";
 import { usePickerLogic } from "@/app/settings/picker.hook";
 
-enum PickerName {
+enum TabPickerName {
     divider = "divider",
     // reg
     reg_bg_reg = "reg_bg_reg",
@@ -76,7 +76,7 @@ export function TabsSettings() {
             </div>
             <div className="col-span-3">
                 <ColorPickerWrapper
-                    {...register(PickerName.divider)}
+                    {...register(TabPickerName.divider)}
                     mutateColor={(data, newColor) => {
                         data.colors.tabs.dividerLine = newColor;
                     }}
@@ -98,7 +98,7 @@ export function TabsSettings() {
 
             <div> Background </div>
             <ColorPickerWrapper
-                {...register(PickerName.reg_bg_reg)}
+                {...register(TabPickerName.reg_bg_reg)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.regular.backgrounds.regular = newColor;
                 }}
@@ -107,14 +107,14 @@ export function TabsSettings() {
                 }
             />
             <ColorPickerWrapper
-                {...register(PickerName.reg_bg_hover)}
+                {...register(TabPickerName.reg_bg_hover)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.regular.backgrounds.hover = newColor;
                 }}
                 getColor={(data) => data.colors.tabs.regular.backgrounds.hover}
             />
             <ColorPickerWrapper
-                {...register(PickerName.reg_bg_unfocus)}
+                {...register(TabPickerName.reg_bg_unfocus)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.regular.backgrounds.unfocused = newColor;
                 }}
@@ -125,21 +125,21 @@ export function TabsSettings() {
 
             <div> Line </div>
             <ColorPickerWrapper
-                {...register(PickerName.reg_line_reg)}
+                {...register(TabPickerName.reg_line_reg)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.regular.line.regular = newColor;
                 }}
                 getColor={(data) => data.colors.tabs.regular.line.regular}
             />
             <ColorPickerWrapper
-                {...register(PickerName.reg_line_hover)}
+                {...register(TabPickerName.reg_line_hover)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.regular.line.hover = newColor;
                 }}
                 getColor={(data) => data.colors.tabs.regular.line.hover}
             />
             <ColorPickerWrapper
-                {...register(PickerName.reg_line_unfocus)}
+                {...register(TabPickerName.reg_line_unfocus)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.regular.line.unfocused = newColor;
                 }}
@@ -149,7 +149,7 @@ export function TabsSettings() {
             <div> Text </div>
             <div className="col-span-3">
                 <ColorPickerWrapper
-                    {...register(PickerName.reg_text)}
+                    {...register(TabPickerName.reg_text)}
                     mutateColor={(data, newColor) => {
                         data.colors.tabs.regular.text = newColor;
                     }}
@@ -169,7 +169,7 @@ export function TabsSettings() {
 
             <div> Background </div>
             <ColorPickerWrapper
-                {...register(PickerName.sel_bg_reg)}
+                {...register(TabPickerName.sel_bg_reg)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.selected.backgrounds.regular = newColor;
                 }}
@@ -178,14 +178,14 @@ export function TabsSettings() {
                 }
             />
             <ColorPickerWrapper
-                {...register(PickerName.sel_bg_hover)}
+                {...register(TabPickerName.sel_bg_hover)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.selected.backgrounds.hover = newColor;
                 }}
                 getColor={(data) => data.colors.tabs.selected.backgrounds.hover}
             />
             <ColorPickerWrapper
-                {...register(PickerName.sel_bg_unfocus)}
+                {...register(TabPickerName.sel_bg_unfocus)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.selected.backgrounds.unfocused = newColor;
                 }}
@@ -196,21 +196,21 @@ export function TabsSettings() {
 
             <div> Line </div>
             <ColorPickerWrapper
-                {...register(PickerName.sel_line_reg)}
+                {...register(TabPickerName.sel_line_reg)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.selected.line.regular = newColor;
                 }}
                 getColor={(data) => data.colors.tabs.selected.line.regular}
             />
             <ColorPickerWrapper
-                {...register(PickerName.sel_line_hover)}
+                {...register(TabPickerName.sel_line_hover)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.selected.line.hover = newColor;
                 }}
                 getColor={(data) => data.colors.tabs.selected.line.hover}
             />
             <ColorPickerWrapper
-                {...register(PickerName.sel_line_unfocus)}
+                {...register(TabPickerName.sel_line_unfocus)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.selected.line.unfocused = newColor;
                 }}
@@ -220,7 +220,7 @@ export function TabsSettings() {
             <div> Text </div>
             <div className="col-span-3">
                 <ColorPickerWrapper
-                    {...register(PickerName.sel_text)}
+                    {...register(TabPickerName.sel_text)}
                     mutateColor={(data, newColor) => {
                         data.colors.tabs.selected.text = newColor;
                     }}
@@ -242,7 +242,7 @@ export function TabsSettings() {
 
             <div> Background </div>
             <ColorPickerWrapper
-                {...register(PickerName.hl_bg_reg)}
+                {...register(TabPickerName.hl_bg_reg)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.highlighted.backgrounds.regular = newColor;
                 }}
@@ -251,7 +251,7 @@ export function TabsSettings() {
                 }
             />
             <ColorPickerWrapper
-                {...register(PickerName.hl_bg_hover)}
+                {...register(TabPickerName.hl_bg_hover)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.highlighted.backgrounds.hover = newColor;
                 }}
@@ -260,7 +260,7 @@ export function TabsSettings() {
                 }
             />
             <ColorPickerWrapper
-                {...register(PickerName.hl_bg_unfocus)}
+                {...register(TabPickerName.hl_bg_unfocus)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.highlighted.backgrounds.unfocused =
                         newColor;
@@ -272,21 +272,21 @@ export function TabsSettings() {
 
             <div> Line </div>
             <ColorPickerWrapper
-                {...register(PickerName.hl_line_reg)}
+                {...register(TabPickerName.hl_line_reg)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.highlighted.line.regular = newColor;
                 }}
                 getColor={(data) => data.colors.tabs.highlighted.line.regular}
             />
             <ColorPickerWrapper
-                {...register(PickerName.hl_line_hover)}
+                {...register(TabPickerName.hl_line_hover)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.highlighted.line.hover = newColor;
                 }}
                 getColor={(data) => data.colors.tabs.highlighted.line.hover}
             />
             <ColorPickerWrapper
-                {...register(PickerName.hl_line_unfocus)}
+                {...register(TabPickerName.hl_line_unfocus)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.highlighted.line.unfocused = newColor;
                 }}
@@ -296,7 +296,7 @@ export function TabsSettings() {
             <div> Text </div>
             <div className="col-span-3">
                 <ColorPickerWrapper
-                    {...register(PickerName.hl_text)}
+                    {...register(TabPickerName.hl_text)}
                     mutateColor={(data, newColor) => {
                         data.colors.tabs.highlighted.text = newColor;
                     }}
@@ -316,7 +316,7 @@ export function TabsSettings() {
 
             <div> Background </div>
             <ColorPickerWrapper
-                {...register(PickerName.nm_bg_reg)}
+                {...register(TabPickerName.nm_bg_reg)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.newMessage.backgrounds.regular = newColor;
                 }}
@@ -325,7 +325,7 @@ export function TabsSettings() {
                 }
             />
             <ColorPickerWrapper
-                {...register(PickerName.nm_bg_hover)}
+                {...register(TabPickerName.nm_bg_hover)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.newMessage.backgrounds.hover = newColor;
                 }}
@@ -334,7 +334,7 @@ export function TabsSettings() {
                 }
             />
             <ColorPickerWrapper
-                {...register(PickerName.nm_bg_unfocus)}
+                {...register(TabPickerName.nm_bg_unfocus)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.newMessage.backgrounds.unfocused =
                         newColor;
@@ -346,21 +346,21 @@ export function TabsSettings() {
 
             <div> Line </div>
             <ColorPickerWrapper
-                {...register(PickerName.nm_line_reg)}
+                {...register(TabPickerName.nm_line_reg)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.newMessage.line.regular = newColor;
                 }}
                 getColor={(data) => data.colors.tabs.newMessage.line.regular}
             />
             <ColorPickerWrapper
-                {...register(PickerName.nm_line_hover)}
+                {...register(TabPickerName.nm_line_hover)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.newMessage.line.hover = newColor;
                 }}
                 getColor={(data) => data.colors.tabs.newMessage.line.hover}
             />
             <ColorPickerWrapper
-                {...register(PickerName.nm_line_unfocus)}
+                {...register(TabPickerName.nm_line_unfocus)}
                 mutateColor={(data, newColor) => {
                     data.colors.tabs.newMessage.line.unfocused = newColor;
                 }}
@@ -370,7 +370,7 @@ export function TabsSettings() {
             <div> Text </div>
             <div className="col-span-3">
                 <ColorPickerWrapper
-                    {...register(PickerName.nm_text)}
+                    {...register(TabPickerName.nm_text)}
                     mutateColor={(data, newColor) => {
                         data.colors.tabs.newMessage.text = newColor;
                     }}

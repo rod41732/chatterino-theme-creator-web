@@ -1,6 +1,6 @@
 import styles from "@/app/fake-uis/chatlist.module.css";
 
-const HoverOverlay = () => {
+export const HoverOverlay = () => {
     return <div className="absolute inset-0 bg-gray-100/20"></div>;
 };
 
@@ -19,7 +19,7 @@ export function ChatterinoTabPreview() {
                 <div
                     className={`flex flex-wrap ${s.tabContainer} w-full bg-black`}
                 >
-                    <div className={`${tb} ${s.tabSelected}`}>current tab</div>
+                    <div className={`${tb} ${s.tabSelected}`}>Current Tab</div>
                     <div className={`${tb} ${s.tabRegular}`}>unselected</div>
                     <div className={`${tb} ${s.tabNewMessage}`}>newMessage</div>
                     <div className={`${tb} ${s.tabRegular}`}>unselected</div>

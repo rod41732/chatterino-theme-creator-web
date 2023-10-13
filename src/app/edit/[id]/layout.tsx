@@ -2,6 +2,7 @@
 
 import { ThemeContextProvider } from "@/app/edit/ThemeContextProvider";
 import { PropsWithChildren } from "react";
+import { InsEditContextProvider } from "@/app/components/InsEdit";
 
 interface RouteParams {
     params: {
@@ -13,9 +14,11 @@ export default function ThemeEditorLayout({
     children,
 }: PropsWithChildren<RouteParams>) {
     return id ? (
-        <ThemeContextProvider key={id} themeId={id}>
-            {children}
-        </ThemeContextProvider>
+        <InsEditContextProvider>
+            <ThemeContextProvider key={id} themeId={id}>
+                {children}
+            </ThemeContextProvider>
+        </InsEditContextProvider>
     ) : (
         <div> no theme ID </div>
     );

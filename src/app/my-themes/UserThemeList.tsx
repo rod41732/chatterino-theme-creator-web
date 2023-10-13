@@ -8,6 +8,7 @@ import { uploadTheme } from "@/lib/api/upload-theme";
 import { Button } from "antd";
 import { useRouter } from "next/navigation";
 import { getLocalStorage } from "@/lib/local-storage";
+import { deleteTheme } from "@/lib/api/deleteTheme";
 
 function localStorageKeys(): string[] {
     return Array(getLocalStorage().length)
@@ -92,7 +93,7 @@ export function UserThemeList() {
         <div className="h-full overflow-hidden flex flex-col px-4 py-2">
             <p>
                 This list your created themes, you can edit, duplicate or delete
-                them.
+                theme, hover over them to see more actions.
             </p>
             {allThemes ? (
                 <div className="flex-1 overflow-auto">
@@ -119,6 +120,23 @@ export function UserThemeList() {
                                                     "theme-" + theme.id,
                                                 );
                                                 setLocalThemes(listThemes());
+                                                if (
+                                                    theme.id.startsWith(
+                                                        "remote-",
+                                                    )
+                                                ) {
+                                                    const remoteId =
+                                                        +theme.id.substring(
+                                                            "remote-".length,
+                                                        );
+                                                    deleteTheme(remoteId).then(
+                                                        () => {
+                                                            setRemoteTrigger(
+                                                                Math.random(),
+                                                            );
+                                                        },
+                                                    );
+                                                }
                                             }
                                         }}
                                         onUpload={async () => {

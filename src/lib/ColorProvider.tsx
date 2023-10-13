@@ -1,6 +1,6 @@
-import { ThemeData } from "@/app/edit/ThemeContextProvider";
 import { PropsWithChildren, useEffect, useMemo } from "react";
 import { flattenJSON } from "./flatten-json";
+import { ThemeData } from "@/app/edit/color-scheme.types";
 
 export function ColorProvider({
     theme,

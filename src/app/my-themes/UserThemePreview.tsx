@@ -6,19 +6,13 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { getThemeKey } from "@/lib/create-theme";
 import { BiSolidDuplicate } from "react-icons/bi";
 import { IconButton } from "@/app/components/IconButton";
-import {
-    MdCloudUpload,
-    MdContentCopy,
-    MdDownload,
-    MdEdit,
-} from "react-icons/md";
+import { MdCloudUpload, MdContentCopy, MdDownload } from "react-icons/md";
 import { produce } from "immer";
 import { copyToClipboard, downloadFile } from "@/lib/export-theme";
 import { css2qt } from "@/utils";
 import useNotification from "antd/es/notification/useNotification";
 import { ThemeEntry } from "@/lib/type";
 import { EditableText } from "@/app/components/EditableText";
-import { GrUserFemale } from "react-icons/gr";
 import { getLocalStorage } from "@/lib/local-storage";
 
 /** entry of theme, with small preview */
@@ -74,7 +68,7 @@ export function UserThemePreview({
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        id: remoteThemeId,
+                        id: +remoteThemeId,
                         data: updatedTheme,
                     }),
                     credentials: "include",
@@ -121,8 +115,8 @@ export function UserThemePreview({
                                         key={idx}
                                         className={clsx(
                                             idx % 2 == 0
-                                                ? styles.chatEven
-                                                : styles.chatOdd,
+                                                ? styles.chatBackgroundRegular
+                                                : styles.chatBackgroundAlternate,
                                             styles.normalText,
                                         )}
                                     >

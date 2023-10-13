@@ -1,23 +1,21 @@
-import {
-    fakeChatListLarge,
-    fakeChatListSmall,
-    fakeChatListVerySmall,
-} from "@/data/fake-chat";
-import { PreviewTab } from "@/app/edit/editor-tab.types";
+import { ChatterinoOverview } from "@/app/settings/InspectSettings";
 import {
     ChatterinoDragSplitPreview,
     ChatterinoSplitAdvanced,
     ChatterinoSplitResize,
     ChatterinoSplitVertical,
 } from "@/app/fake-uis/chatterino";
-import { ChatterinoTabPreview } from "@/app/fake-uis/chatterinoTabPreview.component";
+import {
+    fakeChatListLarge,
+    fakeChatListSmall,
+    fakeChatListVerySmall,
+} from "@/data/fake-chat";
+import clsx from "clsx";
 import { ChatterinoEmptySplit } from "@/app/fake-uis/emptysplit";
 import { EmoteMenu, NewSplitMenu } from "@/app/fake-uis/newSplitMenu";
+import { ChatterinoTabPreview } from "@/app/fake-uis/chatterinoTabPreview.component";
 import { FindPopup, ThreadPopup, UserCard } from "@/app/fake-uis/userInfoCard";
-import clsx from "clsx";
 import { ReactNode } from "react";
-import { PreviewOptionContextProvider } from "@/lib/api/PreviewOptionContext";
-import { ChatterinoOverview } from "@/app/settings/InspectSettings";
 import { ThemeAwareBackground } from "@/app/components/ThemeAwareBackground";
 
 interface Tab {
@@ -25,22 +23,33 @@ interface Tab {
     key: string;
     children: ReactNode;
 }
-
-export const PREVIEW_TABS: Tab[] = [
+export enum GalleryPreviewTab {
+    ALL = "all",
+    CHAT = "chat",
+    SPILT_DROP_PREVIEW = "spilt_drop_preview",
+    SPILT_DROP_TARGET = "spilt_drop_target",
+    SPILT_RESIZE = "spilt_resize",
+    EMPTY_SPLIT = "empty_split",
+    NEW_SPLIT_MENU = "new_split_menu",
+    EMOTE_MENU = "emote_menu",
+    TAB_STATES = "tab_states",
+    USER_CARD = "user_card",
+    THREAD_POPUP = "thread_popup",
+    FIND_POPUP = "find_popup",
+}
+export const GALLERY_TABS: Tab[] = [
     {
-        label: "Editor",
-        key: PreviewTab.EDITOR,
+        label: "All",
+        key: GalleryPreviewTab.ALL,
         children: (
             <ThemeAwareBackground className="h-full">
-                <PreviewOptionContextProvider value={{ editable: true }}>
-                    <ChatterinoOverview />
-                </PreviewOptionContextProvider>
+                <ChatterinoOverview />
             </ThemeAwareBackground>
         ),
     },
     {
         label: "Chat",
-        key: PreviewTab.CHAT,
+        key: GalleryPreviewTab.CHAT,
         children: (
             <ThemeAwareBackground className="p-4 h-full overflow-hidden flex flex-col">
                 <ChatterinoSplitVertical
@@ -52,7 +61,7 @@ export const PREVIEW_TABS: Tab[] = [
     },
     {
         label: "Split Drop Preivew",
-        key: PreviewTab.SPILT_DROP_PREVIEW,
+        key: GalleryPreviewTab.SPILT_DROP_PREVIEW,
         children: (
             <ThemeAwareBackground className="p-4 h-full overflow-hidden">
                 <div>
@@ -65,7 +74,7 @@ export const PREVIEW_TABS: Tab[] = [
     },
     {
         label: "Split Drop Target",
-        key: PreviewTab.SPILT_DROP_TARGET,
+        key: GalleryPreviewTab.SPILT_DROP_TARGET,
         children: (
             <ThemeAwareBackground className="p-4 h-full overflow-hidden flex flex-col">
                 <div>
@@ -78,7 +87,7 @@ export const PREVIEW_TABS: Tab[] = [
     },
     {
         label: "Split Resize",
-        key: PreviewTab.SPILT_RESIZE,
+        key: GalleryPreviewTab.SPILT_RESIZE,
         children: (
             <ThemeAwareBackground className="p-4 h-full overflow-hidden flex flex-col">
                 <ChatterinoSplitResize chatMessages={fakeChatListVerySmall} />
@@ -87,7 +96,7 @@ export const PREVIEW_TABS: Tab[] = [
     },
     {
         label: "Empty Split",
-        key: PreviewTab.EMPTY_SPLIT,
+        key: GalleryPreviewTab.EMPTY_SPLIT,
         children: (
             <ThemeAwareBackground className="p-4 h-full overflow-hidden flex flex-col">
                 <ChatterinoEmptySplit />
@@ -96,7 +105,7 @@ export const PREVIEW_TABS: Tab[] = [
     },
     {
         label: "New Split Menu",
-        key: PreviewTab.NEW_SPLIT_MENU,
+        key: GalleryPreviewTab.NEW_SPLIT_MENU,
         children: (
             <ThemeAwareBackground className="p-4 h-full overflow-hidden flex flex-col">
                 <NewSplitMenu />
@@ -105,7 +114,7 @@ export const PREVIEW_TABS: Tab[] = [
     },
     {
         label: "Emote Menu",
-        key: PreviewTab.EMOTE_MENU,
+        key: GalleryPreviewTab.EMOTE_MENU,
         children: (
             <ThemeAwareBackground className="p-4 h-full overflow-hidden flex flex-col">
                 <EmoteMenu />
@@ -114,7 +123,7 @@ export const PREVIEW_TABS: Tab[] = [
     },
     {
         label: "Tab States",
-        key: PreviewTab.TAB_STATES,
+        key: GalleryPreviewTab.TAB_STATES,
         children: (
             <ThemeAwareBackground className="p-4 bg-gray-800 h-full overflow-auto flex flex-col">
                 <ChatterinoTabPreview />
@@ -123,7 +132,7 @@ export const PREVIEW_TABS: Tab[] = [
     },
     {
         label: "User card",
-        key: PreviewTab.USER_CARD,
+        key: GalleryPreviewTab.USER_CARD,
         children: (
             <ThemeAwareBackground className="p-4 bg-gray-800 h-full overflow-auto flex flex-col">
                 <UserCard />
@@ -132,7 +141,7 @@ export const PREVIEW_TABS: Tab[] = [
     },
     {
         label: "Thread popup",
-        key: PreviewTab.THREAD_POPUP,
+        key: GalleryPreviewTab.THREAD_POPUP,
         children: (
             <ThemeAwareBackground className="p-4 bg-gray-800 h-full overflow-auto flex flex-col">
                 <ThreadPopup />
@@ -141,7 +150,7 @@ export const PREVIEW_TABS: Tab[] = [
     },
     {
         label: "Find popup",
-        key: PreviewTab.FIND_POPUP,
+        key: GalleryPreviewTab.FIND_POPUP,
         children: (
             <ThemeAwareBackground className="p-4 bg-gray-800 h-full overflow-auto flex flex-col">
                 <FindPopup />

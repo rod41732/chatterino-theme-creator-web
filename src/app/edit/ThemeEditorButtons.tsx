@@ -1,20 +1,16 @@
 import { useEditorState } from "@/app/edit/EditorStateContextProvider";
-import { ThemeData, useConfigContext } from "@/app/edit/ThemeContextProvider";
-import { Checkbox, Dropdown, MenuProps, Modal } from "antd";
+import { Checkbox, Dropdown, MenuProps } from "antd";
 import { produce } from "immer";
 import { usePathname, useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { MdKeyboard, MdMoreVert, MdVisibility } from "react-icons/md";
+import { useCallback, useState } from "react";
+import { MdSettings } from "react-icons/md";
 import { UserBadge } from "@/app/components/UserBadge";
-import { IconButton } from "@/app/components/IconButton";
 
 /** buttons that control theme new/edit/export */
 export function ThemeEditorButton() {
     const pathName = usePathname();
     const router = useRouter();
     const { state, setState } = useEditorState();
-
-    const { data } = useConfigContext();
 
     const setWarnUnsavedChanges = useCallback(
         (newValue: boolean) => {
@@ -26,22 +22,12 @@ export function ThemeEditorButton() {
         },
         [setState],
     );
-    const lastData = useRef<ThemeData | null>(null);
-    useEffect(() => {
-        if (lastData.current == null) {
-            lastData.current = data;
-            return;
-        }
-        if (lastData.current != data) {
-            setState((old) => ({ ...old, hasChange: true }));
-        }
-    }, [data, setState]);
 
     const [shortcutOpen, setShortcutOpen] = useState(false);
 
     return (
         <>
-            <Modal
+            {/*<Modal
                 title="Keyboard Shortcuts"
                 open={shortcutOpen}
                 onCancel={() => setShortcutOpen(false)}
@@ -75,23 +61,23 @@ export function ThemeEditorButton() {
                     </kbd>
                     <p> &quot;Undo&quot; picker&#39;s color change </p>
                 </div>
-            </Modal>
+            </Modal>*/}
             <div className="flex-grow"></div>
 
-            <IconButton
+            {/*<IconButton
                 onClick={() => {
                     router.push(pathName + "?preview");
                 }}
                 tooltip="Preview"
             >
                 <MdVisibility />
-            </IconButton>
-            <IconButton
+            </IconButton>*/}
+            {/*<IconButton
                 onClick={() => setShortcutOpen(true)}
                 tooltip="Keyboard Shortcuts"
             >
                 <MdKeyboard />
-            </IconButton>
+            </IconButton>*/}
             <Dropdown
                 menu={{
                     items: [
@@ -120,7 +106,7 @@ export function ThemeEditorButton() {
                         "border-gray-200 text-gray-800 bg hover:bg-gray-500/20 transition-colors p-2 rounded-full text-xl cursor-pointer"
                     }
                 >
-                    <MdMoreVert />
+                    <MdSettings />
                 </div>
             </Dropdown>
             <UserBadge />

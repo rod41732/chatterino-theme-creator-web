@@ -1,9 +1,8 @@
-import { ThemeData } from "@/app/edit/ThemeContextProvider";
 import { Theme } from "@/lib/db/theme";
 import { ApiResponse } from "@/lib/type";
+import { ThemeData } from "@/app/edit/color-scheme.types";
 
 export async function uploadTheme(theme: ThemeData): Promise<Theme> {
-    console.log("xd", JSON.stringify(theme));
     const res = await fetch("/api/themes/create", {
         method: "POST",
         headers: {

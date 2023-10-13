@@ -19,7 +19,21 @@ export default function HomePage() {
                     >
                         Create your theme
                     </button>
-                    <button className="px-4 py-2 text-lg rounded-md block border border-gray-500 w-full hover:bg-gray-500 hover:text-white">
+                    <button
+                        className="px-4 py-2 text-lg rounded-md block border border-gray-500 w-full hover:bg-gray-500 hover:text-white"
+                        onClick={async () => {
+                            await router.push("/my-themes");
+                        }}
+                    >
+                        View your created themes
+                    </button>
+                    <button
+                        // className="px-4 py-2 text-lg rounded-md block border border-gray-500 w-full hover:bg-gray-500 hover:text-white"
+                        className="px-4 py-2 text-lg rounded-md block border border-gray-500 w-full pointer-events-none opacity-25"
+                        // onClick={async () => {
+                        //     await router.push("/gallery");
+                        // }}
+                    >
                         Browse shared themes (Coming soon
                         <img
                             src="/pajaCope.png"

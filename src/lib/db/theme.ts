@@ -1,7 +1,10 @@
 import { z } from "zod";
 import { UserSchema } from "@/lib/db/user";
 import { client } from "@/lib/db/db";
-import { ThemeData } from "@/app/edit/ThemeContextProvider";
+import { produce } from "immer";
+import { Simulate } from "react-dom/test-utils";
+import drag = Simulate.drag;
+import { ThemeData } from "@/app/edit/color-scheme.types";
 
 // theme schema, with optional joined fields
 // TODO: should cleary distinguish theme with or without joined fields
@@ -26,7 +29,11 @@ export async function createTheme(
     data: ThemeData,
     ownerId: number,
 ): Promise<Theme> {
-    const { ctcMeta, ...rest } = data;
+    const updateThemeData = produce(data, (draft) => {
+        draft.ctcMeta.modifiedAt = new Date().toJSON();
+        draft.ctcMeta.createdAt = new Date().toJSON();
+    });
+    const { ctcMeta, ...rest } = updateThemeData;
 
     const createdTheme = await client
         .query(
@@ -36,10 +43,10 @@ export async function createTheme(
              RETURNING *`,
             [
                 ownerId,
-                data,
+                updateThemeData,
                 ctcMeta.name,
-                new Date(),
-                new Date(),
+                ctcMeta.createdAt,
+                ctcMeta.modifiedAt,
                 ctcMeta.checkeredRow,
                 ctcMeta.messageSeparator,
             ],
@@ -125,24 +132,26 @@ export async function updateThemeData(
     id: number,
     data: ThemeData,
 ): Promise<Theme> {
-    const { ctcMeta, ...rest } = data;
+    const updatedData = produce(data, (draft) => {
+        draft.ctcMeta.modifiedAt = new Date().toJSON();
+    });
+
+    const { ctcMeta, ...rest } = updatedData;
 
     const updatedTheme = await client
         .query(
             `UPDATE "UserThemes" SET
             "data" = $1,  
             "name" = $2,  
-            "createdAt" = $3,  
-            "modifiedAt" = $4,  
-            "checkeredRow" = $5,
-            "messageSeparator" = $6
-             WHERE "id" = $7
+            "modifiedAt" = $3,  
+            "checkeredRow" = $4,
+            "messageSeparator" = $5
+             WHERE "id" = $6
              RETURNING *`,
             [
-                data,
+                updatedData,
                 ctcMeta.name,
-                new Date(),
-                new Date(),
+                ctcMeta.modifiedAt,
                 ctcMeta.checkeredRow,
                 ctcMeta.messageSeparator,
                 id,
@@ -159,4 +168,8 @@ export async function listUserTheme(userId: number): Promise<Theme[]> {
         [userId],
     );
     return res.rows.map((it) => ThemeSchema.parse(it));
+}
+
+export async function deleteTheme(themeId: number): Promise<void> {
+    await client.query(`DELETE FROM "UserThemes" WHERE "id" = $1`, [themeId]);
 }

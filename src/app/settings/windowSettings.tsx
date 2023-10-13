@@ -5,7 +5,7 @@ import { JumpIcon } from "@/app/settings/JumpIcon.component";
 import s from "./settings.module.css";
 import { usePickerLogic } from "@/app/settings/picker.hook";
 
-enum PickerName {
+enum WindowPickerName {
     bg = "bg",
     text = "text",
 }
@@ -71,12 +71,8 @@ export function WindowSettings() {
                     data.colors.window.background = newColor;
                 }}
                 getColor={(data) => data.colors.window.background}
-                alpha={true}
-                {...register(PickerName.bg)}
+                {...register(WindowPickerName.bg)}
             />
-            <p className="text-gray-500 col-span-2 -mt-3 mb-1">
-                &quot;Track&quot; Color of scrollbar
-            </p>
 
             <div> Text </div>
             <ColorPickerWrapper
@@ -84,7 +80,7 @@ export function WindowSettings() {
                     data.colors.window.text = newColor;
                 }}
                 getColor={(data) => data.colors.window.text}
-                {...register(PickerName.text)}
+                {...register(WindowPickerName.text)}
             />
             <p className="text-gray-500 col-span-2 -mt-3 mb-1">
                 Some part of UI
