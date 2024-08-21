@@ -1,0 +1,18 @@
+services:
+  db:
+    image: postgres:15
+    restart: no
+    environment:
+      # "C2THEMES_DOCKER_PG_PASSWORD=foobar docker compose up -d" on initial run 
+      POSTGRES_PASSWORD: "${C2THEMES_DOCKER_PG_PASSWORD}"
+    ports:
+      - "${C2THEMES_DOCKER_PG_PORT:-5432}:5432"
+    volumes:
+      - "c2themes_postgres:/var/lib/postgresql/data:rw"
+
+volumes:
+  c2themes_postgres:
+
+
+
+  
