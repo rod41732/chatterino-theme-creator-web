@@ -1,10 +1,34 @@
 import { useInspectorContextNullable } from "@/app/components/InsEdit";
 import styles from "@/app/fake-uis/chatlist.module.css";
 import { HoverOverlay } from "@/app/fake-uis/chatterinoTabPreview.component";
-import { makeWidgets, TabState } from "@/app/fake-uis/tab-preview-widgets";
+import {
+    makeTabInspectorWidgets,
+    TabState,
+} from "@/app/fake-uis/tab-preview-widgets";
 import { usePreviewOptionContext } from "@/lib/api/PreviewOptionContext";
 import clsx from "clsx";
 import { FaCog, FaUserAlt } from "react-icons/fa";
+import { useThemeContext } from "../edit/ThemeContextProvider";
+
+function LiveIndicator() {
+    const theme = useThemeContext();
+    return (
+        <div
+            className="w-1.5 h-1.5 rounded-full absolute top-1 right-1"
+            style={{ backgroundColor: theme.data.colors.tabs.liveIndicator }}
+        ></div>
+    );
+}
+
+function ReturnIndicator() {
+    const theme = useThemeContext();
+    return (
+        <div
+            className="w-1.5 h-1.5 rounded-full absolute top-1 right-1"
+            style={{ backgroundColor: theme.data.colors.tabs.rerunIndicator }}
+        ></div>
+    );
+}
 
 export function GenericTab({ state }: { state: TabState | "hoverBugged" }) {
     const tb = styles.tabBase;
@@ -44,7 +68,8 @@ export function GenericTab({ state }: { state: TabState | "hoverBugged" }) {
                 <div
                     className={clsx(
                         `${tb} ${s.tabSelectedNoHover}`,
-                        editable && "hover:outline hover:outline-red-500",
+                        editable &&
+                            "hover:outline hover:outline-red-500 relative",
                     )}
                     role={editable ? "button" : undefined}
                     onClick={() => {
@@ -52,11 +77,17 @@ export function GenericTab({ state }: { state: TabState | "hoverBugged" }) {
                         if (!setState)
                             throw new Error("Missing InsEditContextProvider");
                         setState({
-                            widgets: makeWidgets("selected", state),
+                            widgets: makeTabInspectorWidgets(
+                                "selected",
+                                state,
+                                { liveIndicator: true },
+                            ),
                         });
                     }}
                 >
-                    Current {state == "hoverBugged" && <HoverOverlay />}
+                    Current
+                    <LiveIndicator />
+                    {state == "hoverBugged" && <HoverOverlay />}
                 </div>
                 <div
                     className={clsx(
@@ -69,11 +100,15 @@ export function GenericTab({ state }: { state: TabState | "hoverBugged" }) {
                         if (!setState)
                             throw new Error("Missing InsEditContextProvider");
                         setState({
-                            widgets: makeWidgets("regular", state),
+                            widgets: makeTabInspectorWidgets("regular", state, {
+                                rerunIndicator: true,
+                            }),
                         });
                     }}
                 >
-                    Unselected {state == "hoverBugged" && <HoverOverlay />}
+                    Unselected
+                    <ReturnIndicator />
+                    {state == "hoverBugged" && <HoverOverlay />}
                 </div>
                 <div
                     className={clsx(
@@ -86,7 +121,10 @@ export function GenericTab({ state }: { state: TabState | "hoverBugged" }) {
                         if (!setState)
                             throw new Error("Missing InsEditContextProvider");
                         setState({
-                            widgets: makeWidgets("newMessage", state),
+                            widgets: makeTabInspectorWidgets(
+                                "newMessage",
+                                state,
+                            ),
                         });
                     }}
                 >
@@ -103,7 +141,10 @@ export function GenericTab({ state }: { state: TabState | "hoverBugged" }) {
                         if (!setState)
                             throw new Error("Missing InsEditContextProvider");
                         setState({
-                            widgets: makeWidgets("highlighted", state),
+                            widgets: makeTabInspectorWidgets(
+                                "highlighted",
+                                state,
+                            ),
                         });
                     }}
                 >

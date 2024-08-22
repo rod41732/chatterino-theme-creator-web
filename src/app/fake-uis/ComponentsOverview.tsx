@@ -20,7 +20,7 @@ import {
     QtRadio,
 } from "@/app/fake-uis/FakeQt.component";
 import { Message } from "@/app/fake-uis/message.component";
-import { makeWidgets } from "@/app/fake-uis/tab-preview-widgets";
+import { makeTabInspectorWidgets } from "@/app/fake-uis/tab-preview-widgets";
 import {
     fakeChatListVerySmall,
     fakeChatListVerySmallNoDistract,
@@ -351,7 +351,7 @@ export function ComponentsOverview() {
                                             "Missing InsEditContextProvider",
                                         );
                                     setState({
-                                        widgets: makeWidgets(
+                                        widgets: makeTabInspectorWidgets(
                                             "selected",
                                             "regular",
                                         ),
@@ -374,7 +374,7 @@ export function ComponentsOverview() {
                                             "Missing InsEditContextProvider",
                                         );
                                     setState({
-                                        widgets: makeWidgets(
+                                        widgets: makeTabInspectorWidgets(
                                             "regular",
                                             "regular",
                                         ),

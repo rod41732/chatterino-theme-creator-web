@@ -6,9 +6,10 @@ type ColorWithAlpha = string;
 const ColorNoAlphaSchema = z
     .string()
     .regex(/^#[0-9a-fA-F]{6}$/, "Expected Color Without Alpha");
+
 const ColorWithAlphaSchema = z
     .string()
-    .regex(/^#[0-9a-fA-F]{8}$/, "Expected Color With Alpha");
+    .regex(/^#[0-9a-fA-F]{6,8}$/, "Expected Color With optional Alpha");
 
 const ColorSchemeSchema = z.object({
     accent: ColorNoAlphaSchema,
@@ -57,8 +58,9 @@ const ColorSchemeSchema = z.object({
         resizeHandleBackground: ColorWithAlphaSchema,
     }),
     tabs: z.object({
-        liveIndicator: ColorNoAlphaSchema,
-        rerunIndicator: ColorNoAlphaSchema,
+        // have default to facilitate old theme users
+        liveIndicator: ColorNoAlphaSchema.default("#ff0000"),
+        rerunIndicator: ColorNoAlphaSchema.default("#c7c715"),
         dividerLine: ColorNoAlphaSchema,
         highlighted: z.object({
             backgrounds: z.object({

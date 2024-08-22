@@ -47,7 +47,7 @@ export const CHATTERINO_LIGHT_THEME: ThemeData = {
                 text: "#000000",
             },
             messageSeperator: "#7f7f7f",
-            resizeHandle: "#0094ff",
+            resizeHandle: "#0094ff70",
             resizeHandleBackground: "#0094ff50",
         },
         tabs: {

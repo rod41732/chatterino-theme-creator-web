@@ -4,10 +4,15 @@ import {
 } from "@/app/components/InsEdit";
 
 export type TabState = "regular" | "hover" | "hoverBugged" | "unfocused";
+type MakeTabInspectorExtras = {
+    liveIndicator?: boolean;
+    rerunIndicator?: boolean;
+};
 
-export function makeWidgets(
+export function makeTabInspectorWidgets(
     tabItemState: "selected" | "regular" | "newMessage" | "highlighted",
     tabState: TabState,
+    extras: MakeTabInspectorExtras = {},
 ): InspectorWidgetDef[] {
     const tabName = {
         selected: "Selected Tab",
@@ -83,6 +88,47 @@ export function makeWidgets(
             description: "Divider line at bottom of tab bar",
         },
     ];
+
+    if (extras.liveIndicator) {
+        widgets.push(
+            {
+                type: "divider",
+            },
+            {
+                type: "title",
+                title: "Live Indicator",
+                subtitle:
+                    "Small colored circle indicating that streamer is LIVE",
+            },
+            {
+                type: "colorPicker",
+                path: "tabs.liveIndicator",
+                name: "Live Indicator",
+                description:
+                    "Color of small circle indicating that streamer is LIVE",
+            },
+        );
+    } else if (extras.rerunIndicator) {
+        widgets.push(
+            {
+                type: "divider",
+            },
+            {
+                type: "title",
+                title: "Rerun Indicator",
+                subtitle:
+                    "Small colored circle indicating that streamer is RERUN",
+            },
+            {
+                type: "colorPicker",
+                path: "tabs.rerunIndicator",
+                name: "Rerun Indicator",
+                description:
+                    "Color of small circle indicating that streamer is RERUN",
+            },
+        );
+    }
+
     if (tabState != "regular") {
         widgets.push({ type: "divider" });
         widgets.push({

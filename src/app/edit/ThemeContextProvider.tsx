@@ -1,5 +1,5 @@
 "use client";
-import { ThemeData } from "@/app/edit/color-scheme.types";
+import { ThemeData, ThemeDataSchema } from "@/app/edit/color-scheme.types";
 import { getThemeKey } from "@/lib/create-theme";
 import { Theme } from "@/lib/db/theme";
 import { useAsyncEffect } from "@/lib/hooks/use-async-effect";
@@ -48,15 +48,27 @@ export const ThemeContextProvider = ({
                 console.log("no data in storage");
             }
         } else {
+            let raw;
             try {
-                setData(JSON.parse(storedData));
-                console.log("loaded data from storage");
+                raw = JSON.parse(storedData);
             } catch (err) {
                 setError(`Failed to parse JSON for local data: ${err}`);
                 console.error("Error loading data", err, "data was", {
                     storedData,
                 });
             }
+
+            try {
+                const parsed: ThemeData = ThemeDataSchema.parse(raw);
+                setData(parsed);
+            } catch (err) {
+                console.error("Error parsing theme data", err);
+                console.warn("Using un-validated data");
+                setData(raw);
+            }
+
+            // ZOD?
+            console.log("loaded data from storage");
         }
         // load remote
         if (themeId.startsWith("remote-")) {
