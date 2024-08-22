@@ -1,4 +1,5 @@
-import { useConfigContext } from "@/app/edit/ThemeContextProvider";
+import { ThemeData } from "@/app/edit/color-scheme.types";
+import { useThemeContext } from "@/app/edit/ThemeContextProvider";
 import s from "@/app/settings/settings.module.css";
 import { Popover } from "antd";
 import clsx from "clsx";
@@ -9,7 +10,6 @@ import {
     forwardRef,
     MutableRefObject,
     useEffect,
-    useId,
     useImperativeHandle,
     useMemo,
     useRef,
@@ -17,7 +17,6 @@ import {
 } from "react";
 import { ChromePicker } from "react-color";
 import { EditableInput } from "react-color/lib/components/common";
-import { ThemeData } from "@/app/edit/color-scheme.types";
 
 export interface ColorPickerWrapperProps {
     mutateColor: (draft: WritableDraft<ThemeData>, color: string) => void;
@@ -59,7 +58,7 @@ export const ColorPickerWrapper = forwardRef(function ColorPickerWrapper(
     }: ColorPickerWrapperProps,
     ref: ForwardedRef<ColorPickerHandle>,
 ) {
-    const { data: _data, setData } = useConfigContext();
+    const { data: _data, setData } = useThemeContext();
     const data = useMemo(() => _data!, [_data]);
     useEffect(() => {
         onColorChange?.(getColor(data));
@@ -74,45 +73,34 @@ export const ColorPickerWrapper = forwardRef(function ColorPickerWrapper(
         setHistory([getColor(data)]);
     }, []);
 
-    useImperativeHandle(
-        ref,
-        () => {
-            return {
-                currentColor: getColor(data),
-                setColor: (newColor) => {
-                    if (alpha && newColor.length != COLOR_WITH_ALPHA_LENGTH) {
-                        newColor = newColor + "ff";
-                    } else if (
-                        !alpha &&
-                        newColor.length != COLOR_NON_ALPHA_LENGTH
-                    ) {
-                        newColor = newColor.substring(
-                            0,
-                            COLOR_NON_ALPHA_LENGTH,
-                        );
-                    }
-                    setData(
-                        produce(data, (draft) => mutateColor(draft, newColor)),
-                    );
-                    setUndoStack((stack) => [...stack, newColor]);
-                    setHistory((hist) => insertWithoutDupe(hist, newColor));
-                },
-                undo: () => {
-                    const stack = undoStackRef.current;
-                    if (stack.length < 2) return;
-                    const popped = stack.slice(0, -1);
-                    const newColor = popped.at(-1)!;
+    useImperativeHandle(ref, () => {
+        return {
+            currentColor: getColor(data),
+            setColor: (newColor) => {
+                if (alpha && newColor.length != COLOR_WITH_ALPHA_LENGTH) {
+                    newColor = newColor + "ff";
+                } else if (
+                    !alpha &&
+                    newColor.length != COLOR_NON_ALPHA_LENGTH
+                ) {
+                    newColor = newColor.substring(0, COLOR_NON_ALPHA_LENGTH);
+                }
+                setData(produce(data, (draft) => mutateColor(draft, newColor)));
+                setUndoStack((stack) => [...stack, newColor]);
+                setHistory((hist) => insertWithoutDupe(hist, newColor));
+            },
+            undo: () => {
+                const stack = undoStackRef.current;
+                if (stack.length < 2) return;
+                const popped = stack.slice(0, -1);
+                const newColor = popped.at(-1)!;
 
-                    setData(
-                        produce(data, (draft) => mutateColor(draft, newColor)),
-                    );
-                    setUndoStack((stack) => popped);
-                    return newColor;
-                },
-            };
-        },
-        [data, getColor, mutateColor, alpha],
-    );
+                setData(produce(data, (draft) => mutateColor(draft, newColor)));
+                setUndoStack((stack) => popped);
+                return newColor;
+            },
+        };
+    }, [data, getColor, mutateColor, alpha]);
 
     return (
         <div

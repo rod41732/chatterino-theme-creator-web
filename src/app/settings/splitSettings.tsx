@@ -1,4 +1,4 @@
-import { useConfigContext } from "@/app/edit/ThemeContextProvider";
+import { useThemeContext } from "@/app/edit/ThemeContextProvider";
 import { Checkbox } from "antd";
 import { produce } from "immer";
 import s from "./settings.module.css";
@@ -36,7 +36,7 @@ enum SplitPickerName {
 
 export function SplitSettings() {
     const { setPreviewTab } = useTabContext();
-    const { data, setData } = useConfigContext();
+    const { data, setData } = useThemeContext();
 
     const [registerHandler, contextHolder] = usePickerLogic();
 

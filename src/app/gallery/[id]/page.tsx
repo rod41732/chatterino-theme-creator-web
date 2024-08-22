@@ -1,25 +1,25 @@
 "use client";
-import { useConfigContext } from "@/app/edit/ThemeContextProvider";
+import { IconButton } from "@/app/components/IconButton";
+import { Topbar } from "@/app/components/Topbar";
+import { UserBadge } from "@/app/components/UserBadge";
 import { EditorFooter } from "@/app/create/EdtiorFooter";
 import { EditorStateContextProvider } from "@/app/edit/EditorStateContextProvider";
-import { useRouter } from "next/navigation";
-import { UserBadge } from "@/app/components/UserBadge";
-import { IconButton } from "@/app/components/IconButton";
-import { BiSolidDuplicate } from "react-icons/bi";
-import { MdContentCopy, MdDownload, MdEdit } from "react-icons/md";
-import { createAndSaveTheme } from "@/lib/create-theme";
-import { produce } from "immer";
-import { copyToClipboard, downloadFile } from "@/lib/export-theme";
-import { css2qt } from "@/utils";
-import useNotification from "antd/es/notification/useNotification";
-import { ColorProvider } from "@/lib/ColorProvider";
-import clsx from "clsx";
+import { useThemeContext } from "@/app/edit/ThemeContextProvider";
 import {
     GALLERY_TABS,
     GalleryPreviewTab,
 } from "@/app/gallery/gallery.constants";
+import { ColorProvider } from "@/lib/ColorProvider";
+import { createAndSaveTheme } from "@/lib/create-theme";
+import { copyToClipboard, downloadFile } from "@/lib/export-theme";
+import { css2qt } from "@/utils";
+import useNotification from "antd/es/notification/useNotification";
+import clsx from "clsx";
+import { produce } from "immer";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Topbar } from "@/app/components/Topbar";
+import { BiSolidDuplicate } from "react-icons/bi";
+import { MdContentCopy, MdDownload, MdEdit } from "react-icons/md";
 
 interface RouteParams {
     params: {
@@ -27,7 +27,7 @@ interface RouteParams {
     };
 }
 export default function ViewThemePage({ params: { id } }: RouteParams) {
-    const { data } = useConfigContext();
+    const { data } = useThemeContext();
     const [previewTab, setPreviewTab] = useState(GalleryPreviewTab.ALL);
 
     return id ? (
@@ -85,7 +85,7 @@ export default function ViewThemePage({ params: { id } }: RouteParams) {
 }
 
 function ThemeDetails({ themeId }: { themeId: string }) {
-    const { data, extras } = useConfigContext();
+    const { data, extras } = useThemeContext();
     const router = useRouter();
     const idWithoutPrefix = themeId.split("-")[1];
 

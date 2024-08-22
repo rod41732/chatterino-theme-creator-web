@@ -1,11 +1,12 @@
 "use client";
-import "./globals.css";
-import { Inter } from "next/font/google";
 import { GlobalStateProvider, useGlobalState } from "@/app/GlobalContext";
+import { Inter } from "next/font/google";
 import { useEffect } from "react";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
+/** UserLoader is empty component that execute user fetching logic */
 function UserLoader() {
     const { state, dispatch } = useGlobalState();
     useEffect(() => {

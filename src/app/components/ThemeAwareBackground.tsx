@@ -1,12 +1,12 @@
-import { PropsWithChildren } from "react";
-import { useConfigContext } from "@/app/edit/ThemeContextProvider";
+import { useThemeContext } from "@/app/edit/ThemeContextProvider";
 import clsx from "clsx";
+import { PropsWithChildren } from "react";
 
 export function ThemeAwareBackground({
     children,
     className,
 }: PropsWithChildren<{ className?: string }>) {
-    const { data } = useConfigContext();
+    const { data } = useThemeContext();
     const isDarkTheme = data.metadata.iconTheme == "light";
     return (
         <div

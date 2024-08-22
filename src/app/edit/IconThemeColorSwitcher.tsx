@@ -1,10 +1,10 @@
-import { useConfigContext } from "@/app/edit/ThemeContextProvider";
-import { useCallback, useMemo } from "react";
-import { produce } from "immer";
+import { useThemeContext } from "@/app/edit/ThemeContextProvider";
 import clsx from "clsx";
+import { produce } from "immer";
+import { useCallback, useMemo } from "react";
 
 export function IconThemeSwitcher() {
-    const { data, setData } = useConfigContext();
+    const { data, setData } = useThemeContext();
     const iconTheme = useMemo(() => {
         return data!.metadata.iconTheme;
     }, [data]);

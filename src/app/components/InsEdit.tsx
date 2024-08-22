@@ -8,7 +8,7 @@ import {
     useState,
 } from "react";
 
-export type InsEditWidgetDef =
+export type InspectorWidgetDef =
     | {
           type: "divider";
       }
@@ -31,17 +31,25 @@ export type InsEditWidgetDef =
       };
 
 export interface InsEditState {
-    widgets: InsEditWidgetDef[];
+    // widgets (editor/title/separator/etc. to show in pane)
+    widgets: InspectorWidgetDef[];
+    // whether inspector is on main page (select theme)
+    // or editor page (editing element and (should) have "Done" button to go back)
     mode?: "editor" | "main";
 }
 
-interface InsEditContextState {
+interface InspectorContextState {
     state: InsEditState;
     setState: Dispatch<SetStateAction<InsEditState>>;
 }
-const InsEditContext = createContext<InsEditContextState | null>(null);
+const InsEditContext = createContext<InspectorContextState | null>(null);
 
-export const InsEditContextProvider = ({ children }: PropsWithChildren<{}>) => {
+/** InspectorContext control state of "inspector" (the interactive theme editor UI in main tab).
+ * list widgets and current mode
+ */
+export const InspectorContextProvider = ({
+    children,
+}: PropsWithChildren<{}>) => {
     const [state, setState] = useState<InsEditState>({
         widgets: [],
         mode: "main",
@@ -53,13 +61,13 @@ export const InsEditContextProvider = ({ children }: PropsWithChildren<{}>) => {
     );
 };
 
-export function useInsEditContext(): InsEditContextState {
+export function useInspectorContext(): InspectorContextState {
     const value = useContext(InsEditContext);
     if (value == null)
         throw new Error("Missing InsEditContextProvider in tree");
     return value;
 }
 
-export function useInsEditContextNullable(): InsEditContextState | null {
+export function useInspectorContextNullable(): InspectorContextState | null {
     return useContext(InsEditContext);
 }

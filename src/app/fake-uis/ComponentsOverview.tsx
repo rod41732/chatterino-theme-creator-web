@@ -1,35 +1,35 @@
 import {
-    InsEditWidgetDef,
-    useInsEditContextNullable,
+    InspectorWidgetDef,
+    useInspectorContextNullable,
 } from "@/app/components/InsEdit";
-import { useConfigContext } from "@/app/edit/ThemeContextProvider";
-import { useEffect, useRef, useState } from "react";
-import { usePreviewOptionContext } from "@/lib/api/PreviewOptionContext";
-import {
-    fakeChatListVerySmall,
-    fakeChatListVerySmallNoDistract,
-} from "@/data/fake-chat";
+import { IconThemeSwitcher } from "@/app/edit/IconThemeColorSwitcher";
+import { useThemeContext } from "@/app/edit/ThemeContextProvider";
 import styles from "@/app/fake-uis/chatlist.module.css";
+import { ChatterinoSplitAdvanced } from "@/app/fake-uis/chatterino";
+import { ChatterinoSplit } from "@/app/fake-uis/chatterinoSplit.component";
+import { ChatterinoSplitHeader } from "@/app/fake-uis/ChatterinoSplitHeader.component";
 import {
     HoverHoverStateTab,
     HoverUnfoucsedStateTab,
     NormalTab,
 } from "@/app/fake-uis/EditableTabPreview.component";
-import { ChatterinoSplitHeader } from "@/app/fake-uis/ChatterinoSplitHeader.component";
-import clsx from "clsx";
-import { Message } from "@/app/fake-uis/message.component";
-import { IconThemeSwitcher } from "@/app/edit/IconThemeColorSwitcher";
-import { makeWidgets } from "@/app/fake-uis/tab-preview-widgets";
 import {
     QtButton,
     QtCheckbox,
     QtInput,
     QtRadio,
 } from "@/app/fake-uis/FakeQt.component";
-import { ChatterinoSplitAdvanced } from "@/app/fake-uis/chatterino";
-import { ChatterinoSplit } from "@/app/fake-uis/chatterinoSplit.component";
+import { Message } from "@/app/fake-uis/message.component";
+import { makeWidgets } from "@/app/fake-uis/tab-preview-widgets";
+import {
+    fakeChatListVerySmall,
+    fakeChatListVerySmallNoDistract,
+} from "@/data/fake-chat";
+import { usePreviewOptionContext } from "@/lib/api/PreviewOptionContext";
+import clsx from "clsx";
+import { useEffect, useRef, useState } from "react";
 
-const USERCARD_WIDGETS: InsEditWidgetDef[] = [
+const USERCARD_WIDGETS: InspectorWidgetDef[] = [
     { type: "title", title: "User card" },
     {
         type: "colorPicker",
@@ -53,7 +53,7 @@ const USERCARD_WIDGETS: InsEditWidgetDef[] = [
         ),
     },
 ];
-const COMPLETION_MENU_WIDGETS: InsEditWidgetDef[] = [
+const COMPLETION_MENU_WIDGETS: InspectorWidgetDef[] = [
     {
         type: "title",
         title: "Completion menu",
@@ -79,7 +79,7 @@ const COMPLETION_MENU_WIDGETS: InsEditWidgetDef[] = [
 ];
 
 export function ComponentsOverview() {
-    const { data } = useConfigContext();
+    const { data } = useThemeContext();
     const [animationState, setAnimationState] = useState(0);
     useEffect(() => {
         let interval = setInterval(() => {
@@ -96,7 +96,7 @@ export function ComponentsOverview() {
     });
 
     const { editable } = usePreviewOptionContext();
-    const setState = useInsEditContextNullable()?.setState;
+    const setState = useInspectorContextNullable()?.setState;
     const chatContainerRef = useRef<HTMLDivElement>();
 
     useEffect(() => {
@@ -504,8 +504,8 @@ export function ComponentsOverview() {
                                                     isPin
                                                         ? "/chatterino-icons/pinEnabled.png"
                                                         : iconTheme == "light"
-                                                        ? "/chatterino-icons/pinDisabledLight.png"
-                                                        : "/chatterino-icons/pinDisabledDark.png"
+                                                          ? "/chatterino-icons/pinDisabledLight.png"
+                                                          : "/chatterino-icons/pinDisabledDark.png"
                                                 }
                                                 className="w-[26px] h-[26px] p-1 cursor-pointer"
                                                 onClick={() =>
@@ -670,10 +670,10 @@ export function ComponentsOverview() {
 }
 
 function EditableInput() {
-    const { data } = useConfigContext();
+    const { data } = useThemeContext();
     const iconTheme = data.metadata.iconTheme;
     const { editable } = usePreviewOptionContext();
-    const setState = useInsEditContextNullable()?.setState;
+    const setState = useInspectorContextNullable()?.setState;
     const [input, setInput] = useState("");
 
     return (

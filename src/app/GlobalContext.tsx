@@ -1,4 +1,6 @@
+import { getMe } from "@/lib/api/get-me";
 import { User } from "@/lib/db/user";
+import { produce } from "immer";
 import {
     createContext,
     Dispatch,
@@ -8,8 +10,6 @@ import {
     useContext,
     useState,
 } from "react";
-import { getMe } from "@/lib/api/get-me";
-import { produce } from "immer";
 
 type AuthorizationState =
     | {
@@ -65,6 +65,7 @@ const reducer = async (
     }
 };
 
+/** Global state for global app logic: currently { auth } */
 export function GlobalStateProvider({ children }: PropsWithChildren<{}>) {
     const [state, setState] = useState<_GlobalState>({ auth: null });
     const dispatch = useCallback(

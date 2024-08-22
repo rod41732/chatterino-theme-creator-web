@@ -21,6 +21,9 @@ const EditorStateContext = createContext<EditorState | null>(null);
 
 const SETTINGS_KEY = "ctc-settings";
 
+/** EditorState handle state that are specific to theme editor (not related to business logic).
+ * Currently tracks if theme is modified
+ */
 export function EditorStateContextProvider({
     children,
 }: PropsWithChildren<{}>) {

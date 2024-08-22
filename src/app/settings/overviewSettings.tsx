@@ -1,5 +1,5 @@
-import { useConfigContext } from "@/app/edit/ThemeContextProvider";
 import { useTabContext } from "@/app/edit/TabContextProvider";
+import { useThemeContext } from "@/app/edit/ThemeContextProvider";
 import { ColorPickerWrapper } from "@/app/settings/ColorPickerWrapper.component";
 import { JumpIcon } from "@/app/settings/JumpIcon.component";
 import clsx from "clsx";
@@ -15,7 +15,7 @@ enum OverviewPickerName {
 }
 
 export function OverviewSettings() {
-    const { data, setData } = useConfigContext();
+    const { data, setData } = useThemeContext();
     const iconTheme = data!.metadata.iconTheme;
     const setIconTheme = useCallback(
         (color: "light" | "dark") => {

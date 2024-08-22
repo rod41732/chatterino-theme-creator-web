@@ -1,15 +1,27 @@
 "use client";
-import { TabContextProvider } from "@/app/edit/TabContextProvider";
-import { useConfigContext } from "@/app/edit/ThemeContextProvider";
-import { ColorApp } from "@/app/edit/ColorApp";
-import { ThemeEditorButton } from "@/app/edit/ThemeEditorButtons";
+import { IconButton } from "@/app/components/IconButton";
+import { Topbar } from "@/app/components/Topbar";
 import { EditorFooter } from "@/app/create/EdtiorFooter";
+import { ThemeNameEditor } from "@/app/edit/[id]/ThemeNameEditor";
+import { ThemeData } from "@/app/edit/color-scheme.types";
+import { ColorApp } from "@/app/edit/ColorApp";
 import {
     EditorStateContextProvider,
     useEditorState,
 } from "@/app/edit/EditorStateContextProvider";
+import { TabContextProvider } from "@/app/edit/TabContextProvider";
+import { useThemeContext } from "@/app/edit/ThemeContextProvider";
+import { ThemeEditorButton } from "@/app/edit/ThemeEditorButtons";
+import { useGlobalState } from "@/app/GlobalContext";
+import { uploadTheme } from "@/lib/api/upload-theme";
+import { createAndSaveTheme, getThemeKey, saveTheme } from "@/lib/create-theme";
+import { downloadFile } from "@/lib/export-theme";
+import { getLocalStorage } from "@/lib/local-storage";
+import { css2qt } from "@/utils";
+import { produce } from "immer";
 import { useRouter } from "next/navigation";
-import { IconButton } from "@/app/components/IconButton";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { BiSolidDuplicate } from "react-icons/bi";
 import {
     MdAddCircleOutline,
     MdCheck,
@@ -17,18 +29,6 @@ import {
     MdDownload,
     MdSave,
 } from "react-icons/md";
-import { createAndSaveTheme, getThemeKey, saveTheme } from "@/lib/create-theme";
-import { Topbar } from "@/app/components/Topbar";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { downloadFile } from "@/lib/export-theme";
-import { css2qt } from "@/utils";
-import { uploadTheme } from "@/lib/api/upload-theme";
-import { useGlobalState } from "@/app/GlobalContext";
-import { getLocalStorage } from "@/lib/local-storage";
-import { ThemeNameEditor } from "@/app/edit/[id]/ThemeNameEditor";
-import { produce } from "immer";
-import { ThemeData } from "@/app/edit/color-scheme.types";
-import { BiSolidDuplicate } from "react-icons/bi";
 
 interface RouteParams {
     params: {
@@ -80,7 +80,7 @@ function LeftButtons({ themeId }: { themeId: string }) {
     const router = useRouter();
     const { state, setState } = useEditorState();
     const [saved, setSaved] = useState(false);
-    const { data } = useConfigContext();
+    const { data } = useThemeContext();
     const {
         state: { auth },
     } = useGlobalState();
@@ -223,7 +223,7 @@ function LeftButtons({ themeId }: { themeId: string }) {
 }
 
 function ExportButton({ themeId }: { themeId: string }) {
-    const { data } = useConfigContext();
+    const { data } = useThemeContext();
     const idWithoutPrefix = themeId.split("-")[1];
 
     return (
@@ -242,7 +242,7 @@ function ExportButton({ themeId }: { themeId: string }) {
 }
 
 function ChangeMonitor() {
-    const { data, setData } = useConfigContext();
+    const { data, setData } = useThemeContext();
     const { setState } = useEditorState();
     const lastData = useRef<ThemeData | null>(null);
     useEffect(() => {

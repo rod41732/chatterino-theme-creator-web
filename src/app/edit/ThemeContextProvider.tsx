@@ -1,7 +1,11 @@
 "use client";
 import { ThemeData } from "@/app/edit/color-scheme.types";
 import { getThemeKey } from "@/lib/create-theme";
+import { Theme } from "@/lib/db/theme";
+import { useAsyncEffect } from "@/lib/hooks/use-async-effect";
+import { getLocalStorage } from "@/lib/local-storage";
 import { ValueOrFactory } from "@/lib/react.types";
+import { ApiResponse } from "@/lib/type";
 import { CHATTERINO_BLACK_THEME } from "@/resources";
 import {
     createContext,
@@ -10,10 +14,6 @@ import {
     useContext,
     useState,
 } from "react";
-import { useAsyncEffect } from "@/lib/hooks/use-async-effect";
-import { Theme } from "@/lib/db/theme";
-import { ApiResponse } from "@/lib/type";
-import { getLocalStorage } from "@/lib/local-storage";
 
 interface ThemeContextData {
     data: ThemeData;
@@ -27,6 +27,8 @@ const ThemeContext = createContext<ThemeContextData>(null as any);
 interface ThemeContextProps {
     themeId: string;
 }
+
+/** ThemeContext provide data (colors) about current theme */
 export const ThemeContextProvider = ({
     children,
     themeId,
@@ -111,7 +113,7 @@ export function ReadonlyThemeContextProvider({
     );
 }
 
-export const useConfigContext = () => {
+export const useThemeContext = () => {
     const v = useContext(ThemeContext);
     if (v == null) throw new Error("Missing context provider");
     return v;

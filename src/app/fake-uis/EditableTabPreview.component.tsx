@@ -1,16 +1,16 @@
+import { useInspectorContextNullable } from "@/app/components/InsEdit";
 import styles from "@/app/fake-uis/chatlist.module.css";
-import { usePreviewOptionContext } from "@/lib/api/PreviewOptionContext";
 import { HoverOverlay } from "@/app/fake-uis/chatterinoTabPreview.component";
-import clsx from "clsx";
-import { useInsEditContextNullable } from "@/app/components/InsEdit";
 import { makeWidgets, TabState } from "@/app/fake-uis/tab-preview-widgets";
+import { usePreviewOptionContext } from "@/lib/api/PreviewOptionContext";
+import clsx from "clsx";
 import { FaCog, FaUserAlt } from "react-icons/fa";
 
 export function GenericTab({ state }: { state: TabState | "hoverBugged" }) {
     const tb = styles.tabBase;
     const s = styles;
     const { editable } = usePreviewOptionContext();
-    const setState = useInsEditContextNullable()?.setState;
+    const setState = useInspectorContextNullable()?.setState;
     return (
         <div>
             <div className={`flex flex-wrap ${s.tabContainer} w-full`}>

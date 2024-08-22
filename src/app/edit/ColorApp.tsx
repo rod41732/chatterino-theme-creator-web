@@ -1,6 +1,6 @@
 import { PREVIEW_TABS } from "@/app/edit/ColorApp.constants";
 import { useTabContext } from "@/app/edit/TabContextProvider";
-import { useConfigContext } from "@/app/edit/ThemeContextProvider";
+import { useThemeContext } from "@/app/edit/ThemeContextProvider";
 import { PreviewTab } from "@/app/edit/editor-tab.types";
 import { ColorProvider } from "@/lib/ColorProvider";
 import clsx from "clsx";
@@ -11,7 +11,7 @@ function ColorProviderFromContext({
     children,
     className,
 }: PropsWithChildren<{ className?: string }>) {
-    const { data } = useConfigContext();
+    const { data } = useThemeContext();
     return (
         <ColorProvider theme={data} className={className}>
             {children}

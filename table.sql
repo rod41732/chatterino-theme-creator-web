@@ -1,10 +1,3 @@
-create table "Users" (
-    "id" serial primary key,
-    "handle" text not null unique,
-    "displayName" text not null,
-    "createdAt" timestamp with time zone not null,
-    "githubUserId" int references "GithubUsers"(id) unique
-);
 
 create table "GithubUsers" (
     "id" int primary key,
@@ -12,6 +5,13 @@ create table "GithubUsers" (
     "name" text not null
 );
 
+create table "Users" (
+    "id" serial primary key,
+    "handle" text not null unique,
+    "displayName" text not null,
+    "createdAt" timestamp with time zone not null,
+    "githubUserId" int references "GithubUsers"(id) unique
+);
 
 create table "UserThemes" (
     "id" serial primary key ,

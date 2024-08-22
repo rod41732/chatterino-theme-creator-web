@@ -1,11 +1,11 @@
-import { FakeChatMessage } from "@/data/fake-chat";
+import { useInspectorContextNullable } from "@/app/components/InsEdit";
 import { ChatterinoFakeTab } from "@/app/fake-uis/chatterinoFakeTab";
 import { ChatterinoSplit } from "@/app/fake-uis/chatterinoSplit.component";
-import clsx from "clsx";
-import styles from "./chatlist.module.css";
+import { FakeChatMessage } from "@/data/fake-chat";
 import { usePreviewOptionContext } from "@/lib/api/PreviewOptionContext";
-import { useInsEditContextNullable } from "@/app/components/InsEdit";
+import clsx from "clsx";
 import { useMemo } from "react";
+import styles from "./chatlist.module.css";
 
 /** basic split */
 export function ChatterinoSplitVertical({
@@ -82,7 +82,7 @@ export function ChatterinoSplitAdvanced({
     persistentPreview?: boolean;
 }) {
     const { editable } = usePreviewOptionContext();
-    const setState = useInsEditContextNullable()?.setState;
+    const setState = useInspectorContextNullable()?.setState;
     const dropTargetProps = useMemo(() => {
         return {
             role: editable ? "button" : undefined,

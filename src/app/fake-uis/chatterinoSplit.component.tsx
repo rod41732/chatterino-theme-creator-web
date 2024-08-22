@@ -1,12 +1,12 @@
-import { useConfigContext } from "@/app/edit/ThemeContextProvider";
-import { FakeChatMessage } from "@/data/fake-chat";
+import { useInspectorContextNullable } from "@/app/components/InsEdit";
+import { useThemeContext } from "@/app/edit/ThemeContextProvider";
 import styles from "@/app/fake-uis/chatlist.module.css";
+import { ChatterinoSplitHeader } from "@/app/fake-uis/ChatterinoSplitHeader.component";
 import { Message } from "@/app/fake-uis/message.component";
+import { FakeChatMessage } from "@/data/fake-chat";
+import { usePreviewOptionContext } from "@/lib/api/PreviewOptionContext";
 import clsx from "clsx";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ChatterinoSplitHeader } from "@/app/fake-uis/ChatterinoSplitHeader.component";
-import { usePreviewOptionContext } from "@/lib/api/PreviewOptionContext";
-import { useInsEditContextNullable } from "@/app/components/InsEdit";
 
 export function ChatterinoSplit({
     name,
@@ -33,13 +33,13 @@ export function ChatterinoSplit({
 }) {
     const [animationState, setAnimationState] = useState(0);
     const [input, setInput] = useState("");
-    const { data } = useConfigContext();
+    const { data } = useThemeContext();
     const iconTheme = useMemo(() => {
         return data!.metadata.iconTheme;
     }, [data]);
     const chatContainerRef = useRef<HTMLDivElement>();
     const { editable } = usePreviewOptionContext();
-    const setState = useInsEditContextNullable()?.setState;
+    const setState = useInspectorContextNullable()?.setState;
 
     useEffect(() => {
         let interval = setInterval(() => {

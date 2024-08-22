@@ -1,10 +1,10 @@
-import { useConfigContext } from "@/app/edit/ThemeContextProvider";
-import { useMemo } from "react";
-import clsx from "clsx";
+import { useInspectorContextNullable } from "@/app/components/InsEdit";
+import { IconThemeSwitcher } from "@/app/edit/IconThemeColorSwitcher";
+import { useThemeContext } from "@/app/edit/ThemeContextProvider";
 import styles from "@/app/fake-uis/chatlist.module.css";
 import { usePreviewOptionContext } from "@/lib/api/PreviewOptionContext";
-import { useInsEditContextNullable } from "@/app/components/InsEdit";
-import { IconThemeSwitcher } from "@/app/edit/IconThemeColorSwitcher";
+import clsx from "clsx";
+import { useMemo } from "react";
 
 interface ChatterinoSplitHeaderProps {
     active: boolean;
@@ -15,13 +15,13 @@ export function ChatterinoSplitHeader({
     active,
     name,
 }: ChatterinoSplitHeaderProps) {
-    const { data } = useConfigContext();
+    const { data } = useThemeContext();
     const iconTheme = useMemo(() => {
         return data!.metadata.iconTheme;
     }, [data]);
     const { editable } = usePreviewOptionContext();
 
-    const setState = useInsEditContextNullable()?.setState;
+    const setState = useInspectorContextNullable()?.setState;
 
     return (
         <div

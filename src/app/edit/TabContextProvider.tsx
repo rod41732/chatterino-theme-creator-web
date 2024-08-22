@@ -19,6 +19,7 @@ export const useTabContext = () => {
     return useContext(TabContext);
 };
 
+/** TabContext handle context for switching tabs in app (Editor, chat, ...) */
 export function TabContextProvider({ children }: PropsWithChildren<{}>) {
     const [settingsTab, setSettingsTab] = useState(SettingsTab.INSEPCTOR);
     const [previewTab, setPreviewTab] = useState(PreviewTab.EDITOR);

@@ -1,13 +1,13 @@
-import { useConfigContext } from "@/app/edit/ThemeContextProvider";
-import { fakeChatListSmall } from "@/data/fake-chat";
+import { useThemeContext } from "@/app/edit/ThemeContextProvider";
 import { QtCheckbox, QtInput } from "@/app/fake-uis/FakeQt.component";
 import { ChatterinoSplit } from "@/app/fake-uis/chatterinoSplit.component";
+import { fakeChatListSmall } from "@/data/fake-chat";
 import clsx from "clsx";
 import { useMemo, useState } from "react";
 import styles from "./chatlist.module.css";
 
 export function UserCard() {
-    const { data } = useConfigContext();
+    const { data } = useThemeContext();
     const iconTheme = useMemo(() => {
         return data!.metadata.iconTheme;
     }, [data]);
@@ -61,8 +61,8 @@ export function UserCard() {
                                     isPin
                                         ? "/chatterino-icons/pinEnabled.png"
                                         : iconTheme == "light"
-                                        ? "/chatterino-icons/pinDisabledLight.png"
-                                        : "/chatterino-icons/pinDisabledDark.png"
+                                          ? "/chatterino-icons/pinDisabledLight.png"
+                                          : "/chatterino-icons/pinDisabledDark.png"
                                 }
                                 className="w-[26px] h-[26px] p-1 cursor-pointer"
                                 onClick={() => setIsPin((e) => !e)}

@@ -1,19 +1,19 @@
-import { FakeChatMessage } from "@/data/fake-chat";
-import styles from "@/app/fake-uis/chatlist.module.css";
-import clsx from "clsx";
-import { usePreviewOptionContext } from "@/lib/api/PreviewOptionContext";
 import {
-    InsEditWidgetDef,
-    useInsEditContextNullable,
+    InspectorWidgetDef,
+    useInspectorContextNullable,
 } from "@/app/components/InsEdit";
-import { Checkbox } from "antd";
-import { useConfigContext } from "@/app/edit/ThemeContextProvider";
-import { produce } from "immer";
+import { useThemeContext } from "@/app/edit/ThemeContextProvider";
+import styles from "@/app/fake-uis/chatlist.module.css";
 import { ColorPickerWrapper } from "@/app/settings/ColorPickerWrapper.component";
+import { FakeChatMessage } from "@/data/fake-chat";
+import { usePreviewOptionContext } from "@/lib/api/PreviewOptionContext";
+import { Checkbox } from "antd";
+import clsx from "clsx";
+import { produce } from "immer";
 
-function makeWidgets(it: FakeChatMessage): InsEditWidgetDef[] {
-    let title: InsEditWidgetDef = { type: "title", title: "", size: "large" };
-    const widgets: InsEditWidgetDef[] = [title];
+function makeWidgets(it: FakeChatMessage): InspectorWidgetDef[] {
+    let title: InspectorWidgetDef = { type: "title", title: "", size: "large" };
+    const widgets: InspectorWidgetDef[] = [title];
     widgets.push({
         type: "title",
         size: "small",
@@ -149,7 +149,7 @@ function makeWidgets(it: FakeChatMessage): InsEditWidgetDef[] {
 }
 
 function AlternateBackgroundSettings() {
-    const { data, setData } = useConfigContext();
+    const { data, setData } = useThemeContext();
 
     return (
         <div>
@@ -193,7 +193,7 @@ function AlternateBackgroundSettings() {
     );
 }
 function MessageSeparatorSettings() {
-    const { data, setData } = useConfigContext();
+    const { data, setData } = useThemeContext();
 
     return (
         <div>
@@ -251,12 +251,12 @@ export function Message({
     animationState: number;
 }) {
     const { editable } = usePreviewOptionContext();
-    const setState = useInsEditContextNullable()?.setState;
+    const setState = useInspectorContextNullable()?.setState;
     const {
         data: {
             ctcMeta: { checkeredRow },
         },
-    } = useConfigContext();
+    } = useThemeContext();
     return (
         <div
             className={clsx(
@@ -284,8 +284,8 @@ export function Message({
                     it.link
                         ? styles.linkText
                         : it.system
-                        ? styles.systemText
-                        : styles.normalText
+                          ? styles.systemText
+                          : styles.normalText
                 }
             >
                 {" "}

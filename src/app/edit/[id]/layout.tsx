@@ -1,8 +1,8 @@
 "use client";
 
+import { InspectorContextProvider } from "@/app/components/InsEdit";
 import { ThemeContextProvider } from "@/app/edit/ThemeContextProvider";
 import { PropsWithChildren } from "react";
-import { InsEditContextProvider } from "@/app/components/InsEdit";
 
 interface RouteParams {
     params: {
@@ -14,11 +14,11 @@ export default function ThemeEditorLayout({
     children,
 }: PropsWithChildren<RouteParams>) {
     return id ? (
-        <InsEditContextProvider>
+        <InspectorContextProvider>
             <ThemeContextProvider key={id} themeId={id}>
                 {children}
             </ThemeContextProvider>
-        </InsEditContextProvider>
+        </InspectorContextProvider>
     ) : (
         <div> no theme ID </div>
     );

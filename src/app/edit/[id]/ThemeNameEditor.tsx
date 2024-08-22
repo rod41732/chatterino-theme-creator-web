@@ -1,12 +1,12 @@
-import { useConfigContext } from "@/app/edit/ThemeContextProvider";
-import { useCallback, useEffect, useState } from "react";
-import { produce } from "immer";
-import { getLocalStorage } from "@/lib/local-storage";
-import { getThemeKey } from "@/lib/create-theme";
 import { EditableText } from "@/app/components/EditableText";
+import { useThemeContext } from "@/app/edit/ThemeContextProvider";
+import { getThemeKey } from "@/lib/create-theme";
+import { getLocalStorage } from "@/lib/local-storage";
+import { produce } from "immer";
+import { useCallback, useEffect, useState } from "react";
 
 export function ThemeNameEditor({ themeId }: { themeId: string }) {
-    const { data } = useConfigContext();
+    const { data } = useThemeContext();
     const [localName, setLocalName] = useState("");
     useEffect(() => setLocalName(data.ctcMeta.name), [data.ctcMeta]);
 

@@ -1,11 +1,14 @@
-import { InsEditWidgetDef, useInsEditContext } from "@/app/components/InsEdit";
+import {
+    InspectorWidgetDef,
+    useInspectorContext,
+} from "@/app/components/InsEdit";
 
 export type TabState = "regular" | "hover" | "hoverBugged" | "unfocused";
 
 export function makeWidgets(
     tabItemState: "selected" | "regular" | "newMessage" | "highlighted",
     tabState: TabState,
-): InsEditWidgetDef[] {
+): InspectorWidgetDef[] {
     const tabName = {
         selected: "Selected Tab",
         regular: "Unselected Tab",
@@ -34,7 +37,7 @@ export function makeWidgets(
     };
     const realState = tabState == "hoverBugged" ? "regular" : tabState;
 
-    const widgets: InsEditWidgetDef[] = [
+    const widgets: InspectorWidgetDef[] = [
         {
             type: "title",
             title: tabName[tabItemState] + stateSuffix[tabState],
@@ -56,7 +59,7 @@ export function makeWidgets(
         },
         {
             type: "colorPicker",
-            path: `tabs.${tabItemState}.backgrounds.${realState}`,
+            path: `tabs.${tabItemState}.line.${realState}`,
             name: "Line color",
             description: `Line color at top of tab ${tabDescriptionStateSuffic[tabState]}`,
         },
@@ -99,7 +102,7 @@ export function makeWidgets(
 }
 
 function GoToMainSettingsButton() {
-    const { setState } = useInsEditContext();
+    const { setState } = useInspectorContext();
     return (
         <button
             className="text-blue-500 p-2"
