@@ -28,6 +28,17 @@ interface ThemeContextProps {
     themeId: string;
 }
 
+function validateAndSetData(raw: unknown, setData: (d: ThemeData) => void) {
+    try {
+        const parsed: ThemeData = ThemeDataSchema.parse(raw);
+        setData(parsed);
+    } catch (err) {
+        console.error("Error parsing theme data", err);
+        console.warn("Using un-validated data");
+        setData(raw as any);
+    }
+}
+
 /** ThemeContext provide data (colors) about current theme */
 export const ThemeContextProvider = ({
     children,
@@ -58,16 +69,7 @@ export const ThemeContextProvider = ({
                 });
             }
 
-            try {
-                const parsed: ThemeData = ThemeDataSchema.parse(raw);
-                setData(parsed);
-            } catch (err) {
-                console.error("Error parsing theme data", err);
-                console.warn("Using un-validated data");
-                setData(raw);
-            }
-
-            // ZOD?
+            validateAndSetData(raw, setData);
             console.log("loaded data from storage");
         }
         // load remote
@@ -98,7 +100,7 @@ export const ThemeContextProvider = ({
                     const themeData = themeModel.data as ThemeData;
 
                     setExtras({ owner: themeModel.owner });
-                    setData(themeData);
+                    validateAndSetData(themeData, setData);
                 });
             }
         }
