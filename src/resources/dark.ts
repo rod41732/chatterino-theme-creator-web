@@ -51,6 +51,8 @@ export const CHATTERINO_DARK_THEME: ThemeData = {
             resizeHandleBackground: "#0094ff20",
         },
         tabs: {
+            liveIndicator: "#ff0000",
+            rerunIndicator: "#c7c715",
             dividerLine: "#555555",
             highlighted: {
                 backgrounds: {

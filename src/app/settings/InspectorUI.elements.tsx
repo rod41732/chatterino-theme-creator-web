@@ -56,7 +56,7 @@ export function InspectorEditorTab(): ReactNode {
     return (
         <div>
             <div className="flex items-center py-2 border-b border-b-gray-300 mb-2">
-                <div className="text-xl font-bold"> Edit element. </div>
+                <div className="text-xl font-bold"> Edit element</div>
                 <div className="flex-1"> </div>
                 <button
                     className="text-blue-500"

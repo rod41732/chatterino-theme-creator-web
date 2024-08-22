@@ -57,6 +57,8 @@ const ColorSchemeSchema = z.object({
         resizeHandleBackground: ColorWithAlphaSchema,
     }),
     tabs: z.object({
+        liveIndicator: ColorNoAlphaSchema,
+        rerunIndicator: ColorNoAlphaSchema,
         dividerLine: ColorNoAlphaSchema,
         highlighted: z.object({
             backgrounds: z.object({
@@ -163,6 +165,8 @@ export interface ColorScheme {
         resizeHandleBackground: ColorWithAlpha;
     };
     tabs: {
+        liveIndicator: ColorNoAlpha;
+        rerunIndicator: ColorNoAlpha;
         dividerLine: ColorNoAlpha;
         highlighted: {
             backgrounds: {

@@ -51,6 +51,8 @@ export const CHATTERINO_WHITE_THEME: ThemeData = {
             resizeHandleBackground: "#0094ff50",
         },
         tabs: {
+            liveIndicator: "#ff0000",
+            rerunIndicator: "#c7c715",
             dividerLine: "#b4d7ff",
             highlighted: {
                 backgrounds: {
