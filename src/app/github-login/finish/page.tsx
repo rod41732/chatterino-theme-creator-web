@@ -1,13 +1,20 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { ApiResponse } from "@/lib/type";
+import { useGlobalState } from "@/app/GlobalContext";
 import { User } from "@/lib/db/user";
 import { useAsyncEffect } from "@/lib/hooks/use-async-effect";
-import { useGlobalState } from "@/app/GlobalContext";
 import { getLocalStorage } from "@/lib/local-storage";
+import { ApiResponse } from "@/lib/type";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useRef, useState } from "react";
 
 export default function Page() {
+    return (
+        <Suspense>
+            <GithubAuth />
+        </Suspense>
+    );
+}
+function GithubAuth() {
     const router = useRouter();
     const hasLogin = useRef(false);
     const params = useSearchParams();
